@@ -50,7 +50,7 @@ export const coursesCard = [
       {
         dcover: "./images/back.webp",
         name: "by John Smith",
-        totalTime: "50 lectures (190 hrs)",
+        totalTime: "50 lectures (1900 hrs)",
       },
     ],
     priceAll: "$100 All Course",

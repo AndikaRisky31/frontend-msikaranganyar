@@ -13,25 +13,25 @@ const Header = () => {
         <nav className='flexSB'>
           <ul className={click ? "mobile-nav" : "flexSB "} onClick={() => setClick(false)}>
             <li>
-              <Link to='/'>Home</Link>
+              <Link to='/'>Beranda</Link>
             </li>
             <li>
-              <Link to='/courses'>All Courses</Link>
+              <Link to='/journal'>Berita</Link>
             </li>
             <li>
-              <Link to='/about'>About</Link>
+              <Link to='/courses'>Pengumuman</Link>
             </li>
             <li>
-              <Link to='/team'>Team</Link>
+              <Link to='/about'>Tentang Kami</Link>
             </li>
             <li>
-              <Link to='/pricing'>Pricing</Link>
+              <Link to='/team'>Tim</Link>
             </li>
             <li>
-              <Link to='/journal'>Journal</Link>
+              <Link to='/pricing'>Lowongan</Link>
             </li>
             <li>
-              <Link to='/contact'>Contact</Link>
+              <Link to='/contact'>Kontak</Link>
             </li>
           </ul>
           <div className='start'>

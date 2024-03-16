@@ -12,10 +12,10 @@ const Hero = () => {
             <p> Bersama kami, Anda menjadi bagian dari perjuangan melawan penyakit mematikan ini untuk mewujudkan masyarakat yang lebih sehat dan sejahtera.</p>
             {/* <div className='button'>
               <button className='primary-btn'>
-                GET STARTED NOW <i className='fa fa-long-arrow-alt-right'></i>
+                Gabung Sekarang<i className='fa fa-long-arrow-alt-right'></i>
               </button>
               <button>
-                VIEW COURSE <i className='fa fa-long-arrow-alt-right'></i>
+                  Lihat Lowongan <i className='fa fa-long-arrow-alt-right'></i>
               </button>
             </div> */}
           </div>
