@@ -8,8 +8,8 @@ const Hero = () => {
       <section className='hero'>
         <div className='container'>
           <div className='row'>
-            <Heading subtitle='WELCOME TO' title='SSR Mentari Sehat Indonesia' />
-            <p> Bersama kami, Anda menjadi bagian dari perjuangan melawan penyakit mematikan ini untuk mewujudkan masyarakat yang lebih sehat dan sejahtera.</p>
+            <Heading subtitle='WELCOME TO' title='SSR Mentari Sehat Indonesia'/>
+            <p>Bersama Kami,Eliminasi TBC Sebelum 2030! Bergabunglah dengan Komunitas Jawa Tengah dan Yayasan Mentari Sehat Indonesia, Ayo Wujudkan Indonesia Bebas TBC pada 2030.</p>
             {/* <div className='button'>
               <button className='primary-btn'>
                 Gabung Sekarang<i className='fa fa-long-arrow-alt-right'></i>

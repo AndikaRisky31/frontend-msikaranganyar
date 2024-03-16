@@ -6,11 +6,10 @@ import About from "./components/about/About"
 import CourseHome from "./components/allcourses/CourseHome"
 import Team from "./components/team/Team"
 import Pricing from "./components/pricing/Pricing"
-import Blog from "./components/blog/Blog"
+import News from "./components/blog/Blog"
 import Contact from "./components/contact/Contact"
 import Footer from "./components/common/footer/Footer"
 import Home from "./components/home/Home"
-import { Link } from "react-router-dom"
 function App() {
   return (
     <>
@@ -18,11 +17,11 @@ function App() {
         <Header />
         <Switch>
           <Route exact path='/' component={Home} />
-          <Route exact path='/about' component={About} />
+          <Route exact path='/lowongan' component={Pricing} />
           <Route exact path='/courses' component={CourseHome} />
           <Route exact path='/team' component={Team} />
-          <Route exact path='/pricing' component={Pricing} />
-          <Route exact path='/journal' component={Blog} />
+          <Route exact path='/about' component={About} />
+          <Route exact path='/news' component={News} />
           <Route exact path='/contact' component={Contact} />
         </Switch>
         <Footer />

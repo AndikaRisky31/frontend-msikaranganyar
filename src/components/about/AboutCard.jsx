@@ -13,7 +13,7 @@ const AboutCard = () => {
             <img src='./images/about.webp' alt='' />
           </div>
           <div className='right row'>
-            <Heading subtitle='LEARN ANYTHING' title='Benefits About Online Learning Expertise' />
+            <Heading subtitle='Pelopor Perubahan Menuju Indonesia Bebas TBC Tahun 2030 di Karanganyar' title='VISI DAN MISI' />
             <div className='items'>
               {homeAbout.map((val) => {
                 return (

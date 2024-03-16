@@ -16,7 +16,7 @@ const Header = () => {
               <Link to='/'>Beranda</Link>
             </li>
             <li>
-              <Link to='/journal'>Berita</Link>
+              <Link to='/news'>Berita</Link>
             </li>
             <li>
               <Link to='/courses'>Pengumuman</Link>
@@ -28,7 +28,7 @@ const Header = () => {
               <Link to='/team'>Tim</Link>
             </li>
             <li>
-              <Link to='/pricing'>Lowongan</Link>
+              <Link to='/lowongan'>Lowongan</Link>
             </li>
             <li>
               <Link to='/contact'>Kontak</Link>

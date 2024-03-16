@@ -1,44 +1,43 @@
 export const homeAbout = [
   {
     id: 1,
-    cover: "https://img.icons8.com/dotty/80/000000/storytelling.png",
-    title: "Online Courses",
-    desc: "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.",
+    cover: "https://img.icons8.com/ios/80/hospital.png",
+    title: "Komunitas Sehat dan Berdaya di Karanganyar",
+    desc: "Mewujudkan komunitas sehat dan berdaya melalui akses pendidikan, kesehatan, dan sosial yang merata."
   },
   {
     id: 1,
-    cover: "https://img.icons8.com/ios/80/000000/diploma.png",
-    title: "Earn A Certificates",
-    desc: "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.",
+    cover: "https://img.icons8.com/ios/100/business-goal.png",
+    title: "Eliminasi TBC di Karanganyar 2030",
+    desc: "Mempercepat eliminasi TBC dengan partisipasi aktif masyarakat dalam pencegahan, deteksi, dan pengobatan.",
   },
   {
     id: 1,
     cover: "https://img.icons8.com/ios/80/000000/athlete.png",
-    title: "Learn with Expert",
-    desc: "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.",
+    title: "Kader Kesehatan Tangguh",
+    desc: "Mengembangkan kader kesehatan masyarakat untuk menjalankan program-program kesehatan lokal.",
   },
 ]
 export const awrapper = [
   {
-    cover: "https://img.icons8.com/external-yogi-aprelliyanto-basic-outline-yogi-aprelliyanto/80/ffffff/external-graduation-education-yogi-aprelliyanto-basic-outline-yogi-aprelliyanto.png",
+    cover: "https://img.icons8.com/ios/80/ffffff/groups.png",
     data: "3,000",
-    title: "SUCCESS STORIES",
+    title: "DIAGNOSED",
   },
-
   {
-    cover: "https://img.icons8.com/ios/80/ffffff/athlete.png",
+    cover: "https://img.icons8.com/ios/80/ffffff/user--v1.png",
     data: "320",
-    title: "TRUSTED TUTORS",
+    title: "DETECTED",
   },
   {
-    cover: "https://img.icons8.com/external-outline-icons-maxicons/80/ffffff/external-calender-insurance-outline-outline-icons-maxicons.png",
+    cover: "https://img.icons8.com/ios/80/ffffff/capsule.png",
     data: "1,000",
-    title: "SCHEDULES",
+    title: "UNDER TREATHMENT",
   },
   {
-    cover: "https://img.icons8.com/ios/80/ffffff/macbook-idea--v3.png",
+    cover: "https://img.icons8.com/ios/80/ffffff/health-insurance.png",
     data: "587",
-    title: "COURSES",
+    title: "RECOVERED",
   },
 ]
 export const coursesCard = [
