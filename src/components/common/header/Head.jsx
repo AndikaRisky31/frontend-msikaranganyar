@@ -11,16 +11,16 @@ const Head = () => {
           </div>
 
           <div className='social'>
-            <a href="https://www.facebook.com/" target="_blank">
+            <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
               <i className='fab fa-facebook-f icon'></i>
             </a>
-            <a href="https://www.instagram.com/_msi_karanganyar?igsh=MXN1MHM0enR6eTJydg==" target="_blank">
+            <a href="https://www.instagram.com/_msi_karanganyar?igsh=MXN1MHM0enR6eTJydg==" target="_blank" rel="noopener noreferrer">
               <i className='fab fa-instagram icon'></i>
             </a>
-            <a href="https://www.tiktok.com/@msi.karanganyar?_t=8kf8aJTji1B&_r=1" target="_blank">
+            <a href="https://www.tiktok.com/@msi.karanganyar?_t=8kf8aJTji1B&_r=1" target="_blank" rel="noopener noreferrer">
               <i className='fab fa-tiktok icon'></i>
             </a>
-            <a href="https://www.youtube.com/@msikab.karanganyar6795?si=9Qt2hFKiZiVqcgJD" target="_blank">
+            <a href="https://www.youtube.com/@msikab.karanganyar6795?si=9Qt2hFKiZiVqcgJD" target="_blank" rel="noopener noreferrer">
               <i className='fab fa-youtube icon'></i>
             </a>
           </div>
