@@ -1,10 +1,15 @@
-import React from "react"
-import ReactDOM from "react-dom/client"
-import App from "./App"
+// index.js
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+import dotenv from 'dotenv';
 
-const root = ReactDOM.createRoot(document.getElementById("root"))
-root.render(
+// Load .env file
+dotenv.config();
+
+ReactDOM.render(
   <React.StrictMode>
     <App />
-  </React.StrictMode>
-)
+  </React.StrictMode>,
+  document.getElementById('root')
+);

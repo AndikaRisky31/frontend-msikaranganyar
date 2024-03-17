@@ -78,7 +78,7 @@ const Footer = () => {
             <h3>Have a Questions?</h3>
             <ul>
               <li>
-                <i class="fa fa-map"></i>
+                <i class="fa fa-map-marker"></i>
                  <span> Perum PPH 06/006 Desa Ngijo, Kec. Tasikmadu, Kab. Karanganyar JAWA TENGAH</span>
               </li>
               <li>
