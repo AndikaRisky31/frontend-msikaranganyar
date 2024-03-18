@@ -9,9 +9,9 @@ const Contact = () => {
     e.preventDefault();
   
     // Isi dengan Service ID, Template ID, dan Public Key Anda
-    const serviceID = "service_68hqebd";
-    const templateID = "template_jc0c3hp";
-    const publicKey = "hs2SPoQfaDVpMbsGv";
+    const serviceID = process.env.REACT_APP_SERVICE_ID;
+    const templateID = process.env.REACT_APP_TEMPLATE_ID;
+    const publicKey = process.env.REACT_APP_PUBLIC_KEY;
   
     // Kirim email menggunakan EmailJS
     emailjs.send(serviceID, templateID, {

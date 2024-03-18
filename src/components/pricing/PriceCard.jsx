@@ -3,9 +3,9 @@ import { price } from "../../dummydata";
 
 const PriceCard = ({ data }) => {
   const handleClick = () => {
-    // Mengarahkan pengguna ke URL tertentu saat tombol diklik
-    window.location.href = `${data.applyUrl}`;
-  };
+    // Membuka URL di tab baru saat tombol diklik
+    window.open(data.apply_url, '_blank');
+  };  
   return (
     <>
       <div className='items shadow'>

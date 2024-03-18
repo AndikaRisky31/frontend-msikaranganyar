@@ -2,6 +2,7 @@ import React from "react";
 import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
 import Heading from "../common/heading/Heading";
 import PriceCard from "../pricing/PriceCard";
+import '../pricing/price.css'
 
 const queryClient = new QueryClient();
 
