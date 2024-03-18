@@ -12,7 +12,7 @@ const Testimonal = () => {
 
           <div className='content grid2'>
             {testimonal.map((val) => (
-              <div className='items shadow'>
+              <div key={val.id} className='items shadow'>
                 <div className='box flex'>
                   <div className='img'>
                     <img src={val.cover} alt='' />

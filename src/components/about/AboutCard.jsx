@@ -17,7 +17,7 @@ const AboutCard = () => {
             <div className='items'>
               {homeAbout.map((val) => {
                 return (
-                  <div className='item flexSB'>
+                  <div key={val.id} className='item flexSB'>
                     <div className='img'>
                       <img src={val.cover} alt='' />
                     </div>

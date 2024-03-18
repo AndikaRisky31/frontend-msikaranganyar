@@ -11,9 +11,6 @@ const Head = () => {
           </div>
 
           <div className='social'>
-            <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
-              <i className='fab fa-facebook-f icon'></i>
-            </a>
             <a href="https://www.instagram.com/_msi_karanganyar?igsh=MXN1MHM0enR6eTJydg==" target="_blank" rel="noopener noreferrer">
               <i className='fab fa-instagram icon'></i>
             </a>

@@ -3,7 +3,7 @@ import AboutCard from "../about/AboutCard"
 import Hblog from "./Hblog"
 import HAbout from "./HAbout"
 import Hero from "./hero/Hero"
-import Hprice from "./Hprice"
+import HVacancy from "./HVacancy"
 import Testimonal from "./testimonal/Testimonal"
 
 const Home = () => {
@@ -14,7 +14,7 @@ const Home = () => {
       {/* <HAbout /> */}
       <Testimonal />
       <Hblog />
-      <Hprice />
+      <HVacancy />
     </>
   )
 }

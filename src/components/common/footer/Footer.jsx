@@ -78,16 +78,16 @@ const Footer = () => {
             <h3>Have a Questions?</h3>
             <ul>
               <li>
-                <i class="fa fa-map-marker"></i>
+                <i className="fa fa-map-marker"></i>
                  <span> Perum PPH 06/006 Desa Ngijo, Kec. Tasikmadu, Kab. Karanganyar JAWA TENGAH</span>
               </li>
               <li>
                 <i className='fa fa-phone-alt'></i>
-                <span class="contact-info">+62 858-0000-0964</span>
+                <span className="contact-info">+62 858-0000-0964</span>
               </li>
               <li>
                 <i className='fa fa-paper-plane'></i>
-                <span class="contact-info">ssrmsi.kabkaranganyar@gmail.com</span>
+                <span className="contact-info">ssrmsi.kabkaranganyar@gmail.com</span>
               </li>
             </ul>
           </div>

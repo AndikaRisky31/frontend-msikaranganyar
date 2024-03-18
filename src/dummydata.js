@@ -6,13 +6,13 @@ export const homeAbout = [
     desc: "Mewujudkan komunitas sehat dan berdaya melalui akses pendidikan, kesehatan, dan sosial yang merata."
   },
   {
-    id: 1,
+    id: 2,
     cover: "https://img.icons8.com/ios/100/business-goal.png",
     title: "Eliminasi TBC di Karanganyar 2030",
     desc: "Mempercepat eliminasi TBC dengan partisipasi aktif masyarakat dalam pencegahan, deteksi, dan pengobatan.",
   },
   {
-    id: 1,
+    id: 3,
     cover: "https://img.icons8.com/ios/80/000000/athlete.png",
     title: "Kader Kesehatan Tangguh",
     desc: "Mengembangkan kader kesehatan masyarakat untuk menjalankan program-program kesehatan lokal.",
@@ -20,21 +20,25 @@ export const homeAbout = [
 ]
 export const awrapper = [
   {
+    id:1,
     cover: "https://img.icons8.com/ios/80/ffffff/groups.png",
     data: "3,000",
     title: "DIAGNOSED",
   },
   {
+    id:2,
     cover: "https://img.icons8.com/ios/80/ffffff/user--v1.png",
     data: "320",
     title: "DETECTED",
   },
   {
+    id:3,
     cover: "https://img.icons8.com/ios/80/ffffff/capsule.png",
     data: "1,000",
     title: "UNDER TREATHMENT",
   },
   {
+    id:4,
     cover: "https://img.icons8.com/ios/80/ffffff/health-insurance.png",
     data: "587",
     title: "RECOVERED",
