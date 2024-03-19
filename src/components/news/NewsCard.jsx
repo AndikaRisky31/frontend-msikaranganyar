@@ -1,33 +1,23 @@
 import React from "react";
-import { formatDate,sliceName,sliceContent } from "../helper";
+import { formatDate, sliceContent } from "../helper";
 
-const BlogCard = ({ blog }) => {
+const NewsCard = ({ blog }) => {
   const baseimageurl = process.env.REACT_APP_IMAGE_URL;
   return (
-    <div className='items shadow'>
-      <div className='img'>
+    <div className='rounded-md shadow-md m-2 w-[350px] h-[600px]'  >
+      <div>
         {blog.imageURLs[0] ? (
-          <img src={baseimageurl+blog.imageURLs[0].imageURL} alt='' />
+          <img src={baseimageurl + blog.imageURLs[0].imageURL} alt='' className=" rounded-t-md w-full h-full object-cover" />
         ) : (
           <p>No Image</p>
         )}
       </div>
-      <div className='text'>
-        <div className='admin flexSB'>
-        <span>
-            <i className='fa fa-user'></i>
-            <label htmlFor=''>{sliceName(blog.admin_name)}</label>
-          </span>
-          <span>
-            <i className='fa fa-calendar-alt'></i>
-            <label htmlFor=''>{formatDate(blog.created_at)}</label>
-          </span>
-        </div>
-        <h1>{blog.title}</h1>
-        <p>{sliceContent(blog.content)}</p>
+      <div className='text p-3'>
+        <h1 className="font-bold text-xl mt-2 mb-4 text-justify">{sliceContent(blog.title,8)}</h1>
+        <p className="text-gray-600 text-base text-justify">{formatDate(blog.created_at)+sliceContent(blog.content,20)}</p>
       </div>
     </div>
   );
 };
 
-export default BlogCard;
+export default NewsCard;

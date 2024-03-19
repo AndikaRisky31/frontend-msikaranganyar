@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Back from '../common/back/Back';
-import BlogCard from './NewsCard';
-import './news.css';
+import NewsCard from './NewsCard';
 
 const fetchBlogs = async (page = 1, perPage = 6) => {
   const url = `${process.env.REACT_APP_BASE_URL}/news/?page=${page}&limit=${perPage}`;
-  console.log(url);
-  const response = await axios.get(url); // Menggunakan Axios untuk melakukan permintaan HTTP
+  const response = await axios.get(url);
   return response.data;
 };
 
@@ -44,16 +42,16 @@ const News = () => {
   return (
     <>
       <Back title='Blog Posts' />
-      <section className='blog padding'>
-        <div className='container grid2'>
+      <section className='p-2'>
+        <div className="flex flex-wrap justify-center gap-4">
           {blogs.map((blog) => (
-            <BlogCard key={blog.id_news} blog={blog} />
+            <NewsCard key={blog.id_news} blog={blog} />
           ))}
         </div>
-        <div className="pagination">
-          <button onClick={prevPage} disabled={currentPage === 1}>Previous</button>
-          <span>{currentPage} / {totalPages}</span>
-          <button onClick={nextPage} disabled={currentPage === totalPages}>Next</button>
+        <div className="pagination flex justify-center mt-6">
+          <button onClick={prevPage} disabled={currentPage === 1} className="px-4 py-2 mr-2 bg-gray-200 border border-gray-300 rounded-md cursor-pointer hover:bg-gray-300">Previous</button>
+          <span className="text-lg font-bold">{currentPage} / {totalPages}</span>
+          <button onClick={nextPage} disabled={currentPage === totalPages} className="px-4 py-2 ml-2 bg-gray-200 border border-gray-300 rounded-md cursor-pointer hover:bg-gray-300">Next</button>
         </div>
       </section>
     </>

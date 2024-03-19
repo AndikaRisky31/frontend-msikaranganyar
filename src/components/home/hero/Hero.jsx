@@ -9,6 +9,7 @@ const Hero = () => {
         <div className='container'>
           <div className='row'>
             <Heading subtitle='WELCOME TO' title='SSR Mentari Sehat Indonesia'/>
+            <h3 className="font-semibold tracking-wide uppercase text-white">Kab. Karanganyar</h3>
             <p>Bersama Kami,Eliminasi TBC Sebelum 2030! Bergabunglah dengan Komunitas Jawa Tengah dan Yayasan Mentari Sehat Indonesia, Ayo Wujudkan Indonesia Bebas TBC pada 2030.</p>
             {/* <div className='button'>
               <button className='primary-btn'>

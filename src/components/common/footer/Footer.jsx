@@ -1,100 +1,61 @@
-import React from "react"
-import { blog } from "../../../dummydata"
-import "./footer.css"
+import React from "react";
+import { blog } from "../../../dummydata";
 
 const Footer = () => {
   return (
-    <>
-      {/* <section className='newletter'>
-        <div className='container flexSB'>
-          <div className='left row'>
-            <h1>Newsletter - Stay tune and get the latest update</h1>
-            <span>Far far away, behind the word mountains</span>
-          </div>
-          <div className='right row'>
-            <input type='text' placeholder='Enter email address' />
-            <i className='fa fa-paper-plane'></i>
-          </div>
-        </div>
-      </section> */}
-      <footer>
-        <div className='container padding'>
-          <div className='box logo'>
-            <h1>Mentari Sehat Indonesia</h1>
-            <span>KAB. KARANGANYAR</span>
-            <p>Bersama kami, Anda menjadi bagian dari perjuangan melawan penyakit mematikan ini untuk mewujudkan masyarakat yang lebih sehat dan sejahtera.</p>
-            <a href="https://www.instagram.com/_msi_karanganyar?igsh=MXN1MHM0enR6eTJydg==" target="_blank" rel="noopener noreferrer">
-              <i className='fab fa-instagram icon'></i>
+    <footer className="bg-gray-100 py-8">
+      <div className="mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
+        <div className="p-4">
+          <h1 className="text-xl font-bold">Mentari Sehat Indonesia</h1>
+          <span className="text-teal-500">KAB. KARANGANYAR</span>
+          <p className="text-gray-700 mt-2">Bersama kami, Anda menjadi bagian dari perjuangan melawan penyakit mematikan ini untuk mewujudkan masyarakat yang lebih sehat dan sejahtera.</p>
+          <div className="flex mt-4">
+            <a href="https://www.instagram.com/_msi_karanganyar?igsh=MXN1MHM0enR6eTJydg==" target="_blank" rel="noopener noreferrer" className="mr-2">
+              <i className='fab fa-instagram text-white bg-teal-500 rounded-full p-2'></i>
             </a>
-            <a href="https://www.tiktok.com/@msi.karanganyar?_t=8kf8aJTji1B&_r=1" target="_blank" rel="noopener noreferrer">
-              <i className='fab fa-tiktok icon'></i>
+            <a href="https://www.tiktok.com/@msi.karanganyar?_t=8kf8aJTji1B&_r=1" target="_blank" rel="noopener noreferrer" className="mr-2">
+              <i className='fab fa-tiktok text-white bg-teal-500 rounded-full p-2'></i>
             </a>
             <a href="https://www.youtube.com/@msikab.karanganyar6795?si=9Qt2hFKiZiVqcgJD" target="_blank" rel="noopener noreferrer">
-              <i className='fab fa-youtube icon'></i>
+              <i className='fab fa-youtube text-white bg-teal-500 rounded-full p-2'></i>
             </a>
           </div>
-          <div className='box link'>
-            <h3>Explore</h3>
-            <ul>
-              <li>About Us</li>
-              <li>Services</li>
-              <li>Courses</li>
-              <li>Blog</li>
-              <li>Contact us</li>
-            </ul>
-          </div>
-          <div className='box link'>
-            <h3>Quick Links</h3>
-            <ul>
-              <li>Contact Us</li>
-              <li>Pricing</li>
-              <li>Terms & Conditions</li>
-              <li>Privacy</li>
-              <li>Feedbacks</li>
-            </ul>
-          </div>
-          <div className='box'>
-            <h3>Recent Post</h3>
-            {blog.slice(0, 3).map((val) => (
-              <div className='items flexSB'>
-                <div className='img'>
-                  <img src={val.cover} alt='' />
-                </div>
-                <div className='text'>
-                  <span>
-                    <i className='fa fa-calendar-alt'></i>
-                    <label htmlFor=''>{val.date}</label>
-                  </span>
-                  <span>
-                    <i className='fa fa-user'></i>
-                    <label htmlFor=''>{val.type}</label>
-                  </span>
-                  <h4>{val.title.slice(0, 40)}...</h4>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className='box last'>
-            <h3>Have a Questions?</h3>
-            <ul>
-              <li>
-                <i className="fa fa-map-marker"></i>
-                 <span> Perum PPH 06/006 Desa Ngijo, Kec. Tasikmadu, Kab. Karanganyar JAWA TENGAH</span>
-              </li>
-              <li>
-                <i className='fa fa-phone-alt'></i>
-                <span className="contact-info">+62 858-0000-0964</span>
-              </li>
-              <li>
-                <i className='fa fa-paper-plane'></i>
-                <span className="contact-info">ssrmsi.kabkaranganyar@gmail.com</span>
-              </li>
-            </ul>
-          </div>
         </div>
-      </footer>
-    </>
+        <div className="p-4 sm:col-span-2 md:col-span-3 lg:col-span-1">
+          <h3 className="text-lg font-semibold">Recent Post</h3>
+          {blog.slice(0, 3).map((val, index) => (
+            <div key={index} className="mt-3 flex items-center">
+              <img src={val.cover} alt='' className="w-12 h-12 object-cover rounded-lg mr-2" />
+              <div>
+                <span className="block text-gray-600">
+                  <i className='fa fa-calendar-alt'></i>
+                  <label htmlFor=''>{val.date}</label>
+                </span>
+                <h4 className="text-gray-800 font-medium">{val.title.slice(0, 40)}...</h4>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="p-4">
+          <h3 className="text-lg font-semibold">Have a Questions?</h3>
+          <ul className="mt-3">
+            <li className="flex items-center text-gray-600 mb-6">
+              <i className="fa fa-map-marker mr-2"></i>
+              <span>Perum PPH 06/006 Desa Ngijo, Kec. Tasikmadu, Kab. Karanganyar JAWA TENGAH</span>
+            </li>
+            <li className="flex items-center text-gray-600 mb-6">
+              <i className='fa fa-phone-alt mr-2'></i>
+              <span className="contact-info">+62 858-0000-0964</span>
+            </li>
+            <li className="flex items-center text-gray-600 mb-6">
+              <i className='fa fa-paper-plane mr-2'></i>
+              <span className="contact-info">ssrmsi.kabkaranganyar@gmail.com</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </footer>
   )
 }
 
-export default Footer
+export default Footer;

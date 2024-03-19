@@ -1,36 +1,30 @@
-import React from "react"
-import { testimonal } from "../../../dummydata"
-import Heading from "../../common/heading/Heading"
-import "./style.css"
+import React from "react";
+import { testimonal } from "../../../dummydata";
+import Heading from "../../common/heading/Heading";
 
 const Testimonal = () => {
   return (
     <>
-      <section className='testimonal padding'>
-        <div className='container'>
-          <Heading subtitle='TESTIMONIAL' title='Cerita Inspiratif Pasien TBC' />
-
-          <div className='content grid2'>
+      <section className="m-auto max-w-[85%]">
+          <Heading subtitle="TESTIMONIAL" title="Cerita Inspiratif Pasien TBC" />
+          <div className="flex overflow-x-auto snap-mandatory snap-x h-[450px]">
             {testimonal.map((val) => (
-              <div key={val.id} className='items shadow'>
-                <div className='box flex'>
-                  <div className='img'>
-                    <img src={val.cover} alt='' />
-                    <i className='fa fa-quote-left icon'></i>
-                  </div>
-                  <div className='name'>
-                    <h2>{val.name}</h2>
-                    <span>{val.post}</span>
-                  </div>
+              <div key={val.id} className="snap-start m-4 shadow-md p-4 flex-shrink-0 w-[350px]" >
+                <div className="relative">
+                  <img src={val.cover} alt="" className="w-24 h-24 rounded-full object-cover" />
+                  <i className="fa fa-quote-left absolute bottom-0 left-4 bg-teal-500 text-white p-2 rounded-full"></i>
                 </div>
-                <p>{val.desc}</p>
-              </div>
+                <div className="ml-4">
+                  <h2 className="text-lg font-bold">{val.name}</h2>
+                  <span className="text-teal-500">{val.post}</span>
+                </div>
+                <p className="mt-4 text-gray-500 text-justify">{val.desc}</p>
+              </div>                                  
             ))}
           </div>
-        </div>
       </section>
     </>
-  )
-}
+  );
+};
 
-export default Testimonal
+export default Testimonal;

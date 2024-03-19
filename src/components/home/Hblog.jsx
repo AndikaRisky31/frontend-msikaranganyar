@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "../news/news.css";
 import NewsCard from "../news/NewsCard";
 import Heading from "../common/heading/Heading";
 
@@ -30,12 +29,14 @@ const HNews = () => {
 
   return (
     <>
-      <section className="blog">
-        <div className="container">
+      <section>
+        <div className="m-auto max-w-[85%]">
           <Heading subtitle="Berita" title="Yang baru dari MSI Karanganyar" />
-          <div className="grid2">
+          <div className="flex overflow-x-auto snap-mandatory snap-x">
             {blogs.map((blog) => (
-              <NewsCard key={blog.id_news} blog={blog} />
+              <div key={blog.id_news} className="snap-start mx-2">
+                <NewsCard blog={blog} />
+              </div>
             ))}
           </div>
         </div>

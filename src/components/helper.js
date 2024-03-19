@@ -9,21 +9,20 @@ export const formatDate = (createdAt) => {
     const day = date.getDate();
     const month = date.toLocaleString('id-ID', { month: 'long' });
     const year = date.getFullYear();
-    const dayName = days[date.getDay()]; // Mendapatkan nama hari dari array days
   
     // Menggabungkan informasi hari, tanggal, bulan, dan tahun dalam format yang diinginkan
-    const formattedDate = `${dayName}, ${day} ${month} ${year}`;
+    const formattedDate = `${day} ${month} ${year},`;
   
     return formattedDate;
 };
 export const sliceName = (fullName) => {
     return fullName.split(" ")[0]
 };
-export const sliceContent = (fullContent)=>{
+export const sliceContent = (fullContent,size)=>{
     const words = fullContent.split(' ');
-    let slicedWords = words.slice(0, 15);
+    let slicedWords = words.slice(0, size);
   
-    if (words.length > 15) {
+    if (words.length > size) {
         slicedWords.push('...');
     }
     
