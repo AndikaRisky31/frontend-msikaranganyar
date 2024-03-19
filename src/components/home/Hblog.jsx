@@ -1,45 +1,47 @@
-import React from "react"
-import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
-import "../blog/blog.css"
-import BlogCard from "../blog/BlogCard";
-import Heading from "../common/heading/Heading"
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import "../news/news.css";
+import NewsCard from "../news/NewsCard";
+import Heading from "../common/heading/Heading";
 
-// copy code of blog => blogCard
+const HNews = () => {
+  const [blogs, setBlogs] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
 
-const queryClient = new QueryClient();
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        const url = `${process.env.REACT_APP_BASE_URL}/news/?page=1&limit=3`;
+        const response = await axios.get(url);
+        setBlogs(response.data.data);
+      } catch (error) {
+        setIsError(true);
+        console.error("Error fetching blogs:", error);
+      }
+      setIsLoading(false);
+    };
 
-const fetchBlogs = async () => {
-  const url = `${process.env.REACT_APP_BASE_URL}/news/?page=1&limit=3`;
-  const response = await fetch(url);
-  if (!response.ok) {
-    throw new Error('Failed to fetch blogs');
-  }
-  return response.json();
-};
-
-const Hblog = () => {
-  const { data, isLoading, isError } = useQuery('blogs', fetchBlogs);
+    fetchBlogs();
+  }, []);
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error fetching blogs</div>;
+
   return (
     <>
-      <section className='blog'>
-        <div className='container'>
-          <Heading subtitle='Berita' title='Yang baru dari MSI Karanganyar' />
-          <div className='grid2'>
-          {data.data.map((blog) => (
-            <BlogCard key={blog.id_news} blog={blog} />
-          ))}
+      <section className="blog">
+        <div className="container">
+          <Heading subtitle="Berita" title="Yang baru dari MSI Karanganyar" />
+          <div className="grid2">
+            {blogs.map((blog) => (
+              <NewsCard key={blog.id_news} blog={blog} />
+            ))}
           </div>
         </div>
       </section>
     </>
-  )
-}
-const HNews = () => (
-  <QueryClientProvider client={queryClient}>
-    <Hblog />
-  </QueryClientProvider>
-);
+  );
+};
+
 export default HNews;

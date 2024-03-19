@@ -17,7 +17,7 @@ export const formatDate = (createdAt) => {
     return formattedDate;
 };
 export const sliceName = (fullName) => {
-    return fullName.split(" ").slice(0, 2).join(" ");
+    return fullName.split(" ")[0]
 };
 export const sliceContent = (fullContent)=>{
     const words = fullContent.split(' ');
@@ -30,4 +30,26 @@ export const sliceContent = (fullContent)=>{
     const slicedText = slicedWords.join(' ');
     return slicedText;
 };
+export const formatIntegerWithCommas = (number) => {
+    // Ubah angka menjadi string
+    const numberString = number.toString();
+
+    // Pisahkan bagian desimal jika ada
+    const parts = numberString.split('.');
+    const integerPart = parts[0];
+    const decimalPart = parts.length > 1 ? '.' + parts[1] : '';
+
+    // Tambahkan titik setiap tiga digit dari belakang
+    let integerWithCommas = '';
+    let count = 0;
+    for (let i = integerPart.length - 1; i >= 0; i--) {
+        integerWithCommas = integerPart[i] + integerWithCommas;
+        count++;
+        if (count % 3 === 0 && i !== 0) {
+            integerWithCommas = '.' + integerWithCommas;
+        }
+    }
+    const formattedNumber = integerWithCommas + decimalPart;
+    return formattedNumber;
+}
   

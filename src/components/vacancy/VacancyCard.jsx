@@ -1,7 +1,6 @@
 import React from "react";
-import { price } from "../../dummydata";
 
-const PriceCard = ({ data }) => {
+const VacancyCard = ({ data }) => {
   const handleClick = () => {
     // Membuka URL di tab baru saat tombol diklik
     window.open(data.apply_url, '_blank');
@@ -21,4 +20,4 @@ const PriceCard = ({ data }) => {
   );
 };
 
-export default PriceCard;
+export default VacancyCard;

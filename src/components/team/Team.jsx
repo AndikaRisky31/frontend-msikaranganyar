@@ -2,8 +2,7 @@ import React from "react"
 import Back from "../common/back/Back"
 import TeamCard from "./TeamCard"
 import "./team.css"
-import Awrapper from "../about/Awrapper"
-import "../about/about.css"
+import DataPasien from "../about/DataPasien"
 
 const Team = () => {
   return (
@@ -14,7 +13,7 @@ const Team = () => {
           <TeamCard />
         </div>
       </section>
-      <Awrapper />
+      <DataPasien />
     </>
   )
 }

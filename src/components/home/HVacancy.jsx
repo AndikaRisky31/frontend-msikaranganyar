@@ -1,22 +1,30 @@
-import React from "react";
-import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import Heading from "../common/heading/Heading";
-import PriceCard from "../pricing/PriceCard";
-import '../pricing/price.css'
+import VacancyCard from "../vacancy/VacancyCard";
+import '../vacancy/vacancy.css'
 
-const queryClient = new QueryClient();
+const HVacancy = () => {
+  const [vacancies, setVacancies] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
 
-const fetchVacancyData = async () => {
-  const url = `${process.env.REACT_APP_BASE_URL}/vacancy/?page=1&limit=4`;
-  const response = await fetch(url);
-  if (!response.ok) {
-    throw new Error("Failed to fetch vacancy data");
-  }
-  return response.json();
-};
+  useEffect(() => {
+    const fetchVacancyData = async () => {
+      try {
+        const url = `${process.env.REACT_APP_BASE_URL}/vacancy/?page=1&limit=4`;
+        const response = await axios.get(url);
+        setVacancies(response.data.data);
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Error fetching vacancy data:", error);
+        setIsError(true);
+        setIsLoading(false);
+      }
+    };
 
-const Vacancy = () => {
-  const { data, isLoading, isError } = useQuery("vacancyData", fetchVacancyData);
+    fetchVacancyData();
+  }, []);
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error fetching vacancy data</div>;
@@ -26,20 +34,12 @@ const Vacancy = () => {
       <section className='hprice padding'>
         <Heading subtitle='LOWONGAN' title='Bergabunglah dengan Tim Kami!' />
         <div className='price container grid'>
-          {data && data.data.map((vacancy) => (
-            <PriceCard key={vacancy.id_vacancy} data={vacancy} />
+          {vacancies.map((vacancy) => (
+            <VacancyCard key={vacancy.id_vacancy} data={vacancy} />
           ))}
         </div>
       </section>
     </>
-  );
-};
-
-const HVacancy = () => {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <Vacancy />
-    </QueryClientProvider>
   );
 };
 

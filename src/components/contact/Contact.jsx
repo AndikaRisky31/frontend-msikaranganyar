@@ -65,7 +65,6 @@ const Contact = () => {
 
             <h3>Follow us here</h3>
             <span>
-              <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">FACEBOOK </a>
               <a href="https://www.instagram.com/_msi_karanganyar?igsh=MXN1MHM0enR6eTJydg==" target="_blank" rel="noopener noreferrer">INSTAGRAM </a>
               <a href="https://www.youtube.com/@msikab.karanganyar6795?si=9Qt2hFKiZiVqcgJD" target="_blank" rel="noopener noreferrer">YOUTUBE </a>
               <a href="https://www.tiktok.com/" target="_blank" rel="noopener noreferrer">TIKTOK </a>
