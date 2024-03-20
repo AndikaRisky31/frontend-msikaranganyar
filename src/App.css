@@ -45,7 +45,7 @@ li {
 .row {
   width: 50%;
 }
-button {
+/* button {
   padding: 17px 30px;
   background-color: #fff;
   color: #1eb2a6;
@@ -56,7 +56,7 @@ button {
   cursor: pointer;
   box-shadow: 0 24px 36px -11px rgb(0 0 0 / 9%);
   transition: 0.5s;
-}
+} */
 button i {
   margin-left: 20px;
 }

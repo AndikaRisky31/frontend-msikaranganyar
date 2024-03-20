@@ -4,11 +4,11 @@ import { blog } from "../../../dummydata";
 const Footer = () => {
   return (
     <footer className="bg-gray-100 py-8">
-      <div className="mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
+      <div className="grid min-[320px]:grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 mx-auto"> 
         <div className="p-4">
           <h1 className="text-xl font-bold">Mentari Sehat Indonesia</h1>
           <span className="text-teal-500">KAB. KARANGANYAR</span>
-          <p className="text-gray-700 mt-2">Bersama kami, Anda menjadi bagian dari perjuangan melawan penyakit mematikan ini untuk mewujudkan masyarakat yang lebih sehat dan sejahtera.</p>
+          <p className="text-gray-700 mt-2 text-justify">Bersama kami, Anda menjadi bagian dari perjuangan melawan penyakit mematikan ini untuk mewujudkan masyarakat yang lebih sehat dan sejahtera.</p>
           <div className="flex mt-4">
             <a href="https://www.instagram.com/_msi_karanganyar?igsh=MXN1MHM0enR6eTJydg==" target="_blank" rel="noopener noreferrer" className="mr-2">
               <i className='fab fa-instagram text-white bg-teal-500 rounded-full p-2'></i>
@@ -21,7 +21,7 @@ const Footer = () => {
             </a>
           </div>
         </div>
-        <div className="p-4 sm:col-span-2 md:col-span-3 lg:col-span-1">
+        <div className="p-4">
           <h3 className="text-lg font-semibold">Recent Post</h3>
           {blog.slice(0, 3).map((val, index) => (
             <div key={index} className="mt-3 flex items-center">

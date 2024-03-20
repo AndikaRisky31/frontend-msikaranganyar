@@ -6,11 +6,12 @@ const Head = () => {
       <section className='bg-transparent py-8'>
         <div className='container flex justify-between items-center'>
           <div className='logo'>
-            <h1 className="text-xl text-white font-bold">MENTARI SEHAT INDONESIA</h1>
-            <span className="text-teal-200 font-bold">KAB. KARANGANYAR</span>
+          <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-3xl text-white font-bold leading-7">MENTARI SEHAT INDONESIA</h1>
+<span className="text-teal-200 text-sm sm:text-base md:text-lg lg:text-xl font-bold">KAB. KARANGANYAR</span>
+
           </div>
 
-          <div className='social flex'>
+          <div className='social flex max-sm:hidden'>
             <a href="https://www.instagram.com/_msi_karanganyar?igsh=MXN1MHM0enR6eTJydg==" target="_blank" rel="noopener noreferrer" className="mr-2">
               <i className='fab fa-instagram icon w-10 h-10 flex justify-center items-center rounded-full text-white bg-green-500 transition duration-500 hover:bg-teal-600'></i>
             </a>
