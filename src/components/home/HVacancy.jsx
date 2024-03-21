@@ -32,7 +32,7 @@ const HVacancy = () => {
   return (
     <>
       <section className='hprice padding'>
-        <Heading subtitle='LOWONGAN' title='Bergabunglah dengan Tim Kami!' />
+        <Heading subtitle='LOWONGAN' title='Bergabunglah dengan Tim Kami!' link="/lowongan"/>
         <div className='price container grid'>
           {vacancies.map((vacancy) => (
             <VacancyCard key={vacancy.id_vacancy} data={vacancy} />

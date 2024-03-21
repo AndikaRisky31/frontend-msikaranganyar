@@ -27,9 +27,9 @@ const DataPasien = () => {
   if (isError) return <div>Error fetching data pasien</div>;
 
   return (
-    <section className='bg-cover bg-center bg-no-repeat h-30vh text-white' style={{ backgroundImage: "url('/images/awrapper.webp')"}}>
-      <div className='container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4'>
-        <div className='box flex flex-col items-center justify-center p-3'>
+    <section className='bg-cover bg-right bg-no-repeat h-30vh text-white' style={{ backgroundImage: "url('/images/awrapper.webp')"}}>
+      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4'>
+        <div className='flex flex-col items-center justify-center p-3'>
           <div className='img'>
             <img src='https://img.icons8.com/ios/80/ffffff/groups.png' alt='' className='w-16 h-16' />
           </div>
@@ -38,7 +38,7 @@ const DataPasien = () => {
             <h3 className='text-lg font-semibold'>DIAGNOSED</h3>
           </div>
         </div>
-        <div className='box flex flex-col items-center justify-center p-3'>
+        <div className='flex flex-col items-center justify-center p-3'>
           <div className='img'>
             <img src='https://img.icons8.com/ios/80/ffffff/user--v1.png' alt='' className='w-16 h-16' />
           </div>
@@ -47,7 +47,7 @@ const DataPasien = () => {
             <h3 className='text-lg font-semibold'>DETECTED</h3>
           </div>
         </div>
-        <div className='box flex flex-col items-center justify-center p-3'>
+        <div className='flex flex-col items-center justify-center p-3'>
           <div className='img'>
             <img src='https://img.icons8.com/ios/80/ffffff/capsule.png' alt='' className='w-16 h-16' />
           </div>
@@ -56,8 +56,8 @@ const DataPasien = () => {
             <h3 className='text-lg font-semibold'>UNDER TREATMENT</h3>
           </div>
         </div>
-        <div className='box flex flex-col items-center justify-center p-3'>
-          <div className='img'>
+        <div className='flex flex-col items-center justify-center p-3'>
+          <div className=''>
             <img src='https://img.icons8.com/ios/80/ffffff/health-insurance.png' alt='' className='w-16 h-16' />
           </div>
           <div className='text text-center'>

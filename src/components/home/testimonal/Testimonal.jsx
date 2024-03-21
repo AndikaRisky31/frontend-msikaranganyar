@@ -5,8 +5,8 @@ import Heading from "../../common/heading/Heading";
 const Testimonal = () => {
   return (
     <>
-      <section className="m-auto max-w-[85%]">
-          <Heading subtitle="TESTIMONIAL" title="Cerita Inspiratif Pasien TBC" />
+      <section className="m-auto max-w-[85%] mt-10">
+          <Heading subtitle="TESTIMONIAL" title="Cerita Inspiratif Pasien TBC" link=""/>
           <div className="flex overflow-x-auto snap-mandatory snap-x h-[400px]">
             {testimonal.map((val) => (
               <div key={val.id} className="snap-start m-4 shadow-md p-4 flex-shrink-0 w-[350px]">

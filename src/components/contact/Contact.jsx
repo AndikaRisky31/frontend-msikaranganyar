@@ -38,18 +38,19 @@ const Contact = () => {
             <iframe src={map} title="Google Maps"></iframe>
           </div>
           <div className='right row'>
-            <h1>Contact us</h1>
+            <h1 className="font-semibold">Contact us</h1>
             <div className='items'>
               <div className='box'>
-                <h4>EMAIL</h4>
+                <h4 className="font-medium">EMAIL</h4>
                 <p>ssrmsi.kabkaranganyar@gmail.com</p>
               </div>
               <div className='box'>
-                <h4>WhatsApp</h4>
-                <p>+62 858-0000-0964</p>
+                <h4 className="font-medium">WhatsApp</h4>
+                <p><a href="https://wa.me/6287737897025" className="text-blue-700">Najendra</a> (+62 877-3789-7025)</p>
+                <p><a href="https://wa.me/6285728013090" className="text-blue-700">Efitya</a> (+62 857-2801-3090)</p>
               </div>
               <div className='box'>
-                <h4>Alamat</h4>
+                <h4 className="font-medium">Alamat</h4>
                 <p>Perum PPH 06/006 Desa Ngijo, Kec. Tasikmadu, Kab. Karanganyar</p>
               </div>
             </div>
@@ -60,7 +61,7 @@ const Contact = () => {
               </div>
               <input type='text' name='subject' placeholder='Subject' required />
               <textarea name='message' cols='30' rows='10' placeholder='Create a message here...' required></textarea>
-              <button type='submit' className='primary-btn'>SEND MESSAGE</button>
+              <button type='submit' className="bg-teal-500 p-5 text-white font-semibold">SEND MESSAGE</button>
             </form>
 
             <h3>Follow us here</h3>

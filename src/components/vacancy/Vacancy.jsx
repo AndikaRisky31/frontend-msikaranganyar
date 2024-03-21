@@ -50,10 +50,10 @@ const Vacancy = () => {
             <VacancyCard key={vacancy.id_vacancy} data={vacancy} />
           ))}
         </div>
-        <div className="pagination">
-          <button onClick={prevPage} disabled={currentPage === 1}>Previous</button>
-          <span>{currentPage} / {totalPages}</span>
-          <button onClick={nextPage} disabled={currentPage === totalPages}>Next</button>
+        <div className="flex justify-center mt-6">
+          <button onClick={prevPage} disabled={currentPage === 1} className="px-4 py-2 mr-2 bg-gray-200 border border-gray-300 rounded-md cursor-pointer hover:bg-gray-300">Previous</button>
+          <span className="text-lg font-bold">{currentPage} / {totalPages}</span>
+          <button onClick={nextPage} disabled={currentPage === totalPages} className="px-4 py-2 ml-2 bg-gray-200 border border-gray-300 rounded-md cursor-pointer hover:bg-gray-300">Next</button>
         </div>
       </section>
       <Faq />
