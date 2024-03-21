@@ -1,28 +1,23 @@
 import React from "react"
-import Heading from "../../common/heading/Heading"
-import "./Hero.css"
 
 const Hero = () => {
   return (
     <>
-      <section className='hero'>
-        <div className='container'>
-          <div className='row'>
-            <Heading subtitle='WELCOME TO' title='SSR Mentari Sehat Indonesia'/>
-            <h3 className="font-semibold tracking-wide uppercase text-white">Kab. Karanganyar</h3>
-            <p>Bersama Kami,Eliminasi TBC Sebelum 2030! Bergabunglah dengan Komunitas Jawa Tengah dan Yayasan Mentari Sehat Indonesia, Ayo Wujudkan Indonesia Bebas TBC pada 2030.</p>
-            {/* <div className='button'>
-              <button className='primary-btn'>
-                Gabung Sekarang<i className='fa fa-long-arrow-alt-right'></i>
-              </button>
-              <button>
-                  Lihat Lowongan <i className='fa fa-long-arrow-alt-right'></i>
-              </button>
-            </div> */}
-          </div>
+    <section className="z-[-1] top-0 left-0 h-screen bg-cover bg-fixed bg-no-repeat bg-center text-white absolute pr-4 md:pr-52 pt-[30%] md:pt-[20%]" style={{ backgroundImage: "url('/images/bg.webp')"}}>
+        <div className='px-10 w-full md:w-4/6 md:pt-24'>
+            <div className="">
+              <h3 className="font-semibold tracking-wide uppercase text-white">WELCOME TO</h3>
+              <h1 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-semibold my-5 capitalize">SSR Mentari Sehat Indonesia</h1>
+            </div>
+            <h3 className="font-semibold tracking-wide uppercase text-white text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl">
+              Kab. Karanganyar
+            </h3>
+            <p className="text-justify text-base sm:text-lg md:text-xl lg:text-lg xl:text-xl">
+              Bersama Kami, Eliminasi TBC Sebelum 2030! Bergabunglah dengan Komunitas Jawa Tengah dan Yayasan Mentari Sehat Indonesia, Ayo Wujudkan Indonesia Bebas TBC pada 2030.
+            </p>
         </div>
       </section>
-      <div className='margin'></div>
+      <div className='min-[10px]:mt-[70%] md:mt-[45%] lg:mt-[40%]'></div>
     </>
   )
 }

@@ -9,14 +9,14 @@ const Header = () => {
     <>
       <Head />
       <header>
-        <nav className='flex justify-between items-center bg-opacity-20 bg-white mx-10 h-24 min-[10px]:h-auto md:h-24 lg:h-24'>
+        <nav className='flex justify-between items-center bg-opacity-20 bg-white min-[10px]:h-auto,mx-5 md:h-24 relative'>
           <button className='md:hidden h-full bg-teal-500 p-5 ml-auto' onClick={() => setClick(!click)}>
-            {click ? <i className='fa fa-times text-2xl text-white'></i> : <i className='fa fa-bars text-2xl text-white'></i>}
+            {click ? <i className='fa fa-times text-2xl text-white h-full'></i> : <i className='fa fa-bars text-2xl text-white'></i>}
           </button>
-          <div className={`${click ? 'absolute top-24 left-0 w-full bg-teal-500' : 'md:px-12 lg:px-20'}`}>
-            <ul className={`flex flex-col items-center md:flex-row ${click ? 'block' : 'max-md:hidden'}`}>
+          <div className={`${click ? 'absolute top-24 right-0 w-1/2 bg-teal-500 mobile-nav' : 'my-10 md:px-12 lg:px-20'}`}>
+            <ul className={`flex flex-col items-center md:flex-row gap-3 ${click ? 'block py-2' : 'max-md:hidden'}`}>
               <li className='md:mr-8'>
-                <Link className="text-white" to='/'>Beranda</Link>
+                <Link className="text-white " to='/'>Beranda</Link>
               </li>
               <li className='md:mr-8'>
                 <Link className="text-white" to='/news'>Berita</Link>
@@ -38,7 +38,7 @@ const Header = () => {
               </li>
             </ul>
           </div>
-          <div className="h-full bg-teal-500 start hidden md:flex md:items-center" text-white p-2 style={{ clipPath: 'polygon(20% 0, 100% 0%, 100% 100%, 0% 100%)' }}>
+          <div className="h-full bg-teal-500 start hidden md:flex md:items-center" text-white p-2 style={{ clipPath: 'polygon(10% 0, 100% 0%, 100% 100%, 0% 100%)' }}>
             <div className='button text-white mx-16'>BERSAMA MELAWAN TBC</div>
           </div>
         </nav>
