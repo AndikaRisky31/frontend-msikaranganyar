@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {formatDate} from '../../helper.js';
+import ListContact from '../../contact/ListContact.jsx';
 
 const Footer = () => {
   const [recentPosts, setRecentPosts] = useState([]);
@@ -61,10 +62,7 @@ const Footer = () => {
             </li>
             <li className="flex items-center text-gray-600 mb-6">
               <i className='fa fa-phone-alt mr-2'></i>
-              <span className="contact-info">
-                <p><a href="https://wa.me/6287737897025" className="text-blue-700">Najendra</a> (+62 877-3789-7025)</p>
-                <p><a href="https://wa.me/6285728013090" className="text-blue-700">Efitya</a> (+62 857-2801-3090)</p>
-              </span>
+              <ListContact></ListContact>
             </li>
             <li className="flex items-center text-gray-600 mb-6">
               <i className='fa fa-paper-plane mr-2'></i>

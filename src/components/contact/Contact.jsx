@@ -2,6 +2,7 @@ import React from "react"
 import Back from "../common/back/Back"
 import "./contact.css"
 import emailjs from '@emailjs/browser';
+import ListContact from "./ListContact";
 
 const Contact = () => {
   const map = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3954.8945765648227!2d110.948781!3d-7.586452899999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a191f9b8aef73%3A0x612413c8710b5afa!2sSSR%20Mentari%20Sehat%20Indonesia%20Karanganyar!5e0!3m2!1sen!2sid!4v1710312478212!5m2!1sen!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" '
@@ -46,8 +47,7 @@ const Contact = () => {
               </div>
               <div className='box'>
                 <h4 className="font-medium">WhatsApp</h4>
-                <p><a href="https://wa.me/6287737897025" className="text-blue-700">Najendra</a> (+62 877-3789-7025)</p>
-                <p><a href="https://wa.me/6285728013090" className="text-blue-700">Efitya</a> (+62 857-2801-3090)</p>
+                <ListContact></ListContact>
               </div>
               <div className='box'>
                 <h4 className="font-medium">Alamat</h4>
