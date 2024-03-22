@@ -6,7 +6,7 @@ import DataPasien from "./DataPasien";
 const AboutCard = () => {
   return (
     <>
-      <section className="px-4 md:px-8 lg:px-12 max-sm:pt-[75%] max-lg:pt-[10%]">
+      <section>
         <Heading subtitle="Pelopor Perubahan Menuju Indonesia Bebas TBC Tahun 2030 di Karanganyar" title="VISI DAN MISI" link="/about" />
           <div className="flex flex-col md:flex-row justify-between items-stretch">
             <div className="flex-1 px-5">

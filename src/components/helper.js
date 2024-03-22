@@ -11,7 +11,7 @@ export const formatDate = (createdAt) => {
     const year = date.getFullYear();
   
     // Menggabungkan informasi hari, tanggal, bulan, dan tahun dalam format yang diinginkan
-    const formattedDate = `${day} ${month} ${year},`;
+    const formattedDate = `${day} ${month} ${year}`;
   
     return formattedDate;
 };

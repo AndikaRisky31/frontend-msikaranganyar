@@ -42,7 +42,7 @@ const News = () => {
   return (
     <>
       <Back title='Blog Posts' />
-      <section className='p-2'>
+      <section className="px-4 md:px-8 lg:px-12 max-sm:pt-[75%] max-lg:pt-[10%] items-center">
         <div className="flex flex-wrap justify-center gap-4">
           {blogs.map((blog) => (
             <NewsCard key={blog.id_news} blog={blog} />

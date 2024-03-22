@@ -3,7 +3,8 @@ import React from "react"
 const Hero = () => {
   return (
     <>
-    <section className="z-[-1] top-0 left-0 h-screen bg-cover bg-fixed bg-no-repeat bg-center text-white absolute pt-[20%]" style={{ backgroundImage: "url('/images/bg.webp')"}}>
+    <section className="z-[-1] top-0 left-0 h-screen bg-cover bg-fixed bg-no-repeat bg-center text-white absolute pt-[20%]" style={{ 
+      backgroundImage: "url('/images/bgnofull.webp')"}}>
         <div className='px-10 w-full md:w-4/6 lg:pt-10'>
             <div className="max-sm:pt-[40%]">
               <h3 className=" font-semibold tracking-wide uppercase text-white md:text-xl lg:text-2xl xl:text-3xl">WELCOME TO</h3>

@@ -31,13 +31,15 @@ const HVacancy = () => {
 
   return (
     <>
-      <section className='hprice padding'>
+      <section className='m-auto max-w-[85%] my-10'>
         <Heading subtitle='LOWONGAN' title='Bergabunglah dengan Tim Kami!' link="/lowongan"/>
-        <div className='price container grid'>
-          {vacancies.map((vacancy) => (
-            <VacancyCard key={vacancy.id_vacancy} data={vacancy} />
-          ))}
-        </div>
+        <div className="flex overflow-x-auto snap-mandatory snap-x gap-5 pb-3">
+            {vacancies.map((vacancy) => (
+              <div key={vacancy.id_vacancy} className="snap-start">
+                <VacancyCard key={vacancy.id_vacancy} data={vacancy} />
+              </div>
+            ))}
+          </div>
       </section>
     </>
   );

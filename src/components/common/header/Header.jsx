@@ -9,7 +9,7 @@ const Header = () => {
     <>
       <Head />
       <header>
-        <nav className='flex justify-between items-center mx-10 pl-5 bg-opacity-20 bg-white min-[10px]:h-auto,mx-5 md:h-24 relative'>
+        <nav className='flex justify-between items-center pl-5 mx-10 bg-opacity-20 bg-white min-[10px]:h-auto,mx-5 md:h-24 relative'>
           <button className='md:hidden bg-teal-700 ml-auto h-full p-5' onClick={() => setClick(!click)}>
             {click ?<i className='fa fa-times text-2xl text-white'></i>:<i className='fa fa-bars text-2xl text-white'></i> }
           </button>

@@ -1,9 +1,25 @@
-import React from "react";
-import { blog } from "../../../dummydata";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import {formatDate} from '../../helper.js';
 
 const Footer = () => {
+  const [recentPosts, setRecentPosts] = useState([]);
+
+  useEffect(() => {
+    const fetchRecentPosts = async () => {
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/announcement/recent-post`);
+        console.log(response.data);
+        setRecentPosts(response.data);
+      } catch (error) {
+        console.error('Error fetching recent posts:', error);
+      }
+    };
+
+    fetchRecentPosts();
+  }, []);
   return (
-    <footer className="bg-gray-100 py-8">
+    <footer className="bg-gray-100">
       <div className="grid min-[320px]:grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 mx-auto"> 
         <div className="p-4">
           <h1 className="text-xl font-bold">Mentari Sehat Indonesia</h1>
@@ -23,15 +39,15 @@ const Footer = () => {
         </div>
         <div className="p-4">
           <h3 className="text-lg font-semibold">Recent Post</h3>
-          {blog.slice(0, 3).map((val, index) => (
-            <div key={index} className="mt-3 flex items-center">
+          {recentPosts.map((val) => (
+            <div key={val[0]} className="mt-3 flex items-center">
               <img src={val.cover} alt='' className="w-12 h-12 object-cover rounded-lg mr-2" />
               <div>
                 <span className="block text-gray-600">
-                  <i className='fa fa-calendar-alt'></i>
-                  <label htmlFor=''>{val.date}</label>
+                  <i className='fa fa-calendar-alt pr-1'></i>
+                  <label htmlFor=''>{formatDate(val.created_at)}</label>
                 </span>
-                <h4 className="text-gray-800 font-medium">{val.title.slice(0, 40)}...</h4>
+                <h4 className="text-gray-800 font-medium">{val.title.slice(0, 60)}...</h4>
               </div>
             </div>
           ))}
@@ -45,7 +61,10 @@ const Footer = () => {
             </li>
             <li className="flex items-center text-gray-600 mb-6">
               <i className='fa fa-phone-alt mr-2'></i>
-              <span className="contact-info">+62 858-0000-0964</span>
+              <span className="contact-info">
+                <p><a href="https://wa.me/6287737897025" className="text-blue-700">Najendra</a> (+62 877-3789-7025)</p>
+                <p><a href="https://wa.me/6285728013090" className="text-blue-700">Efitya</a> (+62 857-2801-3090)</p>
+              </span>
             </li>
             <li className="flex items-center text-gray-600 mb-6">
               <i className='fa fa-paper-plane mr-2'></i>

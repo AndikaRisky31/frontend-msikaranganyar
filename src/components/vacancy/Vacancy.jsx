@@ -44,13 +44,15 @@ const Vacancy = () => {
   return (
     <>
       <Back title='Choose The Right Plan' />
-      <section className='price padding'>
-        <div className='container grid'>
+      <section className="px-4 md:px-8 lg:px-12 max-sm:pt-[75%] max-lg:pt-[10%]">
+        <div className='grid max-sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-center'>
           {vacancies.map((vacancy) => (
-            <VacancyCard key={vacancy.id_vacancy} data={vacancy} />
+            <div key={vacancy.id_vacancy} className="mx-auto">
+              <VacancyCard data={vacancy} />
+            </div>
           ))}
         </div>
-        <div className="flex justify-center mt-6">
+        <div className="flex items-center justify-center mt-6">
           <button onClick={prevPage} disabled={currentPage === 1} className="px-4 py-2 mr-2 bg-gray-200 border border-gray-300 rounded-md cursor-pointer hover:bg-gray-300">Previous</button>
           <span className="text-lg font-bold">{currentPage} / {totalPages}</span>
           <button onClick={nextPage} disabled={currentPage === totalPages} className="px-4 py-2 ml-2 bg-gray-200 border border-gray-300 rounded-md cursor-pointer hover:bg-gray-300">Next</button>
