@@ -38,7 +38,7 @@ const Header = () => {
               </li>
             </ul>
           </div>
-          <div className="h-full bg-teal-600 start hidden md:flex md:items-center" p-2 style={{ clipPath: 'polygon(10% 0, 100% 0%, 100% 100%, 0% 100%)' }}>
+          <div className="h-full bg-teal-600 start hidden md:flex md:items-center" style={{ clipPath: 'polygon(10% 0, 100% 0%, 100% 100%, 0% 100%)' }}>
             <div className='button text-white mx-16 font-normal'>BERSAMA MELAWAN TBC</div>
           </div>
         </nav>

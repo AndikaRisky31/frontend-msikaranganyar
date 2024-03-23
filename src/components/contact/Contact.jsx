@@ -61,14 +61,14 @@ const Contact = () => {
               </div>
               <input type='text' name='subject' placeholder='Subject' required />
               <textarea name='message' cols='30' rows='10' placeholder='Create a message here...' required></textarea>
-              <button type='submit' className="bg-teal-500 p-5 text-white font-semibold">SEND MESSAGE</button>
+              <button type='submit' className="bg-teal-500 p-5 text-white font-semibold hover:bg-teal-600">SEND MESSAGE</button>
             </form>
 
             <h3>Follow us here</h3>
             <span>
-              <a href="https://www.instagram.com/_msi_karanganyar?igsh=MXN1MHM0enR6eTJydg==" target="_blank" rel="noopener noreferrer">INSTAGRAM </a>
-              <a href="https://www.youtube.com/@msikab.karanganyar6795?si=9Qt2hFKiZiVqcgJD" target="_blank" rel="noopener noreferrer">YOUTUBE </a>
-              <a href="https://www.tiktok.com/" target="_blank" rel="noopener noreferrer">TIKTOK </a>
+              <a href="https://www.instagram.com/_msi_karanganyar?igsh=MXN1MHM0enR6eTJydg==" target="_blank" rel="noopener noreferrer" className="hover:text-teal-700">INSTAGRAM </a>
+              <a href="https://www.youtube.com/@msikab.karanganyar6795?si=9Qt2hFKiZiVqcgJD" target="_blank" rel="noopener noreferrer"  className="hover:text-teal-700">YOUTUBE </a>
+              <a href="https://www.tiktok.com/@msi.karanganyar?_t=8kf8aJTji1B&_r=1" target="_blank" rel="noopener noreferrer"  className="hover:text-teal-700">TIKTOK </a>
             </span>
           </div>
         </div>

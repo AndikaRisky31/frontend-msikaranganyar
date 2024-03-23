@@ -1,9 +1,10 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 
 const VacancyCard = ({ data }) => {
+  const history = useHistory();
   const handleClick = () => {
-    // Membuka URL di tab baru saat tombol diklik
-    window.open(data.apply_url, '_blank');
+    history.push(`/vacancy/${data.id_vacancy}`)
   };  
   return (
     <>
@@ -13,7 +14,7 @@ const VacancyCard = ({ data }) => {
         </div>
         <div className="text-center flex items-end justify-center">
           <h1 className="text-5xl text-teal-500">
-            {data.VacancyPositions[0].availability}
+            {data.VacancyPositions[0] ? data.VacancyPositions[0].availability : "-" }
           </h1>
           <span className="font-medium text-xl">Orang</span>
         </div>
