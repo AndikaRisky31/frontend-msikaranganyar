@@ -1,16 +1,13 @@
 import React from "react";
 import Heading from "../common/heading/Heading";
-import { homeAbout } from "../../dummydata";
-import DataPasien from "./DataPasien";
 
-const AboutCard = () => {
+const AboutCard = ({data}) => {
   return (
     <>
       <section>
-        <Heading subtitle="Pelopor Perubahan Menuju Indonesia Bebas TBC Tahun 2030 di Karanganyar" title="VISI DAN MISI" link="/about" />
           <div className="flex flex-col md:flex-row justify-between items-stretch">
             <div className="flex-1 px-5">
-                {homeAbout.map((val) => (
+                {data.map((val) => (
                   <div key={val.id} className="item flex items-top justify-between mb-5 bg-white p-4 transition duration-500 ease-in-out hover:bg-teal-500 hover:text-white hover:shadow-lg">
                     <img src={val.cover} alt="" className="w-16 h-16" />
                     <div className="text ml-4">
@@ -25,7 +22,6 @@ const AboutCard = () => {
             </div>
           </div>
       </section>
-      <DataPasien />
     </>
   );
 };

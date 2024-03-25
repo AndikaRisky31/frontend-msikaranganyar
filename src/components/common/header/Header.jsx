@@ -1,9 +1,15 @@
+import ListSubHeader from './ListSubHeader'
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Head from "./Head";
 
 const Header = () => {
   const [click, setClick] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
 
   return (
     <>
@@ -17,6 +23,16 @@ const Header = () => {
             <ul className={`flex flex-col items-center md:flex-row gap-3 ${click ? 'block py-2' : 'max-md:hidden'}`}>
               <li className='md:mr-8'>
                 <Link className="text-white font-semibold" to='/'>Beranda</Link>
+              </li>
+              <li className='md:mr-8 relative' onClick={toggleDropdown}>
+                <div className="text-white font-semibold cursor-pointer">Program</div>
+                {isOpen && (
+                  <div className={`absolute bg-teal-500 py-2 px-4 shadow-lg w-36 ${click ? 'mr-[50%]': 'mt-10'} `}>
+                    <ListSubHeader title='Kesehatan' to='/ssr'></ListSubHeader>
+                    <ListSubHeader title='Pendidikan'to='#'></ListSubHeader>
+                    <ListSubHeader title='sosial' to='#'></ListSubHeader>
+                  </div>
+                )}
               </li>
               <li className='md:mr-8'>
                 <Link className="text-white font-semibold" to='/news'>Berita</Link>

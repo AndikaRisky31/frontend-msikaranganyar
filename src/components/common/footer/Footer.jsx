@@ -11,7 +11,8 @@ const Footer = () => {
   useEffect(() => {
     const fetchRecentPosts = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/announcement/recent-post`);
+        const limit = 4;
+        const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/announcement/recent-post?limit=${limit}`);
         setRecentPosts(response.data);
       } catch (error) {
         console.error('Error fetching recent posts:', error);
