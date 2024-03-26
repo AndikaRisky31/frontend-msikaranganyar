@@ -7,7 +7,7 @@ const Testimonal = () => {
     <>
       <section className="mx-auto max-w-[85%] mt-10 justify-center">
           <Heading subtitle="TESTIMONIAL" title="Cerita Inspiratif Pasien TBC" link=""/>
-          <div className="flex overflow-x-auto snap-mandatory snap-x h-[400px]">
+          <div className="flex overflow-x-auto snap-mandatory snap-x h-[400px] scroll-auto">
             {testimonal.map((val) => (
               <div key={val.id} className="snap-start m-4 shadow-md p-4 flex-shrink-0 w-[350px]">
                 <div className="relative flex items-center">

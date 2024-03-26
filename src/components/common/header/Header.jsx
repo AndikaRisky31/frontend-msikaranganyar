@@ -1,11 +1,22 @@
-import ListSubHeader from './ListSubHeader'
-import React, { useState } from "react";
+import ListSubHeader from './ListSubHeader';
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Head from "./Head";
 
-const Header = () => {
+const Header = ({showHead}) => {
   const [click, setClick] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [isSticky, setIsSticky] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsSticky(window.pageYOffset > 0);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -13,9 +24,9 @@ const Header = () => {
 
   return (
     <>
-      <Head />
-      <header>
-        <nav className='flex justify-between items-center pl-5 mx-10 bg-opacity-20 bg-white min-[10px]:h-auto,mx-5 md:h-24 relative'>
+      {showHead === true ? <Head /> : null}
+      <header className={`z-50 sticky top-0`}>
+      <nav className={`flex justify-between items-center pl-5 min-[10px]:h-auto md:h-24 relative ${isSticky ? 'bg-teal-400' : showHead ? 'bg-opacity-20 bg-white mx-10' : 'bg-teal-400'}`}>
           <button className='md:hidden bg-teal-700 ml-auto h-full p-5' onClick={() => setClick(!click)}>
             {click ?<i className='fa fa-times text-2xl text-white'></i>:<i className='fa fa-bars text-2xl text-white'></i> }
           </button>

@@ -17,7 +17,7 @@ const HStruktur = ()=>{
         {
             imageURL: "/uploads/team/Efitya.jpeg",
             name: "Efitya Fitria Istifarin, S.Sos",
-            job_title: "Sekretaris"
+            job_title: "Sekretaris Yayasan"
         }
     ]
     return(
