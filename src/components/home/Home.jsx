@@ -6,6 +6,7 @@ import Testimonal from "./testimonal/Testimonal"
 import { homeAbout } from "../../dummydata"
 import HVacancy from "./HVacancy"
 import DataPasien from "../about/DataPasien"
+import Faq from "../vacancy/Faq"
 
 const Home = () => {
   return (
@@ -17,6 +18,7 @@ const Home = () => {
       <DataPasien/>
       <Hblog />
       <HVacancy />
+      <Faq/>
     </div>
     </>
   )

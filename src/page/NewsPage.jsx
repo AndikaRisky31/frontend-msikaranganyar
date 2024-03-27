@@ -28,7 +28,7 @@ const NewsPage = () => {
 
   const getNewsByPage = async (page) => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/news/?page=${page}&limit=4`);
+      const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/news/?page=${page}&limit=6`);
       setTotalPages(response.data.totalPages);
       return response.data.data;
     } catch (error) {

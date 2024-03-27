@@ -4,7 +4,9 @@ import { Link } from "react-router-dom";
 const ListSubHeader = ({title,to}) => {
     return(
         <>
-        <Link className="text-white font-semibold block hover:text-blue-600 m-4" to={to}>{title}</Link>
+        <div className="group hover:bg-teal-400 p-4 text-justify">
+            <Link className="text-white font-semibold block " to={to}>{title}</Link>
+        </div>
         </>
     )
 }
