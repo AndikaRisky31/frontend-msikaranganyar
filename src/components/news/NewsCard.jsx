@@ -1,17 +1,13 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { formatDate, sliceContent } from "../helper";
+import { useHistory } from "react-router-dom";
 
 const NewsCard = ({ blog }) => {
   const baseimageurl = process.env.REACT_APP_IMAGE_URL;
+  const history = useHistory();
   
   const onClick = () => {
-    <Link
-      to={{
-        pathname: "/news",
-        state: blog // your data array of objects
-      }}
-    />
+    history.push(`/news/${blog.id_news}`)
   } 
 
   return (
