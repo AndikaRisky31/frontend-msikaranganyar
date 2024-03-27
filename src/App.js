@@ -6,7 +6,6 @@ import About from "./components/about/About";
 import CourseHome from "./components/allcourses/CourseHome";
 import Team from "./components/team/Team";
 import Vacancy from "./components/vacancy/Vacancy";
-import News from "./components/news/News";
 import Contact from "./components/contact/Contact";
 import Footer from "./components/common/footer/Footer";
 import Home from "./components/home/Home";
@@ -44,16 +43,16 @@ function App() {
             <About />
           </Route>
           <Route exact path='/news'>
-            <Header showHead={true} />
-            <News />
+            <Header showHead={false} />
+            <NewsPage />
+          </Route>
+          <Route exact path='/news/:id_news'>
+            <Header showHead={false} />
+            <NewsPage />
           </Route>
           <Route exact path='/contact'>
             <Header showHead={true} />
             <Contact />
-          </Route>
-          <Route path="/news/:id_news">
-            <Header showHead={false} />
-            <NewsPage />
           </Route>
         </Switch>
         <Footer />

@@ -1,47 +1,53 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
 import { sliceContent, formatDate } from '../components/helper';
+import { useParams } from 'react-router-dom';
 
 const NewsPage = () => {
-  let { id_news } = useParams();
+  const { id_news } = useParams;
   const [newsContent, setNewsContent] = useState(null);
   const [lastNews, setLastNews] = useState(null);
-  const history = useHistory(); // Dapatkan objek history
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
-  const getNewsById = useCallback(async () => {
-    try {
-      const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/news/${id_news}`);
-      setNewsContent(response.data.data);
-    } catch (error) {
-      console.error('Error fetching news content:', error);
-    }
-  }, [id_news]);
 
-  const getNewsByPage = useCallback(async () => {
+  const getNewsByPage = useCallback(async (page = 1,limit = 6) => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/news/?page=1&limit=6`);
-      setLastNews(response.data.data);
+      const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/news/?page=${page}&limit=${limit}`);
+      setTotalPages(response.data.totalPages);
+      setNewsContent(response.data.data[0])
+      setLastNews(response.data.data.slice(1,6));
     } catch (error) {
       console.error('Error fetching last news', error);
     }
   }, []);
 
   useEffect(() => {
-    getNewsById();
     getNewsByPage();
-  }, [getNewsById, getNewsByPage]);
+  }, [getNewsByPage]);
 
-  const loadNewsContent = async (id) => {
-    try {
-      await getNewsById(id); // Panggil getNewsById dengan id yang baru
-      history.push(`/news/${id}`); // Update URL dengan id berita yang baru dimuat
-    } catch (error) {
-      console.error('Error loading news content:', error);
+  const loadContent = useCallback((id) => {
+    const selectedNews = lastNews.filter(item => item.id_news === id);
+    if (selectedNews.length > 0) {
+      setNewsContent(selectedNews[0]); // Memperbarui newsContent dengan berita yang sesuai
     }
+  }, [lastNews]);
+
+  const nextPage = () => {
+    const nextPageNumber = Math.min(currentPage + 1, totalPages);
+    setCurrentPage(nextPageNumber);
+    getNewsByPage(nextPageNumber); // Misalnya 10 adalah jumlah berita per halaman
   };
+  
+  const prevPage = () => {
+    const prevPageNumber = Math.max(currentPage - 1, 1);
+    setCurrentPage(prevPageNumber);
+    getNewsByPage(prevPageNumber); // Misalnya 10 adalah jumlah berita per halaman
+  };
+  
+
 
   return (
     <>
@@ -50,7 +56,7 @@ const NewsPage = () => {
           <div className=" col-span-2 h-full order-1">
             <img src={process.env.REACT_APP_IMAGE_URL+newsContent.imageURLs[0].imageURL} alt="Large News" className="w-full object-cover aspect-video" />
           </div>
-          <div className="col-span-2 md:col-span-1 md:row-span-2 order-3 md:order-2 overflow-y-auto  md:max-h-[70%]">
+          <div className="col-span-2 md:col-span-1 md:row-span-2 order-3 md:order-2 overflow-y-auto">
             {lastNews ? lastNews.map(item => (
               <div key={item.id_news} className="flex mb-2 snap-start">
                 <div className="aspect-square max-w-[25%]">
@@ -58,8 +64,7 @@ const NewsPage = () => {
                 </div>
                 <div className="flex flex-col p-2">
                   <div>
-                    {/* Tambahkan onClick di bawah */}
-                    <h2 className="text-base lg:text-lg font-semibold cursor-pointer" onClick={() => loadNewsContent(item.id_news)}>{sliceContent(item.title, 11)}</h2>
+                    <h2 className="text-base lg:text-lg font-semibold cursor-pointer" onClick={()=> loadContent(item.id_news)}>{sliceContent(item.title, 11)}</h2>
                   </div>
                   <div className="my-1">
                     <p className="text-xs lg:text-sm text-gray-500">{formatDate(item.created_at)} <FontAwesomeIcon icon={faCircle} size="xs" className="pl-2" /> By, {item.admin_name} </p>
@@ -81,7 +86,13 @@ const NewsPage = () => {
       ) : (
         <p>Loading...</p>
       )}
+      <div className="flex justify-center mt-6">
+          <button onClick={prevPage} disabled={currentPage === 1} className="px-4 py-2 mr-2 bg-gray-200 border border-gray-300 rounded-md cursor-pointer hover:bg-gray-300">Previous</button>
+          <span className="text-lg font-bold">{currentPage} / {totalPages}</span>
+          <button onClick={nextPage} disabled={currentPage === totalPages} className="px-4 py-2 ml-2 bg-gray-200 border border-gray-300 rounded-md cursor-pointer hover:bg-gray-300">Next</button>
+        </div>
     </>
+    
   );
 };
 

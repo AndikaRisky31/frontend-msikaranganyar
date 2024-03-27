@@ -1,15 +1,18 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { formatDate, sliceContent } from "../helper";
 
 const NewsCard = ({ blog }) => {
-  const history = useHistory(); // Dapatkan objek history
-
   const baseimageurl = process.env.REACT_APP_IMAGE_URL;
   
   const onClick = () => {
-    history.push(`/news/${blog.id_news}`);
-  }
+    <Link
+      to={{
+        pathname: "/news",
+        state: blog // your data array of objects
+      }}
+    />
+  } 
 
   return (
     <div className='group shadow-lg m-2 w-[350px] h-[600px] hover:bg-teal-500' onClick={onClick}>
