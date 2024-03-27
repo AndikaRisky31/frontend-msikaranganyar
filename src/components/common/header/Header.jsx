@@ -53,9 +53,9 @@ const Header = ({ showHead }) => {
                 <div className="text-white font-semibold cursor-pointer">Program</div>
                 {isOpen && (
                   <div className={`absolute bg-teal-500 shadow-lg w-36 ${click ? 'mr-[50%]' : 'mt-10'} `}>
-                    <ListSubHeader to='/ssr' title='Kesehatan'/>
-                    <ListSubHeader to='#' title='Pendidikan'/>
-                    <ListSubHeader to='#' title='Sosial'/>
+                    <ListSubHeader to='/ssr' title='Kesehatan' disable={false}/>
+                    <ListSubHeader to='#' title='Pendidikan' disable={true}/>
+                    <ListSubHeader to='#' title='Sosial' disable={true}/>
                   </div>
                 )}
               </li>

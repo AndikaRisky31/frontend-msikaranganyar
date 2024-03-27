@@ -11,7 +11,7 @@ const Head = () => {
           </div>
           <div className='flex justify-end max-sm:hidden ml-auto'>
             <a href="https://www.instagram.com/_msi_karanganyar?igsh=MXN1MHM0enR6eTJydg==" target="_blank" rel="noopener noreferrer" className="mr-2">
-              <i className='fab fa-instagram icon w-10 h-10 flex justify-center items-center rounded-full text-white bg-green-500 transition duration-500 hover:bg-teal-600' style={{ filter: "brightness(1.5)" }}></i>
+              <i className='fa fa-instagram icon w-10 h-10 flex justify-center items-center rounded-full text-white bg-green-500 transition duration-500 hover:bg-teal-600' style={{ filter: "brightness(1.5)" }}></i>
             </a>
             <a href="https://www.tiktok.com/@msi.karanganyar?_t=8kf8aJTji1B&_r=1" target="_blank" rel="noopener noreferrer" className="mr-2">
               <i className='fab fa-tiktok icon w-10 h-10 flex justify-center items-center rounded-full text-white bg-green-500 transition duration-500 hover:bg-teal-600' style={{ filter: "brightness(1.5)" }}></i>

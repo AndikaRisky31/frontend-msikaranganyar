@@ -11,6 +11,7 @@ import Footer from "./components/common/footer/Footer";
 import Home from "./components/home/Home";
 import LandingPage from "./page/LandingPage";
 import NewsPage from "./page/NewsPage";
+import VacancyPage from "./page/VacancyPage";
 
 function App() {
   return (
@@ -53,6 +54,10 @@ function App() {
           <Route exact path='/contact'>
             <Header showHead={true} />
             <Contact />
+          </Route>
+          <Route exact path='/vacancy/:id_vacancy'>
+              <Header showHead={false}/>
+              <VacancyPage/>
           </Route>
         </Switch>
         <Footer />

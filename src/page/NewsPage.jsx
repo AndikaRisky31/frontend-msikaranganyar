@@ -1,7 +1,5 @@
 import React, { useState, useEffect} from 'react';
 import axios from 'axios';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircle } from '@fortawesome/free-solid-svg-icons';
 import { sliceContent, formatDate } from '../components/helper';
 import { useParams, useHistory } from 'react-router-dom';
 
@@ -106,7 +104,7 @@ const NewsPage = () => {
                     <h2 className="text-base lg:text-lg font-semibold cursor-pointer" onClick={() => navigateToNews(item.id_news)}>{sliceContent(item.title, 11)}</h2>
                   </div>
                   <div className="my-1">
-                    <p className="text-xs lg:text-sm text-gray-500">{formatDate(item.created_at)} <FontAwesomeIcon icon={faCircle} size="xs" className="pl-2" /> By, {item.admin_name} </p>
+                    <p className="text-xs lg:text-sm text-gray-500">{formatDate(item.created_at)} <i className="fas fa-circle fa-xs"></i> By, {item.admin_name} </p>
                   </div>
                 </div>
               </div>
@@ -117,7 +115,7 @@ const NewsPage = () => {
           </div>
           <div className="px-5 sm:px-10 md:px-16 lg:px-32 col-span-2 text-gray-500 order-2 md:order-3">
             <div className="py-5 text-justify">
-              <p className="text-sm text-gray-500">{formatDate(newsContent.created_at)}<FontAwesomeIcon icon={faCircle} size="xs" className="pl-2" /> By, {newsContent.admin_name} </p>
+              <p className="text-sm text-gray-500">{formatDate(newsContent.created_at)} <i className="fas fa-circle fa-xs"></i> By, {newsContent.admin_name} </p>
               <h2 className="text-xl font-semibold pt-1">{newsContent.title}</h2>
             </div>
             <div className="pb-10">
