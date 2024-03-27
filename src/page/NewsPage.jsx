@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect} from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
@@ -13,68 +13,93 @@ const NewsPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  const navigateToNews = useCallback((id) => {
-    history.push(`/news/${id}`);
-  }, [history]);
+  const navigateToNews = (id) =>{
+    history.push(`/news/${id}`)
+  }
 
-  const getNewsById = useCallback(async (id) => {
+  const getNewsById = async (id) => {
     try {
       const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/news/${id}`);
-      setNewsContent(response.data.data);
+      return response.data.data;
     } catch (error) {
       console.error('Error fetching news by id:', error);
     }
-  }, []);
+  };
 
-  const getNewsByPage = useCallback(async (page = 1, limit = 6) => {
+  const getNewsByPage = async (page) => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/news/?page=${page}&limit=${limit}`);
+      const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/news/?page=${page}&limit=4`);
       setTotalPages(response.data.totalPages);
-      setLastNews(response.data.data);
+      return response.data.data;
     } catch (error) {
       console.error('Error fetching last news:', error);
     }
-  }, []);
+  };
 
-  const loadContent = useCallback(() => {
-    if (lastNews) {
+  const loadContent = async () => {
+    let newsData = null;
+    
+    // Load news content by ID if available
+    if (id_news) {
+      const content = await getNewsById(id_news);
+      newsData = await getNewsByPage(currentPage);
+      setNewsContent(content);
+    } else if (lastNews && lastNews.length > 0) {
+      // If lastNews is available, load the first news item from lastNews
       setNewsContent(lastNews[0]);
+    } else {
+      // If neither id_news nor lastNews is available, load news content by current page
+      newsData = await getNewsByPage(currentPage);
+      if (newsData && newsData.length > 0) {
+        setNewsContent(newsData[0]);
+      }
     }
-  }, [lastNews]);
+  
+    // Set lastNews with the newly fetched news data, regardless of condition
+    if (!lastNews && newsData) {
+      setLastNews(newsData);
+    }
+  };  
 
-  const nextPage = () => {
+  const nextPage = async () => {
     const nextPageNumber = Math.min(currentPage + 1, totalPages);
     setCurrentPage(nextPageNumber);
-    getNewsByPage(nextPageNumber);
+    const newsData = await getNewsByPage(nextPageNumber);
+    setLastNews(newsData);
   };
 
-  const prevPage = () => {
+  const prevPage = async () => {
     const prevPageNumber = Math.max(currentPage - 1, 1);
     setCurrentPage(prevPageNumber);
-    getNewsByPage(prevPageNumber);
+    const newsData = await getNewsByPage(prevPageNumber);
+    setLastNews(newsData);
   };
-  useEffect(() => {
-    getNewsByPage();
-    if (id_news) {
-      getNewsById(id_news);
-    } else {
-      loadContent();
-    }
-  }, [id_news, getNewsById, getNewsByPage, loadContent]);
 
+  useEffect(() => {
+    loadContent();
+  }, [id_news, currentPage]);
 
   return (
     <>
       {newsContent ? (
         <div className="grid grid-cols-3 gap-1">
           <div className="col-span-2 h-full order-1">
-            <img src="/images/ab.webp" alt="Large News" className="w-full object-cover aspect-video" />
+          {newsContent.imageURLs && newsContent.imageURLs[0] && newsContent.imageURLs[0].imageURL ? (
+            <img src={process.env.REACT_APP_IMAGE_URL+newsContent.imageURLs[0].imageURL} alt="Large News" className="w-full object-cover aspect-video" />
+          ) : (
+            <img src="/images/imagenotfound.jpg" alt="Large News" className="w-full object-cover aspect-video" />
+          )}
           </div>
           <div className="col-span-2 md:col-span-1 md:row-span-2 order-3 md:order-2 overflow-y-auto">
-            {lastNews.length > 0 ? lastNews.map(item => (
+          {lastNews ? (
+            lastNews.map(item => (
               <div key={item.id_news} className="flex mb-2 snap-start">
                 <div className="aspect-square max-w-[25%]">
-                  <img src="/images/ab.webp" alt="" className="h-full object-cover" />
+                {item.imageURLs && item.imageURLs[0] && newsContent.imageURLs[0].imageURL ? (
+                  <img src={process.env.REACT_APP_IMAGE_URL+newsContent.imageURLs[0].imageURL} alt="Large News" className="w-full object-cover aspect-video" />
+                ) : (
+                  <img src="/images/imagenotfound.jpg" alt="Large News" className="w-full object-cover aspect-video" />
+                )}
                 </div>
                 <div className="flex flex-col p-2">
                   <div>
@@ -85,7 +110,10 @@ const NewsPage = () => {
                   </div>
                 </div>
               </div>
-            )) : "No news found."}
+            ))
+          ) : (
+            <p>No news found.</p>
+          )}
           </div>
           <div className="px-5 sm:px-10 md:px-16 lg:px-32 col-span-2 text-gray-500 order-2 md:order-3">
             <div className="py-5 text-justify">
