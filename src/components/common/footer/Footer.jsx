@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
-import {formatDate,sliceContent} from '../../helper.js';
+import {formatDate,sliceContent} from '../../../utils/helper';
 import ListContact from '../../contact/ListContact.jsx';
 
 const Footer = () => {

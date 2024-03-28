@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { formatIntegerWithCommas } from '../helper';
+import { formatIntegerWithCommas } from '../../utils/helper';
 
 const DataPasien = () => {
   const [dataPasien, setDataPasien] = useState([]);

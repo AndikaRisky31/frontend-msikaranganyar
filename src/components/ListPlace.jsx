@@ -1,5 +1,5 @@
 import React from "react";
-import { splitTextByNewLine } from "./helper";
+import { splitTextByNewLine } from "../utils/helper";
 
 const ListPlace = ({ dataListPlace }) => {
     const Data = splitTextByNewLine(dataListPlace);

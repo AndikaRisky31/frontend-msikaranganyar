@@ -12,6 +12,7 @@ import Home from "./components/home/Home";
 import LandingPage from "./page/LandingPage";
 import NewsPage from "./page/NewsPage";
 import VacancyPage from "./page/VacancyPage";
+import InterviewPage from "./page/InterviewPage";
 
 function App() {
   return (
@@ -58,6 +59,10 @@ function App() {
           <Route exact path='/lowongan/:id_vacancy'>
               <Header showHead={false}/>
               <VacancyPage/>
+          </Route>
+          <Route exact path='/interview/:id_schedule'>
+              <Header showHead={false}/>
+              <InterviewPage/>
           </Route>
         </Switch>
         <Footer />

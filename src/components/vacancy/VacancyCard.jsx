@@ -1,6 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { sliceContent } from "../helper";
+import { sliceContent } from "../../utils/helper";
 import ListPlace from "../ListPlace";
 
 const VacancyCard = ({ data }) => {

@@ -20,6 +20,12 @@ export const formatDate = (createdAt, showDay = false) => {
         return formattedDate;
     }
 };
+export const getTime = (mysqlDateTime) => {
+    const date = new Date(mysqlDateTime);
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')} WIB`;
+};
 
 export const sliceName = (fullName) => {
     return fullName.split(" ")[0]

@@ -1,5 +1,5 @@
 import React from "react";
-import { formatDate, sliceContent } from "../helper";
+import { formatDate, sliceContent } from "../../utils/helper";
 import { useHistory } from "react-router-dom";
 
 const NewsCard = ({ blog }) => {
