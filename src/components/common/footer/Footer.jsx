@@ -33,14 +33,14 @@ const Footer = () => {
       history.push(`/news/${singleData.id_news}`);
     } else if (type === 'vacancy') {
       // Navigasi ke halaman lowongan
-      history.push(`/vacancy/${singleData.id_vacancy}`);
+      history.push(`/lowongan/${singleData.id_vacancy}`);
     }else if(type === 'scheduleInterview'){
 
       history.push(`/scheduleinterview/${singleData.id_schedule_interview}`);
     }
   };
   return (
-    <footer className="bg-gray-100">
+    <footer className="bg-gray-100 mt-5">
       <div className="grid min-[320px]:grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 mx-auto"> 
         <div className="p-4">
           <h1 className="text-xl font-bold">Mentari Sehat Indonesia</h1>

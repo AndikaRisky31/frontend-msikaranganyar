@@ -2,6 +2,7 @@ import React, { useState, useEffect} from 'react';
 import axios from 'axios';
 import { sliceContent, formatDate } from '../components/helper';
 import { useParams, useHistory } from 'react-router-dom';
+import ListParagraf from '../components/news/ItemParagraf';
 
 const NewsPage = () => {
   const { id_news } = useParams();
@@ -26,7 +27,7 @@ const NewsPage = () => {
 
   const getNewsByPage = async (page) => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/news/?page=${page}&limit=6`);
+      const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/news/?page=${page}&limit=5`);
       setTotalPages(response.data.totalPages);
       return response.data.data;
     } catch (error) {
@@ -80,7 +81,7 @@ const NewsPage = () => {
   return (
     <>
       {newsContent ? (
-        <div className="grid grid-cols-3 gap-1">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-1">
           <div className="col-span-2 h-full order-1">
           {newsContent.imageURLs && newsContent.imageURLs[0] && newsContent.imageURLs[0].imageURL ? (
             <img src={process.env.REACT_APP_IMAGE_URL+newsContent.imageURLs[0].imageURL} alt="Large News" className="w-full object-cover aspect-video" />
@@ -112,25 +113,25 @@ const NewsPage = () => {
           ) : (
             <p>No news found.</p>
           )}
+          <div className="flex justify-center mt-6">
+            <button onClick={prevPage} disabled={currentPage === 1} className="px-4 py-2 mr-2 bg-gray-200 border border-gray-300 rounded-md cursor-pointer hover:bg-gray-300">Previous</button>
+            <span className="text-lg font-bold">{currentPage} / {totalPages}</span>
+            <button onClick={nextPage} disabled={currentPage === totalPages} className="px-4 py-2 ml-2 bg-gray-200 border border-gray-300 rounded-md cursor-pointer hover:bg-gray-300">Next</button>
           </div>
-          <div className="px-5 sm:px-10 md:px-16 lg:px-32 col-span-2 text-gray-500 order-2 md:order-3">
+          </div>
+          <div className="px-5 sm:px-10 md:px-16 lg:px-32 col-span-2 row-span-2 text-gray-500 order-2 md:order-3">
             <div className="py-5 text-justify">
-              <p className="text-sm text-gray-500">{formatDate(newsContent.created_at)} <i className="fas fa-circle fa-xs"></i> By, {newsContent.admin_name} </p>
+              <p className="text-sm text-gray-500">{formatDate(newsContent.created_at,true)} <i className="fas fa-circle fa-xs"></i> By, {newsContent.admin_name} </p>
               <h2 className="text-xl font-semibold pt-1">{newsContent.title}</h2>
             </div>
             <div className="pb-10">
-              <p className="text-justify py-4">{newsContent.content}</p>
+              <ListParagraf content={newsContent.content}/>
             </div>
           </div>
         </div>
       ) : (
         <p>Loading...</p>
       )}
-      <div className="flex justify-center mt-6">
-        <button onClick={prevPage} disabled={currentPage === 1} className="px-4 py-2 mr-2 bg-gray-200 border border-gray-300 rounded-md cursor-pointer hover:bg-gray-300">Previous</button>
-        <span className="text-lg font-bold">{currentPage} / {totalPages}</span>
-        <button onClick={nextPage} disabled={currentPage === totalPages} className="px-4 py-2 ml-2 bg-gray-200 border border-gray-300 rounded-md cursor-pointer hover:bg-gray-300">Next</button>
-      </div>
     </>
   );
 };

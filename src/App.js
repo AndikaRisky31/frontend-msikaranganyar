@@ -55,7 +55,7 @@ function App() {
             <Header showHead={true} />
             <Contact />
           </Route>
-          <Route exact path='/vacancy/:id_vacancy'>
+          <Route exact path='/lowongan/:id_vacancy'>
               <Header showHead={false}/>
               <VacancyPage/>
           </Route>

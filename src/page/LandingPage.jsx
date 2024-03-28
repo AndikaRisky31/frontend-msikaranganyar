@@ -29,7 +29,7 @@ const LandingPage = () => {
     <>
         <div className="max-sm:pt-[75%] max-lg:pt-[10%]">
             <Hero title="Yayasan Mentari Sehat Indonesia" narasi="Tumbuh Dan Berkembang Bersama Komunitas,Demi Mewujudkan Indonesia Emas 2045"/>
-            <Heading subtitle="Kontribusi melalui program-program penanggulangan penyakit, perubahan sosial, dan peningkatan akses pendidikan." title="VISI DAN MISI"/>
+            <Heading subtitle="Kontribusi melalui program-program penanggulangan penyakit, perubahan sosial, dan peningkatan akses pendidikan." title="VISI DAN MISI" link='#'/>
             <AboutCard data={Data}></AboutCard>
             <HStruktur></HStruktur>
         </div>

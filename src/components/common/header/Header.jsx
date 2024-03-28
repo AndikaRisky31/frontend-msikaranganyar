@@ -2,6 +2,7 @@ import ListSubHeader from "./ListSubHeader";
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import Head from "./Head";
+import NavItem from "./NavItem";
 
 const Header = ({ showHead }) => {
   const [click, setClick] = useState(false);
@@ -46,37 +47,23 @@ const Header = ({ showHead }) => {
           </button>
           <div className={`${click ? 'absolute top-24 right-0 w-1/2 bg-teal-600 mobile-nav' : ''}`} ref={dropdownRef}>
             <ul className={`flex flex-col items-center md:flex-row gap-3 ${click ? 'block py-2' : 'max-md:hidden'}`}>
-              <li className='md:mr-8'>
-                <Link className="text-white font-semibold" to='/'>Beranda</Link>
-              </li>
-              <li className='md:mr-8 relative' onClick={toggleDropdown}>
-                <div className="text-white font-semibold cursor-pointer">Program</div>
-                {isOpen && (
-                  <div className={`absolute bg-teal-500 shadow-lg w-36 ${click ? 'mr-[50%]' : 'mt-10'} `}>
+            <NavItem to='/' title='Beranda' />
+            <li className='md:mr-8 relative' onClick={toggleDropdown}>
+              <div className="text-white font-semibold cursor-pointer">Program</div>
+              {isOpen && (
+                <div className={`absolute bg-teal-500 shadow-lg w-36 ${click ? 'mr-[50%]' : 'mt-10'} `}>
                     <ListSubHeader to='/ssr' title='Kesehatan' disable={false}/>
                     <ListSubHeader to='#' title='Pendidikan' disable={true}/>
                     <ListSubHeader to='#' title='Sosial' disable={true}/>
                   </div>
                 )}
               </li>
-              <li className='md:mr-8'>
-                <Link className="text-white font-semibold" to='/news'>Berita</Link>
-              </li>
-              <li className='md:mr-8'>
-                <Link className="text-white font-semibold" to='/courses'>Pengumuman</Link>
-              </li>
-              <li className='md:mr-8'>
-                <Link className="text-white font-semibold" to='/about'>Tentang Kami</Link>
-              </li>
-              <li className='md:mr-8'>
-                <Link className="text-white font-semibold" to='/team'>Tim</Link>
-              </li>
-              <li className='md:mr-8'>
-                <Link className="text-white font-semibold" to='/lowongan'>Lowongan</Link>
-              </li>
-              <li>
-                <Link className="text-white font-semibold" to='/contact'>Kontak</Link>
-              </li>
+            <NavItem to='/news' title='Berita' />
+            <NavItem to='/courses' title='Pengumuman' />
+            <NavItem to='/about' title='Tentang Kami' />
+            <NavItem to='/team' title='Tim' />
+            <NavItem to='/lowongan' title='Lowongan' />
+            <NavItem to='/contact' title='Kontak' />
             </ul>
           </div>
           <div className="h-full bg-teal-600 start hidden md:flex md:items-center" style={{ clipPath: 'polygon(10% 0, 100% 0%, 100% 100%, 0% 100%)' }}>

@@ -58,7 +58,6 @@ const Vacancy = () => {
           <button onClick={nextPage} disabled={currentPage === totalPages} className="px-4 py-2 ml-2 bg-gray-200 border border-gray-300 rounded-md cursor-pointer hover:bg-gray-300">Next</button>
         </div>
       </section>
-      <Faq />
     </>
   );
 };

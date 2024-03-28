@@ -1,5 +1,5 @@
-export const formatDate = (createdAt) => {
-    // Membuat objek Date dari string created_at
+export const formatDate = (createdAt, showDay = false) => {
+    // Membuat objek Date dari string createdAt
     const date = new Date(createdAt);
   
     // Array nama-nama hari
@@ -12,9 +12,15 @@ export const formatDate = (createdAt) => {
   
     // Menggabungkan informasi hari, tanggal, bulan, dan tahun dalam format yang diinginkan
     const formattedDate = `${day} ${month} ${year}`;
-  
-    return formattedDate;
+
+    if (showDay) {
+        const dayName = days[date.getDay()];
+        return `${dayName}, ${formattedDate}`;
+    } else {
+        return formattedDate;
+    }
 };
+
 export const sliceName = (fullName) => {
     return fullName.split(" ")[0]
 };
@@ -51,4 +57,7 @@ export const formatIntegerWithCommas = (number) => {
     const formattedNumber = integerWithCommas + decimalPart;
     return formattedNumber;
 }
+export const splitTextByNewLine = (text) => {
+    return text.split(/\r?\n/).filter(line => line.trim() !== '');
+};
   
