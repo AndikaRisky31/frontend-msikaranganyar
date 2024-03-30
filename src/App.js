@@ -3,7 +3,6 @@ import "./App.css";
 import Header from "./components/common/header/Header";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import About from "./components/about/About";
-import CourseHome from "./components/allcourses/CourseHome";
 import Team from "./components/team/Team";
 import Vacancy from "./components/vacancy/Vacancy";
 import Contact from "./components/contact/Contact";
@@ -13,6 +12,7 @@ import LandingPage from "./page/LandingPage";
 import NewsPage from "./page/NewsPage";
 import VacancyPage from "./page/VacancyPage";
 import InterviewPage from "./page/InterviewPage";
+import AnnouncementPage from "./page/AnnouncementPage";
 
 function App() {
   return (
@@ -32,9 +32,9 @@ function App() {
             <Header showHead={true} />
             <Vacancy />
           </Route>
-          <Route exact path='/courses'>
-            <Header showHead={true} />
-            <CourseHome />
+          <Route exact path='/pengumuman'>
+            <Header showHead={false} />
+            <AnnouncementPage />
           </Route>
           <Route exact path='/team'>
             <Header showHead={true} />

@@ -67,7 +67,7 @@ const VacancyPage = () => {
                 </div>
               </div>
               <div className="row-span-2">
-                <h2 className="text-xl font-bold text-center m-3">Kualifikasi</h2>
+                <h2 className="text-xl font-bold my-3">Requirements :</h2>
                 <p className="text-lg whitespace-pre-line text-gray-500" dangerouslySetInnerHTML={{ __html: content.qualification }}></p>
               </div>
               <div className="mt-10 sm:mt-0">

@@ -29,11 +29,11 @@ const InterviewPage = () => {
     <>
         {content && (
           <div className="mx-auto py-10 px-4 sm:px-6 md:px-20">
-            <Heading title={content.description} subtitle="Jadwal Interview"/>
-            <div className="grid grid-cols-1 sm:grid-cols-2">
+            <Heading title={content.title} subtitle="Jadwal Interview"/>
+            <div className="grid grid-cols-1 sm:grid-cols-2 mx-5 lg:mx-24">
               <div className="w-full sm:col-span-2 mb-5">
                 <div className="flex">
-                  <div className="w-1/2 sm:w-1/3 md:w-1/4">
+                  <div className="min-w-[30%] md:w-1/4">
                     <p className="text-lg font-bold">Hari</p>
                   </div>
                   <div className="mr-3">
@@ -44,7 +44,7 @@ const InterviewPage = () => {
                   </div>
                 </div>
                 <div className="flex">
-                  <div className="w-1/2 sm:w-1/3 md:w-1/4">
+                  <div className="min-w-[30%] md:w-1/4">
                     <p className="text-lg font-bold">Pukul</p>
                   </div>
                   <div className="mr-3">
@@ -55,7 +55,7 @@ const InterviewPage = () => {
                   </div>
                 </div>
                 <div className="flex mb-2">
-                  <div className="w-1/2 sm:w-1/3 md:w-1/4">
+                  <div className="min-w-[30%] md:w-1/4">
                     <p className="text-lg font-bold">Tempat</p>
                   </div>
                   <div className="mr-3">
@@ -67,20 +67,18 @@ const InterviewPage = () => {
                 </div>
               </div>
               <div className="row-span-2">
-                <h2 className="text-xl font-bold text-center m-3">Kualifikasi</h2>
-                <p className="text-lg whitespace-pre-line text-gray-500" dangerouslySetInnerHTML={{ __html: content.qualification }}></p>
+                <h2 className="text-xl font-bold text-center m-3">Persyaratan</h2>
+                <p className="text-lg whitespace-pre-line text-gray-500">{content.description}</p>
               </div>
               <div className="mt-10 sm:mt-0">
-                <h2 className="text-xl font-bold text-center m-3">Persyaratan</h2>
-                <p className="text-lg whitespace-pre-line text-gray-500">{content.recruitment}</p>
-              </div>
-              <div className="flex justify-center items-center">
-              <button
-                disabled={content.apply_url === null} 
-                className={`bg-teal-500 px-24 py-3 my-10 text-white hover:bg-teal-600 hover:shadow-md ${content.apply_url === null ? 'cursor-not-allowed' : ''}`}
-              >
-                Apply
-              </button>
+                <h2 className="text-xl font-bold text-center m-3">Daftar Peserta</h2>
+                <div className="border border-black p-3">
+                {content.Participants.map((item,index) => (
+                  <div key={item.id_participant}>
+                    <h4 className="text-lg whitespace-pre-line pb-3" >{index+1}. {item.participant_name}</h4>
+                  </div>
+                ))}
+                </div>
               </div>
             </div>
           </div>
