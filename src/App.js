@@ -69,6 +69,16 @@ function App() {
             <Header showHead={false}/>
             <AnnouncementPage/>
           </Route>
+          <Route path="/dashboard">
+            <DashboardLayout>
+              <Route exact path="/dashboard/news" component={News} />
+              <Route
+                exact
+                path="/dashboard/news/create"
+                component={CreateNews}
+              />
+            </DashboardLayout>
+          </Route>
         </Switch>
         <Footer />
       </Router>

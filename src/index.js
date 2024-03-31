@@ -1,16 +1,26 @@
-import React from 'react';
-import { createRoot } from 'react-dom/client';
-import App from './App';
-import dotenv from 'dotenv';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { QueryClient, QueryClientProvider } from "react-query";
 
-// Load .env file
-dotenv.config();
+import { AuthProvider } from "./context/auth-provider";
+import App from "./App";
 
-const container = document.getElementById('createroot'); // Get the container element
-const root = createRoot(container); // Create a root instance with the container
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      retry: false,
+    },
+  },
+});
 
+const root = ReactDOM.createRoot(document.getElementById("createroot"));
 root.render(
   <React.StrictMode>
-    <App />
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <App />
+      </AuthProvider>
+    </QueryClientProvider>
   </React.StrictMode>
 );
