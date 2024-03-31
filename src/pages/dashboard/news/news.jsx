@@ -39,7 +39,7 @@ const News = () => {
           News List
         </Typography>
       </div>
-      <div className="grid grid-cols-1 gap-5">
+      <div className="grid grid-cols-4 gap-5">
         {isFetching ? (
           <Button variant="text" loading={true}>
             Loading

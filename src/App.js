@@ -14,6 +14,9 @@ import VacancyPage from "./page/VacancyPage";
 import InterviewPage from "./page/InterviewPage";
 import AnnouncementPage from "./page/AnnouncementPage";
 import Announcement from "./page/Announcement";
+import DashboardLayout from './layout/dashboard-layout/dashboard-layout'
+import News from '../src/pages/dashboard/news/news'
+import CreateNews from '../src/pages/dashboard/news/create-news'
 
 function App() {
   return (

@@ -12,7 +12,7 @@ export const useFetchNews = () => {
   } = useQuery({
     queryKey: ["news", page],
     queryFn: async () => {
-      const response = await axiosInstance.get(`/news/?page=${page}&limit=5`);
+      const response = await axiosInstance.get(`/news/?page=${page}&limit=8`);
 
       console.log(response.data);
       return response.data;
