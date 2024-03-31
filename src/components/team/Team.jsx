@@ -45,7 +45,7 @@ const Team = () => {
 
         {/* Tingkat 3 */}
         <div className="text-center py-5">
-          <div className="flex overflow-x-auto snap-mandatory snap-x">
+          <div className="flex justify-start lg:justify-center overflow-x-auto snap-mandatory snap-x">
             {dataTeam.filter(val => val.tingkat === 3).map((val) => (
               <div key={val.id_management} className="snap-start mx-2">
                 <TeamCard val={val} />
@@ -57,7 +57,7 @@ const Team = () => {
         {/* Tingkat 4 */}
         <div className="text-center py-5">
           <h2 className="text-lg font-semibold mb-4">KADER</h2>
-          <div className="grid max-sm:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1">
+          <div className="grid justify-items-center max-sm:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-1">
             {dataTeam.filter(val => val.tingkat === 4).map((val) => (
               <TeamCard key={val.id_management} val={val} />
             ))}

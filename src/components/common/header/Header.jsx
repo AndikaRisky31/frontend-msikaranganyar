@@ -1,6 +1,5 @@
 import ListSubHeader from "./ListSubHeader";
 import React, { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
 import Head from "./Head";
 import NavItem from "./NavItem";
 
@@ -42,7 +41,7 @@ const Header = ({ showHead }) => {
       {showHead === true ? <Head /> : null}
       <header className={`z-50 sticky top-0`}>
         <nav className={`flex justify-between items-center pl-5 min-[10px]:h-auto md:h-24 relative ${isSticky ? 'bg-teal-300' : showHead ? 'bg-opacity-20 bg-white mx-10' : 'bg-teal-400'}`}>
-          <img src="/images/logo.png" className="w-1/4 md:hidden"/>
+          <img src="/images/logo.png" alt="" className="w-1/4 md:hidden"/>
           <button className='md:hidden bg-teal-700 ml-auto h-full p-5' onClick={() => setClick(!click)}>
             {click ? <i className='fa fa-times text-2xl text-white'></i> : <i className='fa fa-bars text-2xl text-white'></i>}
           </button>

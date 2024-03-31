@@ -13,6 +13,7 @@ import NewsPage from "./page/NewsPage";
 import VacancyPage from "./page/VacancyPage";
 import InterviewPage from "./page/InterviewPage";
 import AnnouncementPage from "./page/AnnouncementPage";
+import Announcement from "./page/Announcement";
 
 function App() {
   return (
@@ -34,7 +35,7 @@ function App() {
           </Route>
           <Route exact path='/pengumuman'>
             <Header showHead={false} />
-            <AnnouncementPage />
+            <Announcement/>
           </Route>
           <Route exact path='/team'>
             <Header showHead={true} />
@@ -57,12 +58,16 @@ function App() {
             <Contact />
           </Route>
           <Route exact path='/lowongan/:id_vacancy'>
-              <Header showHead={false}/>
-              <VacancyPage/>
+            <Header showHead={false}/>
+            <VacancyPage/>
           </Route>
           <Route exact path='/interview/:id_schedule'>
-              <Header showHead={false}/>
-              <InterviewPage/>
+            <Header showHead={false}/>
+            <InterviewPage/>
+          </Route>
+          <Route exact path='/pengumuman/:id_announcement'>
+            <Header showHead={false}/>
+            <AnnouncementPage/>
           </Route>
         </Switch>
         <Footer />

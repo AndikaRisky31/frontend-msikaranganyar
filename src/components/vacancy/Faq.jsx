@@ -25,7 +25,7 @@ const Faq = () => {
               </button>
               {click === index ? (
                 <div className='text'>
-                  <p>{val.desc}</p>
+                  <p dangerouslySetInnerHTML={{ __html: val.desc }} />
                 </div>
               ) : null}
             </div>

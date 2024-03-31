@@ -1,22 +1,46 @@
-import React from "react";
-import Heading from "../components/common/heading/Heading";
-import { coursesCard } from "../dummydata";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import Heading from '../components/common/heading/Heading';
+import { formatDate, getTime } from "../utils/helper";
+import ListPlace from "../components/ListPlace";
 
 const AnnouncementPage = () => {
+  const { id_announcement } = useParams();
+  const [content, setContent] = useState(null);
+
+  const getAnnouncementById = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_BASE_URL}/announcement/${id_announcement}`
+      );
+      const data = response.data.data;
+      setContent(data);
+    } catch (error) {
+      console.error('Failed to fetch vacancy', error);
+    }
+  };
+
+  useEffect(() => {
+    getAnnouncementById();
+  }, [id_announcement]);
+
   return (
-    <section className="Announcement mx-auto pt-5 px-4 sm:px-10 md:px-20 lg:px-40">
-      <Heading title="Pengumuman" subtitle="Apa yang baru?" link="#"/>
-      <div className="grid grid-cols-1 gap-2">
-        {coursesCard.map((item, index) => (
-          <div className={`flex flex-row w-3/4 md:w-2/3 md:min-h-32  ${(index + 1) % 2 === 1 ? "mr-[25%] bg-sky-200 text-black" : "ml-auto bg-teal-600 text-white"}`}>
-            <div className="p-2">
-              <h1 className="font-bold">{item.coursesName}</h1>
-              <h2>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ea accusamus, atque consectetur sapiente tenetur omnis?</h2>
+    <>
+        {content && (
+          <div className="mx-auto py-10 px-4 sm:px-6 md:px-20">
+            <Heading title={content.title} subtitle="pengumuman"/>
+            <div className="grid grid-cols-1 mx-5 lg:mx-24">
+              <div className="w-full mb-5">
+                        <p className="">{getTime(content.updated_at,true,true)} {formatDate(content.updated_at,true,true)}</p>
+              </div>
+              <div className="row-span-2">
+                <p className="text-lg whitespace-pre-line text-gray-500">{content.content}</p>
+              </div>
             </div>
           </div>
-        ))} 
-      </div>
-    </section>
+        )}
+    </>
   );
 };
 

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Back from "../common/back/Back";
 import VacancyCard from "./VacancyCard";
-import Faq from "./Faq";
 import "./vacancy.css";
 
 const Vacancy = () => {
@@ -13,7 +12,7 @@ const Vacancy = () => {
   const [isError, setIsError] = useState(false);
 
   useEffect(() => {
-    const fetchVacancyData = async (page = 1, limit = 8) => {
+    const fetchVacancyData = async (page = 1, limit = 10) => {
       try {
         const url = `${process.env.REACT_APP_BASE_URL}/vacancy/?page=${page}&limit=${limit}`;
         const response = await axios.get(url);
@@ -45,7 +44,7 @@ const Vacancy = () => {
     <>
       <Back title='Choose The Right Plan' />
       <section className="px-4 md:px-8 lg:px-12 max-sm:pt-[75%] max-lg:pt-[10%]">
-        <div className='grid max-sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-center'>
+        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 justify-center'>
           {vacancies.map((vacancy) => (
             <div key={vacancy.id_vacancy} className="mx-auto">
               <VacancyCard data={vacancy} />
