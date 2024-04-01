@@ -1,18 +1,29 @@
 import React, { useState } from "react";
-import InputField from '../'
+import InputField from '../../../components/inputField'
+import { createNews } from "../../../API/NewsAPI";
 
 const FormCreateNews = ({ onSubmit }) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [image, setImage] = useState(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("content", content);
-    formData.append("image", image);
-    onSubmit(formData);
+    try {
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("content", content);
+      formData.append("image", image);
+
+      // Panggil fungsi createNews dengan formData
+      await createNews(formData);
+
+      // Panggil onSubmit jika berhasil tanpa error
+      onSubmit();
+    } catch (error) {
+      console.error("Error creating news:", error);
+      // Handle error if needed
+    }
   };
 
   return (

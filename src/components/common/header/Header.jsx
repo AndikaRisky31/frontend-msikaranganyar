@@ -2,18 +2,12 @@ import ListSubHeader from "./ListSubHeader";
 import React, { useState, useEffect, useRef } from "react";
 import Head from "./Head";
 import NavItem from "./NavItem";
-import { useHistory } from "react-router-dom";
 
 const Header = ({ showHead }) => {
   const [click, setClick] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
   const dropdownRef = useRef(null);
-  const history = useHistory()
-
-  const redirectToDashboard = () => {
-    history.push('/login');
-  };
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -73,7 +67,7 @@ const Header = ({ showHead }) => {
             </ul>
           </div>
           <div className="h-full bg-teal-600 start hidden md:flex md:items-center" style={{ clipPath: 'polygon(10% 0, 100% 0%, 100% 100%, 0% 100%)' }}>
-            <div className='button text-white mx-16 font-normal cursor-pointer' onClick={redirectToDashboard}>BERSAMA MELAWAN TBC</div>
+            <div className='button text-white mx-16 font-normal'>BERSAMA MELAWAN TBC</div>
           </div>
         </nav>
       </header>
