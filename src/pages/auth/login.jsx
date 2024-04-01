@@ -1,93 +1,80 @@
-import React, { useContext } from "react";
+import React, { useState } from "react";
+import axios from "axios";
+import { Redirect } from "react-router-dom";
 import {
   Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
   Typography,
   Input,
   Checkbox,
   Button,
   Spinner,
 } from "@material-tailwind/react";
-import { useHistory } from "react-router-dom";
-
-import { AuthContext } from "../../context/auth-provider";
-import { useLoginForm } from "../../features/auth-user/login/useLoginForm";
 
 const LoginPage = () => {
-  const { data } = useContext(AuthContext);
-  const history = useHistory();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  if (data) history.push("/dashboard");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/auth/login`, { email, password });
+      if (response.status === 200 && response.data.token) {
+        const { token, message } = response.data;
+        localStorage.setItem("access_token", token); // Menyimpan token ke localStorage
+        setIsLoggedIn(true); // Setelah pengguna berhasil login, atur isLoggedIn menjadi true
+      } else {
+        setError('Unexpected response from server');
+      }
+    } catch (error) {
+      setError(error.response ? error.response.data.message : 'Unknown error occurred');
+    } finally {
+      setIsLoading(false);
+    }
+  };  
 
-  const onSuccess = () => history.push("/dashboard");
-
-  const onError = (error) => console.log(error);
-
-  const { formik, isLoading } = useLoginForm({ onSuccess, onError });
-
-  const handleForm = (event) => {
-    const { target } = event;
-
-    formik.setFieldValue(target.name, target.value);
-  };
+  // Jika pengguna sudah terautentikasi, redirect ke dashboard
+  if (isLoggedIn || localStorage.getItem("access_token")) {
+    return <Redirect to="/dashboard" />;
+  }
 
   return (
     <section className="container relative">
       <div className="flex min-h-screen items-center justify-center">
         <Card className="w-96">
-          <form onSubmit={formik.handleSubmit}>
-            <CardHeader
-              variant="gradient"
-              color="gray"
-              className="mb-4 flex h-28 justify-center items-center"
-            >
-              <Typography variant="h3" color="white" className="">
+          <form onSubmit={handleSubmit}>
+            <div className="flex h-28 justify-center items-center bg-gradient-to-r from-gray-400 to-gray-600 mb-4">
+              <Typography variant="h3" color="white">
                 Welcome
               </Typography>
-            </CardHeader>
-            <CardBody className="flex flex-col gap-4">
+            </div>
+            <div className="flex flex-col gap-4 px-6">
               <Input
                 label="Email"
                 size="lg"
-                name="email"
-                onChange={handleForm}
-                error={formik.errors.email && formik.touched && true}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
-              {formik.errors.email && formik.touched.email && (
-                <Typography
-                  variant="small"
-                  color="red"
-                  className="mt-2 font-normal"
-                >
-                  {formik.errors.email}
-                </Typography>
-              )}
               <Input
                 label="Password"
                 size="lg"
                 type="password"
-                name="password"
-                onChange={handleForm}
-                error={
-                  formik.errors.password && formik.touched.password && true
-                }
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
-              {formik.errors.password && formik.touched.password && (
-                <Typography
-                  variant="small"
-                  color="red"
-                  className="mt-2 font-normal"
-                >
-                  {formik.errors.password}
+              {error && (
+                <Typography variant="small" color="red">
+                  {error}
                 </Typography>
               )}
               <div className="-ml-2.5">
                 <Checkbox label="Remember Me" />
               </div>
-            </CardBody>
-            <CardFooter className="pt-0">
+            </div>
+            <div className="px-6 pt-0">
               {isLoading ? (
                 <Button
                   type="submit"
@@ -119,7 +106,7 @@ const LoginPage = () => {
                   Sign up
                 </Typography>
               </Typography>
-            </CardFooter>
+            </div>
           </form>
         </Card>
       </div>

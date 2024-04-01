@@ -1,8 +1,8 @@
 import React from "react"
-import AboutCard from "../components/about/AboutCard"
-import Hero from "../components/home/hero/Hero"
-import HStruktur from "../components/home/HStruktur"
-import Heading from "../components/common/heading/Heading"
+import Heading from "../../components/common/heading/Heading"
+import HStruktur from "../../components/home/HStruktur"
+import Hero from "../../components/Hero"
+import AboutCard from "../../components/about/AboutCard"
 
 const LandingPage = () => {
     const Data =[
@@ -31,7 +31,7 @@ const LandingPage = () => {
             <Hero title="Yayasan Mentari Sehat Indonesia" narasi="Tumbuh Dan Berkembang Bersama Komunitas,Demi Mewujudkan Indonesia Emas 2045"/>
             <Heading subtitle="Kontribusi melalui program-program penanggulangan penyakit, perubahan sosial, dan peningkatan akses pendidikan." title="VISI DAN MISI" link='#'/>
             <AboutCard data={Data}></AboutCard>
-            <HStruktur></HStruktur>
+            <HStruktur/>
         </div>
     </>
   )

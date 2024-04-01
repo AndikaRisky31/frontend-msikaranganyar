@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Back from "../common/back/Back";
-import VacancyCard from "./VacancyCard";
-import "./vacancy.css";
+import Back from "../../components/common/back/Back";
+import VacancyCard from "../../components/vacancy/VacancyCard";
 
 const Vacancy = () => {
   const [vacancies, setVacancies] = useState([]);

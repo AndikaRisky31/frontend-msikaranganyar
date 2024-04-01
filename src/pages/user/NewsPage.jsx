@@ -1,8 +1,8 @@
 import React, { useState, useEffect} from 'react';
 import axios from 'axios';
-import { sliceContent, formatDate } from '../utils/helper';
+import { sliceContent, formatDate } from '../../utils/helper';
 import { useParams, useHistory } from 'react-router-dom';
-import ListParagraf from '../components/news/ItemParagraf';
+import ListParagraf from '../../components/news/ItemParagraf';
 
 const NewsPage = () => {
   const { id_news } = useParams();
@@ -25,9 +25,9 @@ const NewsPage = () => {
     }
   };
 
-  const getNewsByPage = async (page) => {
+  const getNewsByPage = async (page,limit=5) => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/news/?page=${page}&limit=5`);
+      const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/news/?page=${page}&limit=${limit}`);
       setTotalPages(response.data.totalPages);
       return response.data.data;
     } catch (error) {
@@ -83,8 +83,8 @@ const NewsPage = () => {
       {newsContent ? (
         <div className="grid grid-cols-2 md:grid-cols-3 gap-1">
           <div className="col-span-2 h-full order-1">
-          {newsContent.imageURLs && newsContent.imageURLs[0] && newsContent.imageURLs[0].imageURL ? (
-            <img src={process.env.REACT_APP_IMAGE_URL+newsContent.imageURLs[0].imageURL} alt="Large News" className="w-full object-cover aspect-video" />
+          {newsContent.imageURL ? (
+            <img src={process.env.REACT_APP_IMAGE_URL+newsContent.imageURL} alt="Large News" className="w-full object-cover aspect-video" />
           ) : (
             <img src="/images/imagenotfound.jpg" alt="Large News" className="w-full object-cover aspect-video" />
           )}
@@ -94,8 +94,8 @@ const NewsPage = () => {
             lastNews.map(item => (
               <div key={item.id_news} className="flex mb-2 snap-start">
                 <div className="aspect-square max-w-[25%]">
-                {item.imageURLs && item.imageURLs[0] && newsContent.imageURLs[0].imageURL ? (
-                  <img src={process.env.REACT_APP_IMAGE_URL+newsContent.imageURLs[0].imageURL} alt="Large News" className="w-full object-cover aspect-video" />
+                {item.imageURL ? (
+                  <img src={process.env.REACT_APP_IMAGE_URL+item.imageURL} alt="Large News" className="w-full object-cover aspect-square" />
                 ) : (
                   <img src="/images/imagenotfound.jpg" alt="Large News" className="w-full object-cover aspect-video" />
                 )}

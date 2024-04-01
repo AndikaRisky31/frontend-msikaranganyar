@@ -2,21 +2,22 @@ import React from "react";
 import "./App.css";
 import Header from "./components/common/header/Header";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import About from "./components/about/About";
+import About from "./pages/user/About";
 import Team from "./components/team/Team";
-import Vacancy from "./components/vacancy/Vacancy";
-import Contact from "./components/contact/Contact";
+import Vacancy from "./pages/user/Vacancy";
+import Contact from "./pages/user/Contact";
 import Footer from "./components/common/footer/Footer";
-import Home from "./components/home/Home";
-import LandingPage from "./page/LandingPage";
-import NewsPage from "./page/NewsPage";
-import VacancyPage from "./page/VacancyPage";
-import InterviewPage from "./page/InterviewPage";
-import AnnouncementPage from "./page/AnnouncementPage";
-import Announcement from "./page/Announcement";
-import DashboardLayout from './layout/dashboard-layout/dashboard-layout'
+import Home from "./pages/user/Home";
+import LandingPage from "./pages/user/LandingPage";
+import NewsPage from "./pages/user/NewsPage";
+import VacancyPage from "./pages/user/VacancyPage";
+import DashboardLayout from './pages/dashboard/dashboard-layout'
 import News from '../src/pages/dashboard/news/news'
-import CreateNews from '../src/pages/dashboard/news/create-news'
+import FormCreateNews from '../src/pages/dashboard/news/FormCreateNews'
+import LoginPage from "./pages/auth/login";
+import Announcement from "./pages/user/Announcement"
+import AnnouncementPage from "./pages/user/AnnouncementPage";
+import InterviewPage from "./pages/user/InterviewPage"
 
 function App() {
   return (
@@ -27,50 +28,62 @@ function App() {
           <Route exact path='/'>
             <Header showHead={true} />
             <LandingPage />
+            <Footer />
           </Route>
           <Route exact path='/SSR'>
             <Header showHead={true} />
             <Home />
+            <Footer />
           </Route>
           <Route exact path='/lowongan'>
             <Header showHead={true} />
             <Vacancy />
+            <Footer />
           </Route>
           <Route exact path='/pengumuman'>
             <Header showHead={false} />
             <Announcement/>
+            <Footer />
           </Route>
           <Route exact path='/team'>
             <Header showHead={true} />
             <Team />
+            <Footer />
           </Route>
           <Route exact path='/about'>
             <Header showHead={true} />
             <About />
+            <Footer />
           </Route>
           <Route exact path='/news'>
             <Header showHead={false} />
             <NewsPage />
+            <Footer />
           </Route>
           <Route exact path='/news/:id_news'>
             <Header showHead={false} />
             <NewsPage />
+            <Footer />
           </Route>
           <Route exact path='/contact'>
             <Header showHead={true} />
             <Contact />
+            <Footer />
           </Route>
           <Route exact path='/lowongan/:id_vacancy'>
             <Header showHead={false}/>
             <VacancyPage/>
+            <Footer />
           </Route>
           <Route exact path='/interview/:id_schedule'>
             <Header showHead={false}/>
             <InterviewPage/>
+            <Footer />
           </Route>
           <Route exact path='/pengumuman/:id_announcement'>
             <Header showHead={false}/>
             <AnnouncementPage/>
+            <Footer />
           </Route>
           <Route path="/dashboard">
             <DashboardLayout>
@@ -78,12 +91,12 @@ function App() {
               <Route
                 exact
                 path="/dashboard/news/create"
-                component={CreateNews}
+                component={FormCreateNews}
               />
             </DashboardLayout>
           </Route>
+          <Route exact path="/login" component={LoginPage} />
         </Switch>
-        <Footer />
       </Router>
     </>
   );

@@ -4,15 +4,12 @@ module.exports = withMT({
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      fontFamily: {
+        sans: ['Roboto', 'sans-serif'],
       },
-      colors: {
-        soft: "#182237",
-        graysoft: "#b7bac1",
-      },
+      gridAutoColumns: {
+        '2fr': 'minmax(0, 2fr)',
+      }
     },
   },
   plugins: [],

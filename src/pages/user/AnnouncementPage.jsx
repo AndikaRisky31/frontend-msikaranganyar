@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import Heading from '../components/common/heading/Heading';
-import { formatDate, getTime } from "../utils/helper";
-import ListPlace from "../components/ListPlace";
+import { formatDate, getTime } from "../../utils/helper"
+import Heading from "../../components/common/heading/Heading";
 
 const AnnouncementPage = () => {
   const { id_announcement } = useParams();

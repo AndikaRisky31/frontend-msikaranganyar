@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 
 import {
   MdNotifications,
@@ -22,11 +23,11 @@ const menuItems = [
     ],
   },
   {
-    title: "Settings",
+    title: "Announcement",
     list: [
       {
-        title: "Profile",
-        path: "/dashboard/profile",
+        title: "Announcement",
+        path: "/dashboard/announcement",
       },
       {
         title: "Account",
@@ -42,8 +43,8 @@ const MenuLink = ({ title, path, icon }) => {
   return (
     <a
       href={path}
-      className={`flex items-center gap-2 mt-1 rounded-lg p-5 hover:bg-[#2e374a] focus:bg-[#2e374a] ${
-        pathname === path ? "bg-[#2e374a]" : ""
+      className={`flex items-center gap-1 mt-1 p-2 hover:bg-teal-500 hover:text-white focus:bg-teal-700 ${
+        pathname === path ? "bg-teal-700 text-white" : ""
       }`}
     >
       {icon}
@@ -53,18 +54,25 @@ const MenuLink = ({ title, path, icon }) => {
 };
 
 const Navigation = () => {
+  const history = useHistory(); // Memindahkan penggunaan useHistory ke dalam komponen Navigation
+
+  const redirectToHome = () => {
+    history.push('/');
+  };
+
   return (
-    <div className="sticky top-10 mt-8">
-      <div className="flex items-center gap-5 mb-5">
+    <div className="sticky top-10">
+      <div className="flex items-center gap-2 mb-5">
         <img src="" alt="" />
-        <div>
-          <h3 className="text-2xl font-semibold">MSI</h3>
+        <div className="cursor-pointer" onClick={redirectToHome}>
+          <h3 className="text-2xl font-semibold " >Mentari Sehat Indonesia</h3>
+          <h3 className="text-xl font-semibold">Kab. Karanganyar</h3>
         </div>
       </div>
       <ul className="list-none">
         {menuItems.map((item, index) => (
           <li key={`item-${index}`}>
-            <span className="font-bold text-sm mt-10 mb-10 text-graysoft">
+            <span className="font-bold text-sm my-8 text-graysoft">
               {item.title}
             </span>
             {item.list.map((list, index) => (
@@ -85,8 +93,8 @@ const NavbarDashboard = () => {
         <p>{pathname.split("/").pop()}</p>
       </div>
       <div className="flex items-center gap-5">
-        <div className="flex items-center gap-2 bg-[#2e374a] p-2 rounded-lg">
-          <MdSearch className="text-gray-500" />
+        <div className="flex items-center gap-2 p-2 bg-teal-100 rounded-lg">
+          <MdSearch className="text-gray-800" />
           <input
             type="text"
             placeholder="Search..."
@@ -106,7 +114,7 @@ const NavbarDashboard = () => {
 const DashboardLayout = ({ children }) => {
   return (
     <div className="flex">
-      <div className="flex-1 min-h-screen p-5 bg-soft">
+      <div className="flex-1 min-h-screen p-5 bg-teal-100">
         <Navigation />
       </div>
       <div className="flex-[4] p-5">

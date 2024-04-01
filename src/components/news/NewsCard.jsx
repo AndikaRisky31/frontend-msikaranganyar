@@ -13,8 +13,8 @@ const NewsCard = ({ blog }) => {
   return (
     <div className='group shadow-lg m-2 w-[350px] h-[600px] hover:bg-teal-500' onClick={onClick}>
       <div>
-        {blog.imageURLs[0] ? (
-          <img src={baseimageurl + blog.imageURLs[0].imageURL} alt='' className=" rounded-t-md w-full h-full object-cover group-hover:brightness-75" />
+        {blog.imageURL ? (
+          <img src={baseimageurl + blog.imageURL} alt='' className=" rounded-t-md w-full h-full object-cover group-hover:brightness-75" />
         ) : (
           <p>No Image</p>
         )}

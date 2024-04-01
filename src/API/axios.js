@@ -1,7 +1,6 @@
 import axios from "axios";
-import Cookies from "js-cookie";
 
-const BASE_URL = "https://apimsi.kencang.id/api/";
+const BASE_URL =process.env.REACT_APP_BASE_URL;
 
 export const axiosInstance = axios.create({
   baseURL: BASE_URL,
@@ -13,6 +12,6 @@ export const axiosInstance = axios.create({
 export const axiosInstanceAuth = axios.create({
   baseURL: BASE_URL,
   headers: {
-    Authorization: Cookies.get("access_token"),
+    Authorization: localStorage.getItem("access_token") ? `Bearer ${localStorage.getItem("access_token")}` : null,
   },
 });

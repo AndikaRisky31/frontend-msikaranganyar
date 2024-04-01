@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Heading from "../components/common/heading/Heading";
-import { useHistory } from "react-router-dom/cjs/react-router-dom";
+import { useHistory } from "react-router-dom";
+import Heading from "../../components/common/heading/Heading";
 
 
 
