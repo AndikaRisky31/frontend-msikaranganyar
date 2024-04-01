@@ -42,7 +42,7 @@ const Vacancy = () => {
   return (
     <>
       <Back title='Choose The Right Plan' />
-      <section className="px-4 md:px-8 lg:px-12 max-sm:pt-[75%] max-lg:pt-[10%]">
+      <section className="px-4 md:px-8 lg:px-12 pt-[75%] sm:pt-[10%]">
         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 justify-center'>
           {vacancies.map((vacancy) => (
             <div key={vacancy.id_vacancy} className="mx-auto">

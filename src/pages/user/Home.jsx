@@ -11,7 +11,7 @@ import Hero from "../../components/Hero"
 const Home = () => {
   return (
     <>
-    <div className="max-sm:pt-[75%] max-lg:pt-[10%]">
+    <div className="pt-[75%] sm:pt-[10%]">
       <Hero title="SSR Mentari Sehat Indonesia" narasi="Bersama Kami, Eliminasi TBC Sebelum 2030! Bergabunglah dengan Komunitas Karanganyar dan Yayasan Mentari Sehat Indonesia, Ayo Wujudkan Indonesia Bebas TBC pada 2030." />
       <AboutCard data={homeAbout}/>
       <Testimonal />

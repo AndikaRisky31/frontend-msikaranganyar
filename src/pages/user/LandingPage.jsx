@@ -3,6 +3,7 @@ import Heading from "../../components/common/heading/Heading"
 import HStruktur from "../../components/home/HStruktur"
 import Hero from "../../components/Hero"
 import AboutCard from "../../components/about/AboutCard"
+import { Link } from "react-router-dom"
 
 const LandingPage = () => {
     const Data =[
@@ -27,9 +28,14 @@ const LandingPage = () => {
       ]
     return (
     <>
-        <div className="max-sm:pt-[75%] max-lg:pt-[10%]">
+        <div className="pt-[75%] md:pt-[10%]">
             <Hero title="Yayasan Mentari Sehat Indonesia" narasi="Tumbuh Dan Berkembang Bersama Komunitas,Demi Mewujudkan Indonesia Emas 2045"/>
-            <Heading subtitle="Kontribusi melalui program-program penanggulangan penyakit, perubahan sosial, dan peningkatan akses pendidikan." title="VISI DAN MISI" link='#'/>
+            <div className="text-center pb-10">
+              <h3 className="font-semibold tracking-wide uppercase text-white lg:text-teal-500 justify-center mx-3">Kontribusi melalui program-program penanggulangan penyakit, perubahan sosial, dan peningkatan akses pendidikan.</h3>
+              <Link to='#'>
+                <h1 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-semibold my-5 capitalize cursor-pointer transition duration-300 ease-in-out text-white lg:text-black">VISI DAN MISI</h1>
+              </Link>
+            </div>
             <AboutCard data={Data}></AboutCard>
             <HStruktur/>
         </div>

@@ -24,13 +24,9 @@ const CardNews = ({
   const toNews = (id_news) => {
     history.push(`/news/${id_news}`);
   };
-
-  const handleDelete = () => {
-    if (window.confirm("Apakah Anda yakin ingin menghapus berita ini?")) {
-      // Panggil fungsi handleDeleteNews
-      handleDeleteNews(id_news);
-    }
-  };
+  const toEditNews = (id_news)=>{
+    history.push(`/dashboard/news/addUpdate/${id_news}`)
+  }
 
   return (
     <Card className="max-w-[24rem] overflow-hidden" key={id_news}>
@@ -54,15 +50,15 @@ const CardNews = ({
         >
           {title}
         </Typography>
-        <Typography variant="p" color="gray" className="mt-3 font-normal">
+        <Typography variant="paragraph" color="gray" className="mt-3 font-normal">
           {sliceContent(content, 20)}
         </Typography>
       </CardBody>
       <CardFooter className="flex items-center justify-end mt-auto">
-        <Button color="red" className="ml-2" onClick={handleDelete}>
+        <Button color="red" className="ml-2" onClick={() => handleDeleteNews(id_news)}>
           <FaTrash size={8} />
         </Button>
-        <Button color="green" className="ml-2" onClick={handleEditNews}>
+        <Button color="green" className="ml-2" onClick={() => toEditNews(id_news)}>
           <FaRegEdit size={8} />
         </Button>
       </CardFooter>

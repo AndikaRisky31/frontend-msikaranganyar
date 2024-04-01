@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import InputField from '../../../components/inputField'
 import { createNews } from "../../../API/NewsAPI";
+import { useParams } from "react-router-dom";
 
-const FormCreateNews = ({ onSubmit }) => {
+const FormCreateNews = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [image, setImage] = useState(null);
+  const {id_news} = useParams()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,8 +20,6 @@ const FormCreateNews = ({ onSubmit }) => {
       // Panggil fungsi createNews dengan formData
       await createNews(formData);
 
-      // Panggil onSubmit jika berhasil tanpa error
-      onSubmit();
     } catch (error) {
       console.error("Error creating news:", error);
       // Handle error if needed

@@ -9,7 +9,7 @@ const Head = () => {
             <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-3xl text-white font-bold leading-7">MENTARI SEHAT INDONESIA</h1>
             <span className="text-white text-sm sm:text-base md:text-lg lg:text-xl font-bold">KAB. KARANGANYAR</span>
           </div>
-          <div className='flex justify-end max-sm:hidden ml-auto'>
+          <div className='hidden sm:flex justify-end  ml-auto'>
             <a href="https://www.instagram.com/_msi_karanganyar?igsh=MXN1MHM0enR6eTJydg==" target="_blank" rel="noopener noreferrer" className="mr-2">
               <i className='fa fa-instagram icon w-10 h-10 flex justify-center items-center rounded-full text-white bg-green-500 transition duration-500 hover:bg-teal-600' style={{ filter: "brightness(1.5)" }}></i>
             </a>

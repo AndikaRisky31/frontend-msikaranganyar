@@ -13,12 +13,8 @@ const menuItems = [
     title: "News",
     list: [
       {
-        title: "News List",
+        title: "News",
         path: "/dashboard/news",
-      },
-      {
-        title: "Create News",
-        path: "/dashboard/news/create",
       },
     ],
   },
@@ -39,11 +35,12 @@ const menuItems = [
 
 const MenuLink = ({ title, path, icon }) => {
   const pathname = window.location.pathname;
+  console.log(pathname);
 
   return (
     <a
       href={path}
-      className={`flex items-center gap-1 mt-1 p-2 hover:bg-teal-500 hover:text-white focus:bg-teal-700 ${
+      className={`flex items-center gap-1 mt-1 p-1 hover:bg-teal-500 hover:text-white focus:bg-teal-700 ${
         pathname === path ? "bg-teal-700 text-white" : ""
       }`}
     >
@@ -71,8 +68,8 @@ const Navigation = () => {
       </div>
       <ul className="list-none">
         {menuItems.map((item, index) => (
-          <li key={`item-${index}`}>
-            <span className="font-bold text-sm my-8 text-graysoft">
+          <li key={`item-${index}`} className="mt-2">
+            <span className="font-bold text-base text-graysoft">
               {item.title}
             </span>
             {item.list.map((list, index) => (

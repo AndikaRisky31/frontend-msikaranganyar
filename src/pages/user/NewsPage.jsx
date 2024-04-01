@@ -81,8 +81,8 @@ const NewsPage = () => {
   return (
     <>
       {newsContent ? (
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-1">
-          <div className="col-span-2 h-full order-1">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-1 pt-2">
+          <div className="px-5 sm:px-10 md:px-16 lg:px-32 col-span-2 h-full order-1">
           {newsContent.imageURL ? (
             <img src={process.env.REACT_APP_IMAGE_URL+newsContent.imageURL} alt="Large News" className="w-full object-cover aspect-video" />
           ) : (

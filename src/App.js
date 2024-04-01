@@ -90,7 +90,12 @@ function App() {
               <Route exact path="/dashboard/news" component={News} />
               <Route
                 exact
-                path="/dashboard/news/create"
+                path="/dashboard/news/addUpdate"
+                component={FormCreateNews}
+              />
+              <Route
+                exact
+                path="/dashboard/news/addUpdate/:id_news"
                 component={FormCreateNews}
               />
             </DashboardLayout>

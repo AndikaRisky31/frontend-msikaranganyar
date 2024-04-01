@@ -2,12 +2,18 @@ import ListSubHeader from "./ListSubHeader";
 import React, { useState, useEffect, useRef } from "react";
 import Head from "./Head";
 import NavItem from "./NavItem";
+import { useHistory } from "react-router-dom";
 
 const Header = ({ showHead }) => {
   const [click, setClick] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
   const dropdownRef = useRef(null);
+  const history = useHistory()
+
+  const redirectToDashboard = () => {
+    history.push('/login');
+  };
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -46,7 +52,7 @@ const Header = ({ showHead }) => {
             {click ? <i className='fa fa-times text-2xl text-white'></i> : <i className='fa fa-bars text-2xl text-white'></i>}
           </button>
           <div className={`${click ? 'absolute top-24 right-0 w-1/2 bg-teal-600 mobile-nav' : ''}`} ref={dropdownRef}>
-            <ul className={`flex flex-col items-center md:flex-row gap-3 ${click ? 'block py-2' : 'max-md:hidden'}`}>
+            <ul className={`hidden md:flex flex-col items-center md:flex-row gap-3 ${click ? 'flex py-2' : ''}`}>
             <NavItem to='/' title='Beranda' />
             <li className='md:mr-8 relative ' onClick={toggleDropdown}>
               <div className="text-white font-semibold cursor-pointer hover:text-teal-500">Program</div>
@@ -67,7 +73,7 @@ const Header = ({ showHead }) => {
             </ul>
           </div>
           <div className="h-full bg-teal-600 start hidden md:flex md:items-center" style={{ clipPath: 'polygon(10% 0, 100% 0%, 100% 100%, 0% 100%)' }}>
-            <div className='button text-white mx-16 font-normal'>BERSAMA MELAWAN TBC</div>
+            <div className='button text-white mx-16 font-normal cursor-pointer' onClick={redirectToDashboard}>BERSAMA MELAWAN TBC</div>
           </div>
         </nav>
       </header>

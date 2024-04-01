@@ -21,8 +21,8 @@ const Team = () => {
     <>
       <Back title="Team" />
       <div className="text-center pb-10">
-        <h1 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-semibold my-5 max-sm:text-white">Struktur SSR Mentari Sehat Indonesia</h1>
-        <h3 className="font-semibold tracking-wide uppercase text-teal-500 max-sm:text-white">Kab. Karanganyar</h3>
+        <h1 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-semibold my-5 text-white sm:text-black">Struktur SSR Mentari Sehat Indonesia</h1>
+        <h3 className="font-semibold tracking-wide uppercase  text-white sm:text-teal-500">Kab. Karanganyar</h3>
       </div>
       <section className="px-4 md:px-8 lg:px-12">
         {/* Tingkat 1 */}
@@ -57,7 +57,7 @@ const Team = () => {
         {/* Tingkat 4 */}
         <div className="text-center py-5">
           <h2 className="text-lg font-semibold mb-4">KADER</h2>
-          <div className="grid justify-items-center max-sm:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-1">
+          <div className="grid justify-items-center grid-cols-2  md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-1">
             {dataTeam.filter(val => val.tingkat === 4).map((val) => (
               <TeamCard key={val.id_management} val={val} />
             ))}
