@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import InputField from '../../../components/inputField'
-import { createNews, getNewsById,updateNews } from "../../../API/NewsAPI";
+import { createAnnouncement, getAnnouncementById,updateAnnouncement } from "../../../API/AnnouncementAPI";
 import { useHistory, useParams } from "react-router-dom";
 
-const FormCreateNews = () => {
+const FormCreateAnnouncement = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [image, setImage] = useState(null);
-  const [berita, setBerita] = useState([]);
-  const { id_news } = useParams();
+  const [pengumuman, setpengumuman] = useState([]);
+  const { id_announcement } = useParams();
   const history = useHistory()
 
   const handleSubmit = async (e) => {
@@ -22,39 +22,39 @@ const FormCreateNews = () => {
         formData.append("image", image);
       }
 
-      if (id_news) {
-        // Jika id_news tersedia, maka lakukan pembaruan (update) berita
-        await updateNews(id_news, formData);
+      if (id_announcement) {
+        // Jika id_announcement tersedia, maka lakukan pembaruan (update) pengumuman
+        await updateAnnouncement(id_announcement, formData);
       } else {
-        // Jika id_news tidak tersedia, maka lakukan pembuatan (create) berita baru
-        await createNews(formData);
+        // Jika id_announcement tidak tersedia, maka lakukan pembuatan (create) pengumuman baru
+        await createAnnouncement(formData);
       }
 
-      // Navigasi ke halaman dashboard/news setelah berhasil membuat atau memperbarui berita
-      history.push("/dashboard/news");
+      // Navigasi ke halaman dashboard/Announcement setelah berhasil membuat atau memperbarui pengumuman
+      history.push("/dashboard/pengumuman")
     } catch (error) {
       console.error("Error:", error);
       // Handle error if needed
     }
   };
 
-  const fetchNews = async () => {
+  const fetchAnnouncement = async () => {
     try {
-      const data = await getNewsById(id_news); // Panggil getNewsById dengan id_news
-      setBerita(data); // Set nilai berita yang diterima
-      setTitle(data.title); // Set nilai title dari berita
-      setContent(data.content); // Set nilai content dari berita
-      // Anda mungkin perlu menangani nilai image dari berita jika diperlukan
+      const data = await getAnnouncementById(id_announcement); // Panggil getAnnouncementById dengan id_announcement
+      setpengumuman(data); // Set nilai pengumuman yang diterima
+      setTitle(data.title); // Set nilai title dari pengumuman
+      setContent(data.content); // Set nilai content dari pengumuman
+      // Anda mungkin perlu menangani nilai image dari pengumuman jika diperlukan
     } catch (error) {
-      console.error("gagal set berita ", error);
+      console.error("gagal set pengumuman ", error);
     }
   };
 
   useEffect(() => {
-    if (id_news) {
-      fetchNews();
+    if (id_announcement) {
+      fetchAnnouncement();
     }
-  }, [id_news]);
+  }, [id_announcement]);
 
   return (
     <form onSubmit={handleSubmit} className="max-w-lg mx-auto">
@@ -87,10 +87,10 @@ const FormCreateNews = () => {
         <label htmlFor="image" className="block mb-1 text-sm font-medium text-gray-900">
           Gambar
         </label>
-        {berita.imageURL ? (
+        {pengumuman.imageURL ? (
           <div>
-            <img className="w-1/2" src={`${process.env.REACT_APP_IMAGE_URL}${berita.imageURL}`} alt="" />
-            <h2 className="text-gray-700 text-sm my-2">Biarkan jika tidak ingin mengubah gambar!!!</h2>
+            <img className="w-1/2" src={`${process.env.REACT_APP_IMAGE_URL}${pengumuman.imageURL}`} alt="" />
+            <h2 className="text-gray-700 text-sm">Biarkan jika tidak ingin mengubah gambar!!!</h2>
           </div>
         ) : (
           null
@@ -100,9 +100,8 @@ const FormCreateNews = () => {
           id="image"
           onChange={(e) => setImage(e.target.files[0])}
           accept="image/*"
-          required={id_news ? false : true}
+          required={id_announcement ? false : true}
         />
-        <h2 className="text-red-500 text-sm font-semibold">Untuk hasil yang bagus gunakan foto landscape 16:9</h2>
       </div>
       <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
         Submit
@@ -111,4 +110,4 @@ const FormCreateNews = () => {
   );
 };
 
-export default FormCreateNews;
+export default FormCreateAnnouncement;

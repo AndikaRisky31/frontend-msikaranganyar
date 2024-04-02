@@ -18,6 +18,8 @@ import LoginPage from "./pages/auth/login";
 import Announcement from "./pages/user/Announcement"
 import AnnouncementPage from "./pages/user/AnnouncementPage";
 import InterviewPage from "./pages/user/InterviewPage"
+import Announcementdb from "./pages/dashboard/announcement/Announcementbd";
+import FormCreateAnnouncement from "./pages/dashboard/announcement/FormCreateAnnouncement";
 
 function App() {
   return (
@@ -88,6 +90,7 @@ function App() {
           <Route path="/dashboard">
             <DashboardLayout>
               <Route exact path="/dashboard/news" component={News} />
+              <Route exact path="/dashboard/pengumuman"component={Announcementdb}/>
               <Route
                 exact
                 path="/dashboard/news/addUpdate"
@@ -97,6 +100,16 @@ function App() {
                 exact
                 path="/dashboard/news/addUpdate/:id_news"
                 component={FormCreateNews}
+              />
+              <Route
+                exact
+                path="/dashboard/pengumuman/addUpdate"
+                component={FormCreateAnnouncement}
+              />
+              <Route
+                exact
+                path="/dashboard/pengumuman/addUpdate/:id_announcement"
+                component={FormCreateAnnouncement}
               />
             </DashboardLayout>
           </Route>

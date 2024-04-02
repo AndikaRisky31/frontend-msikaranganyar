@@ -16,7 +16,6 @@ const CardNews = ({
   title,
   content,
   imageURL,
-  handleEditNews,
   handleDeleteNews,
 }) => {
   const history = useHistory();

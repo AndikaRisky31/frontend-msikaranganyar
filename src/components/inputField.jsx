@@ -1,6 +1,6 @@
 import React from "react";
 
-const InputField = ({ id, label, type, placeholder, value, onChange }) => {
+const InputField = ({ id, label, type, placeholder, value, onChange, required }) => {
   return (
     <>
       <div className="mb-3">
@@ -14,6 +14,7 @@ const InputField = ({ id, label, type, placeholder, value, onChange }) => {
           onChange={onChange}
           placeholder={placeholder}
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          required={required} // Menambahkan properti required di sini dengan nilai dari parameter required
         />
       </div>
     </>

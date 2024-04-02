@@ -27,10 +27,13 @@ const AnnouncementPage = () => {
   return (
     <>
         {content && (
-          <div className="mx-auto py-10 px-4 sm:px-6 md:px-20">
-            <Heading title={content.title} subtitle="pengumuman"/>
+          <div className="mx-auto w-full py-10 px-4 sm:px-6 md:px-20 lg:w-3/4">
+            <Heading title={content.title} subtitle="pengumuman" link="#"/>
             <div className="grid grid-cols-1 mx-5 lg:mx-24">
-              <div className="w-full mb-5">
+              <div>
+              <img src={`${process.env.REACT_APP_IMAGE_URL}${content.imageURL}`} alt="gambar" className="aspect-video w-full h-auto object-cover object-center"/>
+              </div>
+              <div className="w-full my-5">
                         <p className="">{getTime(content.updated_at,true,true)} {formatDate(content.updated_at,true,true)}</p>
               </div>
               <div className="row-span-2">

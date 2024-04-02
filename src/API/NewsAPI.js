@@ -3,9 +3,9 @@ import {axiosInstance,axiosInstanceAuth} from './axios'
 const getNewsByPage = async (page, limit = 5) => {
   try {
     const response = await axiosInstance.get(
-      `${process.env.REACT_APP_BASE_URL}/news/?page=${page}&limit=${limit}`
+      `/news/?page=${page}&limit=${limit}`
     );
-    return response.data.data;
+    return response.data;
   } catch (error) {
     console.error("Error fetching news:", error);
     throw error;
@@ -15,7 +15,7 @@ const getNewsByPage = async (page, limit = 5) => {
 const deleteNews = async (id) => {
   try {
     await axiosInstanceAuth.delete(
-      `${process.env.REACT_APP_BASE_URL}/news/${id}`
+      `/news/${id}`
     );;
     return true;
   } catch (error) {
@@ -28,11 +28,9 @@ const createNews = async (newsData) => {
   try {
     newsData.hidden = false;
     const response = await axiosInstanceAuth.post(
-      `${process.env.REACT_APP_BASE_URL}/news/create`,
+      `/news/create`,
       newsData
     );
-    // Handle response if needed
-    console.log('News created successfully:', response.data);
     return response.data; // Return the created news data if needed
   } catch (error) {
     // Handle error if needed
@@ -41,4 +39,24 @@ const createNews = async (newsData) => {
   }
 };
 
-export { getNewsByPage, deleteNews,createNews };
+const getNewsById = async (id_news)=>{
+  try {
+    const response = await axiosInstance.get(
+      `news/${id_news}`
+    )
+    return response.data.data;
+  } catch (error) {
+    console.error("gagal fetch news by id",error);
+  }
+}
+const updateNews = async (id_news, newsData) => {
+  try {
+    const response = await axiosInstanceAuth.patch(`news/${id_news}`, newsData);
+    return response.data;
+  } catch (error) {
+    console.error("gagal mengupdate berita", error);
+    throw error; // Dilemparkan kembali agar dapat ditangkap oleh pemanggil fungsi
+  }
+};
+
+export { getNewsByPage, deleteNews,createNews,getNewsById,updateNews };

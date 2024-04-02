@@ -38,7 +38,7 @@ const LoginPage = () => {
 
   // Jika pengguna sudah terautentikasi, redirect ke dashboard
   if (isLoggedIn || localStorage.getItem("access_token")) {
-    return <Redirect to="/dashboard" />;
+    return <Redirect to="/dashboard/news" />;
   }
 
   return (

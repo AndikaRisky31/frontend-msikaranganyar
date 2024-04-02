@@ -10,37 +10,39 @@ import {
 
 const menuItems = [
   {
-    title: "News",
+    title: "Daftar",
     list: [
       {
         title: "News",
         path: "/dashboard/news",
       },
-    ],
-  },
-  {
-    title: "Announcement",
-    list: [
       {
-        title: "Announcement",
-        path: "/dashboard/announcement",
+        title: "Pengumuman",
+        path: "/dashboard/pengumuman",
       },
       {
-        title: "Account",
-        path: "/dashboard/account",
+        title: "Lowongan",
+        path: "/dashboard/lowongan",
+      },
+      {
+        title: "Interview",
+        path: "/dashboard/interview",
+      },
+      {
+        title: "Update Pasien",
+        path: "/dashboard/Pasien",
       },
     ],
   },
 ];
 
 const MenuLink = ({ title, path, icon }) => {
-  const pathname = window.location.pathname;
-  console.log(pathname);
+  const pathname = window.location.pathname
 
   return (
     <a
       href={path}
-      className={`flex items-center gap-1 mt-1 p-1 hover:bg-teal-500 hover:text-white focus:bg-teal-700 ${
+      className={`flex items-center gap-1 mt-1 pl-3 p-1 hover:bg-teal-500 hover:text-white focus:bg-teal-700 ${
         pathname === path ? "bg-teal-700 text-white" : ""
       }`}
     >

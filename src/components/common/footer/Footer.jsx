@@ -65,7 +65,7 @@ const Footer = () => {
               <div className="group hover:bg-teal-600 w-full pl-3 py-2">
                 <h4 className="text-gray-800 font-medium group-hover:text-white ease-in-out">{val.type === 'scheduleInterview' ? sliceContent(val.description,5) :val.title }</h4>
                 <span className="block text-gray-600 group-hover:text-white">
-                  <label htmlFor='' className="text-sm">{formatDate(val.created_at)} ({val.type})</label>
+                  <h1 htmlFor='' className="text-sm">{formatDate(val.created_at)} ({val.type})</h1>
                 </span>
               </div>
             </div>

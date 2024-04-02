@@ -15,7 +15,7 @@ const Faq = () => {
   return (
     <>
       <section className='faq mt-10'>
-      <Heading subtitle='FAQS' title='Frequesntly Ask Question' />
+      <Heading subtitle='Temukan Jawaban atas Pertanyaan yang Sering Diajukan' title='Pertanyaan Umum (FAQ)' />
         <div className='container'>
           {faq.map((val, index) => (
             <div className='box'>
