@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Back from "../../components/common/back/Back";
-import VacancyCard from "../../components/vacancy/VacancyCard";
+import VacancyCard from "../../components/card/VacancyCard";
 
 const Vacancy = () => {
   const [vacancies, setVacancies] = useState([]);
@@ -46,7 +46,7 @@ const Vacancy = () => {
         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 justify-center'>
           {vacancies.map((vacancy) => (
             <div key={vacancy.id_vacancy} className="mx-auto">
-              <VacancyCard data={vacancy} />
+              <VacancyCard VacancyData={vacancy} />
             </div>
           ))}
         </div>

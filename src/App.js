@@ -20,6 +20,8 @@ import AnnouncementPage from "./pages/user/AnnouncementPage";
 import InterviewPage from "./pages/user/InterviewPage"
 import Announcementdb from "./pages/dashboard/announcement/Announcementbd";
 import FormCreateAnnouncement from "./pages/dashboard/announcement/FormCreateAnnouncement";
+import Vacancydb from "./pages/dashboard/vacancy/Vacancydb";
+import FormCreateVacancy from "./pages/dashboard/vacancy/FormCreateVacancy";
 
 function App() {
   return (
@@ -91,6 +93,7 @@ function App() {
             <DashboardLayout>
               <Route exact path="/dashboard/news" component={News} />
               <Route exact path="/dashboard/pengumuman"component={Announcementdb}/>
+              <Route exact path='/dashboard/lowongan'component={Vacancydb}/>
               <Route
                 exact
                 path="/dashboard/news/addUpdate"
@@ -110,6 +113,16 @@ function App() {
                 exact
                 path="/dashboard/pengumuman/addUpdate/:id_announcement"
                 component={FormCreateAnnouncement}
+              />
+              <Route
+                exact
+                path="/dashboard/lowongan/addUpdate"
+                component={FormCreateVacancy}
+              />
+              <Route
+                exact
+                path="/dashboard/lowongan/addUpdate/:id_vacancy"
+                component={FormCreateVacancy}
               />
             </DashboardLayout>
           </Route>

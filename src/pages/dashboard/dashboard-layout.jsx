@@ -86,10 +86,11 @@ const Navigation = () => {
 
 const NavbarDashboard = () => {
   const pathname = window.location.pathname;
+  console.log(pathname);
   return (
     <div className="p-5 rounded-lg flex bg-soft items-center justify-between">
       <div className="text-graysoft font-bold capitalize">
-        <p>{pathname.split("/").pop()}</p>
+        <p>{pathname.split("/")[2]}</p>
       </div>
       <div className="flex items-center gap-5">
         <div className="flex items-center gap-2 p-2 bg-teal-100 rounded-lg">
@@ -100,11 +101,7 @@ const NavbarDashboard = () => {
             className="bg-transparent border-none text-white focus:outline-none"
           />
         </div>
-        <div className="flex gap-5 cursor-pointer">
-          <MdOutlineChat size={20} />
-          <MdNotifications size={20} />
-          <MdPublic size={20} />
-        </div>
+        <button type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Logout</button>
       </div>
     </div>
   );

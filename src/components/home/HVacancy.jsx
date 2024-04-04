@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Heading from "../common/heading/Heading";
-import VacancyCard from "../vacancy/VacancyCard";
+import VacancyCard from "../card/VacancyCard";
 import '../vacancy/vacancy.css'
 
 const HVacancy = () => {

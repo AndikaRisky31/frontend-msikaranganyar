@@ -66,4 +66,12 @@ export const formatIntegerWithCommas = (number) => {
 export const splitTextByNewLine = (text) => {
     return text.split(/\r?\n/).filter(line => line.trim() !== '');
 };
+export const formatDateForInputDate = (datetimeString) => {
+    const date = new Date(datetimeString); // Buat objek Date dari datetimeString
+    const year = date.getFullYear(); // Ambil tahun
+    let month = (date.getMonth() + 1).toString().padStart(2, '0'); // Ambil bulan dan pad dengan 0 jika kurang dari 10
+    let day = date.getDate().toString().padStart(2, '0'); // Ambil tanggal dan pad dengan 0 jika kurang dari 10
+  
+    return `${year}-${month}-${day}`; // Gabungkan tahun, bulan, dan tanggal dengan tanda '-' sebagai pemisah
+  };
   
