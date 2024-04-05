@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import Header from "./components/common/header/Header";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import About from "./pages/user/About";
 import Team from "./components/team/Team";
 import Vacancy from "./pages/user/Vacancy";
@@ -22,14 +22,14 @@ import Announcementdb from "./pages/dashboard/announcement/Announcementbd";
 import FormCreateAnnouncement from "./pages/dashboard/announcement/FormCreateAnnouncement";
 import Vacancydb from "./pages/dashboard/vacancy/Vacancydb";
 import FormCreateVacancy from "./pages/dashboard/vacancy/FormCreateVacancy";
+import ProtectedRoute from "./pages/auth/ProtectedRoute";
 
 function App() {
   return (
-    <>
-      {/* Router pertama dengan showHead=true */}
-      <Router>
+    <Router>
+      <div>
         <Switch>
-          <Route exact path='/'>
+        <Route exact path='/'>
             <Header showHead={true} />
             <LandingPage />
             <Footer />
@@ -89,48 +89,57 @@ function App() {
             <AnnouncementPage/>
             <Footer />
           </Route>
-          <Route path="/dashboard">
-            <DashboardLayout>
-              <Route exact path="/dashboard/news" component={News} />
-              <Route exact path="/dashboard/pengumuman"component={Announcementdb}/>
-              <Route exact path='/dashboard/lowongan'component={Vacancydb}/>
-              <Route
-                exact
-                path="/dashboard/news/addUpdate"
-                component={FormCreateNews}
-              />
-              <Route
-                exact
-                path="/dashboard/news/addUpdate/:id_news"
-                component={FormCreateNews}
-              />
-              <Route
-                exact
-                path="/dashboard/pengumuman/addUpdate"
-                component={FormCreateAnnouncement}
-              />
-              <Route
-                exact
-                path="/dashboard/pengumuman/addUpdate/:id_announcement"
-                component={FormCreateAnnouncement}
-              />
-              <Route
-                exact
-                path="/dashboard/lowongan/addUpdate"
-                component={FormCreateVacancy}
-              />
-              <Route
-                exact
-                path="/dashboard/lowongan/addUpdate/:id_vacancy"
-                component={FormCreateVacancy}
-              />
-            </DashboardLayout>
-          </Route>
+          
+          <ProtectedRoute path="/dashboard" component={DashboardRoutes} />
           <Route exact path="/login" component={LoginPage} />
+          <Route render={() => <Redirect to="/" />} />
         </Switch>
-      </Router>
-    </>
+      </div>
+    </Router>
   );
 }
+
+const DashboardRoutes = () => {
+  return (
+    <DashboardLayout>
+      <Switch>
+        <Route exact path="/dashboard/news" component={News} />
+        <Route exact path="/dashboard/pengumuman" component={Announcementdb} />
+        <Route exact path='/dashboard/lowongan' component={Vacancydb} />
+        <Route
+          exact
+          path="/dashboard/news/addUpdate"
+          component={FormCreateNews}
+        />
+        <Route
+          exact
+          path="/dashboard/news/addUpdate/:id_news"
+          component={FormCreateNews}
+        />
+        <Route
+          exact
+          path="/dashboard/pengumuman/addUpdate"
+          component={FormCreateAnnouncement}
+        />
+        <Route
+          exact
+          path="/dashboard/pengumuman/addUpdate/:id_announcement"
+          component={FormCreateAnnouncement}
+        />
+        <Route
+          exact
+          path="/dashboard/lowongan/addUpdate"
+          component={FormCreateVacancy}
+        />
+        <Route
+          exact
+          path="/dashboard/lowongan/addUpdate/:id_vacancy"
+          component={FormCreateVacancy}
+        />
+        <Route render={() => <Redirect to="/dashboard/news" />} />
+      </Switch>
+    </DashboardLayout>
+  );
+};
 
 export default App;

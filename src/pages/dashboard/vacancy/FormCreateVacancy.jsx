@@ -72,103 +72,109 @@ const FormCreateVacancy = () => {
   }, [id_vacancy]);
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-lg mx-auto">
-    <div className="mb-4">
-      <label htmlFor="title" className="block mb-1 text-sm font-medium text-gray-900">
-        Judul
-      </label>
-      <InputField
-        id="title"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        placeholder="Masukkan Judul"
-        required={true}
-      />
-    </div>
-    <div className="mb-4">
-        <label htmlFor="place" className="block mb-1 text-sm font-medium text-gray-900">
-            Tempat
+    <form onSubmit={handleSubmit} className="max-w-lg mx-auto grid grid-cols-2 gap-4">
+      <div className="mb-4 col-span-2">
+        <label htmlFor="title" className="block mb-1 text-sm font-medium text-gray-900">
+          Posisi
+        </label>
+        <InputField
+          id="title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          placeholder="Masukkan Judul"
+          required={true}
+        />
+      </div>
+      <div className="mb-4">
+          <label htmlFor="place" className="block mb-1 text-sm font-medium text-gray-900">
+              Penempatan
+          </label>
+          <textarea
+              id="place"
+              value={place}
+              onChange={(e) => setPlace(e.target.value)}
+              placeholder="Masukkan Tempat"
+              required={true}
+              rows={2} // Set jumlah baris menjadi 2
+              className="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring focus:border-blue-400"
+          ></textarea>
+      </div>
+  
+      <div className="mb-4">
+        <label htmlFor="kuota" className="block mb-1 text-sm font-medium text-gray-900">
+          Kuota
+        </label>
+        <InputField
+          type="number"
+          id="kuota"
+          value={kuota}
+          onChange={(e) => {
+            const inputValue = parseInt(e.target.value);
+            // Memastikan nilai yang dimasukkan adalah angka positif dan minimal 1
+            if (!isNaN(inputValue) && inputValue >= 1) {
+              setKuota(inputValue);
+            }
+          }}
+          placeholder="Masukkan Kuota"
+          required={true}
+        />
+      </div>
+      {/* Tambahan kode untuk kolom kedua */}
+      <div className="mb-4">
+        <label htmlFor="closing_date" className="block mb-1 text-sm font-medium text-gray-900">
+          Tanggal Penutupan
+        </label>
+        <InputField
+          type="date"
+          id="closing_date"
+          value={formatDateForInputDate(closing_date)}
+          onChange={(e) => setClosingDate(e.target.value)}
+          required={true}
+        />
+      </div>
+      <div className="mb-4">
+        <label htmlFor="apply_url" className="block mb-1 text-sm font-medium text-gray-900">
+          Link Gform
+        </label>
+        <InputField
+          id="apply_url"
+          value={apply_url}
+          onChange={(e) => setApplyUrl(e.target.value)}
+          placeholder="Masukkan Apply URL"
+          required={true}
+        />
+      </div>
+      <div className="mb-4">
+        <label htmlFor="qualification" className="block mb-1 text-sm font-medium text-gray-900">
+          Kualifikasi
         </label>
         <textarea
-            id="place"
-            value={place}
-            onChange={(e) => setPlace(e.target.value)}
-            placeholder="Masukkan Tempat"
-            required={true}
-            rows={2} // Set jumlah baris menjadi 2
-            className="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring focus:border-blue-400"
+          id="qualification"
+          value={qualification}
+          onChange={(e) => setQualification(e.target.value)}
+          required={true}
+          rows={5}
+          className="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring focus:border-blue-400"
         ></textarea>
-    </div>
-
-    <div className="mb-4">
-      <label htmlFor="kuota" className="block mb-1 text-sm font-medium text-gray-900">
-        Kuota
-      </label>
-      <InputField
-        type="number"
-        id="kuota"
-        value={kuota}
-        onChange={(e) => setKuota(e.target.value)}
-        placeholder="Masukkan Kuota"
-        required={true}
-      />
-    </div>
-    <div className="mb-4">
-      <label htmlFor="closing_date" className="block mb-1 text-sm font-medium text-gray-900">
-        Tanggal Penutupan
-      </label>
-      <InputField
-        type="date"
-        id="closing_date"
-        value={formatDateForInputDate(closing_date)}
-        onChange={(e) => setClosingDate(e.target.value)}
-        required={true}
-      />
-    </div>
-    <div className="mb-4">
-      <label htmlFor="qualification" className="block mb-1 text-sm font-medium text-gray-900">
-        Kualifikasi
-      </label>
-      <textarea
-        id="qualification"
-        value={qualification}
-        onChange={(e) => setQualification(e.target.value)}
-        required={true}
-        rows={5}
-        className="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring focus:border-blue-400"
-      ></textarea>
-    </div>
-    <div className="mb-4">
-      <label htmlFor="recruitment" className="block mb-1 text-sm font-medium text-gray-900">
-        Rekrutmen
-      </label>
-      <textarea
-        id="recruitment"
-        value={recruitment}
-        onChange={(e) => setRecruitment(e.target.value)}
-        required={true}
-        rows={5}
-        className="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring focus:border-blue-400"
-      ></textarea>
-    </div>
-    <div className="mb-4">
-      <label htmlFor="apply_url" className="block mb-1 text-sm font-medium text-gray-900">
-        Apply URL
-      </label>
-      <InputField
-        id="apply_url"
-        value={apply_url}
-        onChange={(e) => setApplyUrl(e.target.value)}
-        placeholder="Masukkan Apply URL"
-        required={true}
-      />
-    </div>
-    <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
-      Submit
-    </button>
-  </form>
-  
-  );
+      </div>
+      <div className="mb-4">
+        <label htmlFor="recruitment" className="block mb-1 text-sm font-medium text-gray-900">
+          Persyaratan
+        </label>
+        <textarea
+          id="recruitment"
+          value={recruitment}
+          onChange={(e) => setRecruitment(e.target.value)}
+          required={true}
+          rows={5}
+          className="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring focus:border-blue-400"
+        ></textarea>
+      </div>
+      <button type="submit" className="col-span-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
+        Submit
+      </button>
+    </form>
+  );  
 };
 
 export default FormCreateVacancy;
