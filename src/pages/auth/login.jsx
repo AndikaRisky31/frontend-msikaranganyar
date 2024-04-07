@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import { login } from "../../API/AuthAPI";
 import { Redirect } from "react-router-dom";
 import {
   Card,
@@ -21,20 +21,16 @@ const LoginPage = () => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/auth/login`, { email, password });
-      if (response.status === 200 && response.data.token) {
-        const { token, message } = response.data;
-        localStorage.setItem("access_token", token); // Menyimpan token ke localStorage
-        setIsLoggedIn(true); // Setelah pengguna berhasil login, atur isLoggedIn menjadi true
-      } else {
-        setError('Unexpected response from server');
-      }
+      const { token, message, role } = await login(email, password);
+      localStorage.setItem("access_token", token); // Menyimpan token ke localStorage
+      localStorage.setItem("role", role);
+      setIsLoggedIn(true); // Setelah pengguna berhasil login, atur isLoggedIn menjadi true
     } catch (error) {
-      setError(error.response ? error.response.data.message : 'Unknown error occurred');
+      setError(error.message);
     } finally {
       setIsLoading(false);
     }
-  };  
+  }; 
 
   // Jika pengguna sudah terautentikasi, redirect ke dashboard
   if (isLoggedIn || localStorage.getItem("access_token")) {

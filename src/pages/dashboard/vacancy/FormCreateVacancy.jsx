@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import InputField from '../../../components/inputField'
 import { createVacancy, getVacancyById,updateVacancy } from "../../../API/VacancyAPI";
 import { useHistory, useParams } from "react-router-dom";
-import { formatDateForInputDate } from "../../../utils/helper";
+import { formatDateForInputDate,removeEmptyLines } from "../../../utils/helper";
 
 const FormCreateVacancy = () => {
     const [title, setTitle] = useState('');
@@ -24,9 +24,9 @@ const FormCreateVacancy = () => {
         
           const formData = new FormData();
           formData.append("title", title);
-          formData.append("qualification", qualification);
-          formData.append("recruitment", recruitment);
-          formData.append("place", place);
+          formData.append("qualification", removeEmptyLines(qualification));
+          formData.append("recruitment", removeEmptyLines(recruitment));
+          formData.append("place", removeEmptyLines(place));
           formData.append("closing_date", formattedClosingDate); // Gunakan tanggal penutupan yang sudah diformat
           formData.append("kuota", kuota);
           formData.append("apply_url", apply_url);

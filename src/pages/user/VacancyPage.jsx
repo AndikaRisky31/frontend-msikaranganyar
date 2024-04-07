@@ -40,7 +40,7 @@ const VacancyPage = () => {
     <>
         {content && (
           <div className="mx-auto py-10 px-4 sm:px-6 md:px-20">
-            <Heading title={content.title} subtitle="Lowongan Kerja" link="#"/>
+            <Heading title={content.title} subtitle="Lowongan Kerja" />
             <div className="grid grid-cols-1 sm:grid-cols-2">
               <div className="w-full sm:col-span-2 mb-5">
                 <div className="flex mb-2">

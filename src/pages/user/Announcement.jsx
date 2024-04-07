@@ -15,9 +15,6 @@ const Announcement = () => {
   const toAnnouncement = (id_announcement) =>{
     history.push(`/pengumuman/${id_announcement}`)
   }
-  const toInterview = (id_scedule) =>{
-    history.push(`/interview/${id_scedule}`)
-  }
 
   const getPengumuman = async () => {
     try {
@@ -46,13 +43,13 @@ const Announcement = () => {
   
   return (
     <section className="Announcement w-5/6 sm:w-9/12 lg:w-3/6 mx-auto py-10">
-      <Heading title="Jadwal Interview" subtitle="Apa yang baru?" link="#"/>
+      <Heading title="Jadwal Interview" subtitle="Apa yang baru?"/>
       <div className="flex justify-start overflow-x-auto snap-mandatory snap-x gap-5 h-48">
       {scheduleInterview && scheduleInterview.map((interview) => (
         <InterviewCard 
           key={interview.id_schedule_interview} 
           interview={interview} 
-          onClick={() => toInterview(interview.id_schedule_interview)}
+          
         />
       ))}
       </div>

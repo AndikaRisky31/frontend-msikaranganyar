@@ -64,8 +64,13 @@ export const formatIntegerWithCommas = (number) => {
     return formattedNumber;
 }
 export const splitTextByNewLine = (text) => {
-    return text.split(/\r?\n/).filter(line => line.trim() !== '');
-};
+    if (!text || text.trim() === '') {
+      return [];
+    }
+    const hasil = text.split(/\r?\n/).filter(line => line.trim() !== '');
+    return hasil
+  };
+
 export const formatDateForInputDate = (datetimeString) => {
     const date = new Date(datetimeString); // Buat objek Date dari datetimeString
     const year = date.getFullYear(); // Ambil tahun
@@ -74,4 +79,26 @@ export const formatDateForInputDate = (datetimeString) => {
   
     return `${year}-${month}-${day}`; // Gabungkan tahun, bulan, dan tanggal dengan tanda '-' sebagai pemisah
   };
+  
+export const formatDateForInputDateTime = (datetimeString) => {
+    const date = new Date(datetimeString); // Buat objek Date dari datetimeString
+    const year = date.getFullYear(); // Ambil tahun
+    const month = ('0' + (date.getMonth() + 1)).slice(-2); // Ambil bulan dan pad dengan 0 jika kurang dari 10
+    const day = ('0' + date.getDate()).slice(-2); // Ambil tanggal dan pad dengan 0 jika kurang dari 10
+    const hours = ('0' + date.getHours()).slice(-2); // Ambil jam dan pad dengan 0 jika kurang dari 10
+    const minutes = ('0' + date.getMinutes()).slice(-2); // Ambil menit dan pad dengan 0 jika kurang dari 10
+  
+    return `${year}-${month}-${day}T${hours}:${minutes}`; // Gabungkan tahun, bulan, tanggal, jam, dan menit dengan tanda '-' dan 'T' sebagai pemisah
+  };
+
+export const removeEmptyLines = (text) => {
+    // Memisahkan teks menjadi array baris
+    const lines = text.split(/\r?\n/);
+    // Menghapus baris kosong dengan menggunakan filter
+    const nonEmptyLines = lines.filter(line => line.trim() !== '');
+    // Menggabungkan kembali baris yang tersisa menjadi satu teks
+    const result = nonEmptyLines.join('\n');
+    return result;
+  };
+  
   

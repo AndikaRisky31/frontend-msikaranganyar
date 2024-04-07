@@ -1,7 +1,7 @@
 import React from 'react';
 import { CardFooter,Button } from '@material-tailwind/react';
-import { useHistory } from 'react-router-dom';
 import { FaTrash, FaRegEdit } from "react-icons/fa";
+import { useHistory } from 'react-router-dom';
 
 
 const AnnouncementCard = ({ announcement,handleDeleteAnnouncement,showButton = false })=> {

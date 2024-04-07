@@ -1,20 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { formatDate, getTime } from '../../utils/helper'
+import { formatDate, getTime, splitTextByNewLine } from '../../utils/helper'
 import ListPlace from "../../components/ListPlace";
 import Heading from "../../components/common/heading/Heading";
 
 const InterviewPage = () => {
   const { id_schedule } = useParams();
   const [content, setContent] = useState(null);
+  const [participant, setparticipant] = useState([]);
 
   const getScheduleById = async () => {
     try {
       const response = await axios.get(
         `${process.env.REACT_APP_BASE_URL}/interview/${id_schedule}`
       );
-      const data = response.data.data;
+      const data = response.data.data
+      setparticipant(splitTextByNewLine(data.participants));
       setContent(data);
     } catch (error) {
       console.error('Failed to fetch vacancy', error);
@@ -29,7 +31,7 @@ const InterviewPage = () => {
     <>
         {content && (
           <div className="mx-auto py-10 px-4 sm:px-6 md:px-20">
-            <Heading title={content.title} subtitle="Jadwal Interview"/>
+            <Heading title={content.title} subtitle="Jadwal Interview" />
             <div className="grid grid-cols-1 sm:grid-cols-2 mx-5 lg:mx-24">
               <div className="w-full sm:col-span-2 mb-5">
                 <div className="flex">
@@ -73,9 +75,9 @@ const InterviewPage = () => {
               <div className="mt-10 sm:mt-0">
                 <h2 className="text-xl font-bold text-center m-3">Daftar Peserta</h2>
                 <div className="border border-black p-3">
-                {content.Participants.map((item,index) => (
-                  <div key={item.id_participant}>
-                    <h4 className="text-lg whitespace-pre-line pb-3" >{index+1}. {item.participant_name}</h4>
+                {participant.map((item,index) => (
+                  <div key={index}>
+                    <h4 className="text-lg whitespace-pre-line pb-3" >{index+1}. {item}</h4>
                   </div>
                 ))}
                 </div>

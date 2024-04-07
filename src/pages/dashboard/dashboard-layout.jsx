@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import PopupModal from "../../components/modal/popup-modal";
-import { MdSearch,MdKeyboardDoubleArrowRight, MdKeyboardDoubleArrowLeft } from "react-icons/md";
+import { MdSearch, MdKeyboardDoubleArrowRight, MdKeyboardDoubleArrowLeft } from "react-icons/md";
+import { isSuperAdmin } from "../../utils/auth";
 
 const menuItems = [
   {
@@ -20,12 +21,16 @@ const menuItems = [
         path: "/dashboard/lowongan",
       },
       {
-        title: "Interview",
-        path: "/dashboard/interview",
+        title: "Wawancara",
+        path: "/dashboard/wawancara",
       },
       {
-        title: "Update Pasien",
+        title: "Pasien",
         path: "/dashboard/pasien", // Mengubah path menjadi huruf kecil
+      },
+      {
+        title: "Profile",
+        path: "/dashboard/profile",
       },
     ],
   },
@@ -35,10 +40,6 @@ const menuItems = [
       {
         title: "Daftar Admin",
         path: "/dashboard/Admin",
-      },
-      {
-        title: "Profile",
-        path: "/dashboard/profile",
       },
     ],
   },
@@ -62,6 +63,16 @@ const MenuLink = ({ title, path, icon }) => {
 
 const Navigation = ({ isOpen }) => {
   const history = useHistory(); // Memindahkan penggunaan useHistory ke dalam komponen Navigation
+  const [listSidebar, setListSidebar] = useState([]);
+
+  useEffect(() => {
+    const isAdminSuperAdmin = isSuperAdmin(); // Memeriksa apakah pengguna adalah superadmin
+    if (isAdminSuperAdmin) {
+      setListSidebar(menuItems);
+    } else {
+      setListSidebar(menuItems.filter(item => item.title !== "Admin"));
+    }
+  }, []);
 
   const redirectToHome = () => {
     history.push('/');
@@ -70,19 +81,19 @@ const Navigation = ({ isOpen }) => {
   return (
     <div>
       <div className="flex items-center px-4 py-2 w-full">
-          <div className="cursor-pointer" onClick={redirectToHome}>
-            <h3 className="text-2xl font-semibold">Mentari Sehat Indonesia</h3>
-            <h3 className="text-xl font-semibold">Kab. Karanganyar</h3>
-          </div>
+        <div className="cursor-pointer" onClick={redirectToHome}>
+          <h3 className="text-2xl font-semibold">Mentari Sehat Indonesia</h3>
+          <h3 className="text-xl font-semibold">Kab. Karanganyar</h3>
+        </div>
       </div>
       <ul className={`list-none p-5 ${isOpen ? '' : 'hidden'}`}>
-        {menuItems.map((item, index) => (
+        {listSidebar.map((item, index) => (
           <li key={`item-${index}`} className="mt-2">
             <span className="font-bold text-base text-graysoft">
               {item.title}
             </span>
-            {item.list.map((list, index) => (
-              <MenuLink key={index} {...list} />
+            {item.list.map((listItem, listIndex) => (
+              <MenuLink key={`list-${listIndex}`} {...listItem} />
             ))}
           </li>
         ))}
@@ -90,6 +101,7 @@ const Navigation = ({ isOpen }) => {
     </div>
   );
 };
+
 
 
 const NavbarDashboard = ({ toggleSidebar,isOpen }) => {
@@ -104,6 +116,7 @@ const NavbarDashboard = ({ toggleSidebar,isOpen }) => {
   const handleConfirmDelete = () => {
     // Hapus token dari localStorage
     localStorage.removeItem("access_token");
+    localStorage.removeItem("role");
 
     // Arahkan pengguna ke halaman login
     history.push("/login");

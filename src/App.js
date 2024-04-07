@@ -23,6 +23,8 @@ import FormCreateAnnouncement from "./pages/dashboard/announcement/FormCreateAnn
 import Vacancydb from "./pages/dashboard/vacancy/Vacancydb";
 import FormCreateVacancy from "./pages/dashboard/vacancy/FormCreateVacancy";
 import ProtectedRoute from "./pages/auth/ProtectedRoute";
+import FormCreateInterview from "./pages/dashboard/interview/FormCreateInterview";
+import Interviewdb from "./pages/dashboard/interview/Interviewdb";
 
 function App() {
   return (
@@ -79,7 +81,7 @@ function App() {
             <VacancyPage/>
             <Footer />
           </Route>
-          <Route exact path='/interview/:id_schedule'>
+          <Route exact path='/wawancara/:id_schedule'>
             <Header showHead={false}/>
             <InterviewPage/>
             <Footer />
@@ -89,10 +91,8 @@ function App() {
             <AnnouncementPage/>
             <Footer />
           </Route>
-          
           <ProtectedRoute path="/dashboard" component={DashboardRoutes} />
           <Route exact path="/login" component={LoginPage} />
-          <Route render={() => <Redirect to="/" />} />
         </Switch>
       </div>
     </Router>
@@ -106,6 +106,7 @@ const DashboardRoutes = () => {
         <Route exact path="/dashboard/news" component={News} />
         <Route exact path="/dashboard/pengumuman" component={Announcementdb} />
         <Route exact path='/dashboard/lowongan' component={Vacancydb} />
+        <Route exact path='/dashboard/wawancara' component={Interviewdb} />
         <Route
           exact
           path="/dashboard/news/addUpdate"
@@ -136,7 +137,16 @@ const DashboardRoutes = () => {
           path="/dashboard/lowongan/addUpdate/:id_vacancy"
           component={FormCreateVacancy}
         />
-        <Route render={() => <Redirect to="/dashboard/news" />} />
+        <Route
+          exact
+          path="/dashboard/wawancara/addUpdate"
+          component={FormCreateInterview}
+        />
+        <Route
+          exact
+          path="/dashboard/wawancara/addUpdate/:id_schedule_interview"
+          component={FormCreateInterview}
+        />
       </Switch>
     </DashboardLayout>
   );

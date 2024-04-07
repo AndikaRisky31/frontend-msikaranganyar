@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Heading = ({ subtitle, title, link }) => {
+const Heading = ({ subtitle, title, link = "#" }) => {
   return (
     <div className="text-center pb-10">
       <h3 className="font-semibold tracking-wide uppercase text-teal-500 justify-center mx-3">{subtitle}</h3>
