@@ -1,34 +1,36 @@
 import React, { useState, useEffect } from "react";
-import { Button, Typography } from "@material-tailwind/react";
+import { Button } from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import CardNews from "../../../components/card/card";
 import { getNewsByPage, deleteNews } from "../../../API/NewsAPI";
 import PopupModal from "../../../components/modal/popup-modal";
 import { useHistory } from "react-router-dom";
 
-const News = () => {
+const News = ({searchKeyword}) => {
   const [dataNews, setDataNews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [deleteId, setDeleteId] = useState(null); // Menyimpan ID berita yang akan dihapus
   const [showDeleteModal, setShowDeleteModal] = useState(false); // Menyimpan status tampilan modal konfirmasi
   const [totalPages, settotalPages] = useState([]);
-  const history = useHistory()
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const newsData = await getNewsByPage(page); // Mengambil data berita dari halaman saat ini
-        setDataNews(newsData.data);
-        settotalPages(newsData.totalPages)
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching news:", error);
-        setLoading(false);
-      }
-    };
+  const history = useHistory();
 
+  const fetchData = async () => {
+    try {
+      const newsData = await getNewsByPage(page); // Mengambil data berita dari halaman saat ini
+      setDataNews(newsData.data);
+      settotalPages(newsData.totalPages)
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching news:", error);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    console.log(searchKeyword);
     fetchData();
-  }, [page]);
+  }, [page,searchKeyword]);
 
   const toCreate =()=>{
     history.push('/dashboard/news/addUpdate')
@@ -65,11 +67,6 @@ const News = () => {
   return (
     <div className="mt-3">
       <button type="button" onClick={toCreate} className="rounded-md focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Tambah Berita</button>
-      <div className="flex items-center justify-between">
-        <Typography variant="h3" color="gray" className="mb-4">
-          News List
-        </Typography>
-      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
         {loading ? (
           <Button variant="text" loading={true}>

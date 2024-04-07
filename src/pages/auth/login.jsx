@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { login } from "../../API/AuthAPI";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
+import { FaLongArrowAltLeft } from "react-icons/fa";
 import {
   Card,
   Typography,
   Input,
-  Checkbox,
   Button,
   Spinner,
 } from "@material-tailwind/react";
@@ -16,6 +16,7 @@ const LoginPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const history = useHistory()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,10 +38,15 @@ const LoginPage = () => {
     return <Redirect to="/dashboard/news" />;
   }
 
+  const handleBack = () => {
+    history.goBack(); // fungsi untuk kembali ke halaman sebelumnya
+  };
+
   return (
-    <section className="container relative">
+    <section>
       <div className="flex min-h-screen items-center justify-center">
         <Card className="w-96">
+          <button onClick={handleBack} className="w-1/3 text-left p-5 hover:bg-teal-500 hover:text-white"><i className="fas fa-long-arrow-alt-left pr-3"></i>Back</button>
           <form onSubmit={handleSubmit}>
             <div className="flex h-28 justify-center items-center bg-gradient-to-r from-gray-400 to-gray-600 mb-4">
               <Typography variant="h3" color="white">
@@ -66,9 +72,6 @@ const LoginPage = () => {
                   {error}
                 </Typography>
               )}
-              <div className="-ml-2.5">
-                <Checkbox label="Remember Me" />
-              </div>
             </div>
             <div className="px-6 pt-0">
               {isLoading ? (
@@ -83,31 +86,19 @@ const LoginPage = () => {
               ) : (
                 <Button
                   type="submit"
-                  className="mt-6"
+                  className="my-6"
                   fullWidth
                   variant="gradient"
                 >
                   Login
                 </Button>
               )}
-              <Typography variant="small" className="mt-6 flex justify-center">
-                Don&apos;t have an account?
-                <Typography
-                  as="a"
-                  href="#signup"
-                  variant="small"
-                  color="blue-gray"
-                  className="ml-1 font-bold"
-                >
-                  Sign up
-                </Typography>
-              </Typography>
             </div>
           </form>
         </Card>
-      </div>
+        </div>
     </section>
   );
-};
+}
 
 export default LoginPage;

@@ -11,7 +11,7 @@ import Home from "./pages/user/Home";
 import LandingPage from "./pages/user/LandingPage";
 import NewsPage from "./pages/user/NewsPage";
 import VacancyPage from "./pages/user/VacancyPage";
-import DashboardLayout from './pages/dashboard/dashboard-layout'
+import DashboardLayout from "./pages/dashboard/component/DashboardLayout";
 import News from '../src/pages/dashboard/news/news'
 import FormCreateNews from '../src/pages/dashboard/news/FormCreateNews'
 import LoginPage from "./pages/auth/login";

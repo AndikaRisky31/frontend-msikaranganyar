@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
-import {formatDate,sliceContent} from '../../../utils/helper';
+import {formatDate,jenisPost,sliceContent} from '../../../utils/helper';
 import ListContact from '../../contact/ListContact.jsx';
 
 const Footer = () => {
@@ -65,7 +65,7 @@ const Footer = () => {
               <div className="group hover:bg-teal-600 w-full pl-3 py-2">
                 <h4 className="text-gray-800 font-medium group-hover:text-white ease-in-out">{val.type === 'scheduleInterview' ? sliceContent(val.description,5) :val.title }</h4>
                 <span className="block text-gray-600 group-hover:text-white">
-                  <h1 htmlFor='' className="text-sm">{formatDate(val.created_at)} ({val.type})</h1>
+                  <h1 htmlFor='' className="text-sm">{formatDate(val.created_at)} ({jenisPost(val.type)})</h1>
                 </span>
               </div>
             </div>

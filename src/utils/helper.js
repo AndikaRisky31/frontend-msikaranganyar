@@ -100,5 +100,18 @@ export const removeEmptyLines = (text) => {
     const result = nonEmptyLines.join('\n');
     return result;
   };
+
+export const jenisPost = (text)=>{
+
+    if(text === "scheduleInterview"){
+        return "Wawancara"
+    }else if(text === "news"){
+        return "Berita"
+    }else if(text === "announcement"){
+        return "Pengumuman"
+    }else if(text === "vacancy"){
+        return "Lowongan"
+    }
+}
   
   
