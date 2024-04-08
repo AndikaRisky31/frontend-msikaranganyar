@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useContext } from "react";
 import { Button, Typography } from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import VacancyCard from "../../../components/card/VacancyCard";
-import { deleteVacancy, getVacancyByPage } from "../../../API/VacancyAPI";
+import { deleteVacancy, getVacancyByPage,getSearchVacancy } from "../../../API/VacancyAPI";
 import PopupModal from "../../../components/modal/popup-modal";
 import { useHistory } from "react-router-dom";
+import { MyContext } from "../component/DashboardLayout";
 
 const Vacancydb = () => {
   const [dataVacancy, setDataVacancy] = useState([]);
@@ -14,22 +15,36 @@ const Vacancydb = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false); // Menyimpan status tampilan modal konfirmasi
   const [totalPages, settotalPages] = useState([]);
   const history = useHistory()
+  const keyword = useContext(MyContext)
   
+  const fetchByPage = async () => {
+    try {
+      const VacancyData = await getVacancyByPage(page); // Mengambil data Vacancy dari halaman saat ini
+      setDataVacancy(VacancyData.data);
+      settotalPages(VacancyData.totalPages)
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching Vacancy:", error);
+      setLoading(false);
+    }
+  };
+  const fetchBySearch= async () => {
+    try {
+      const VacancyData = await getSearchVacancy(keyword);
+      setDataVacancy(VacancyData.data);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching Vacancy:", error);
+      setLoading(false);
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const VacancyData = await getVacancyByPage(page); // Mengambil data Vacancy dari halaman saat ini
-        setDataVacancy(VacancyData.data);
-        settotalPages(VacancyData.totalPages)
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching Vacancy:", error);
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [page]);
+    if(keyword){
+      fetchBySearch()
+    }else{
+      fetchByPage();
+    }
+  }, [page,keyword]);
 
   const toCreate =()=>{
     history.push('/dashboard/lowongan/addUpdate')
@@ -67,7 +82,7 @@ const Vacancydb = () => {
   return (
     <div className="mt-3">
       <button type="button" onClick={toCreate} className="rounded-md focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Tambah Vacancy</button>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
         {loading ? (
           <Button variant="text" loading={true}>
             Loading

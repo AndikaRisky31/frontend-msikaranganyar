@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useContext } from "react";
 import { Button, Typography } from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
-import { getInterviewByPage, deleteInterview } from "../../../API/InterviewAPI.js";
+import { getInterviewByPage, deleteInterview,getSearchInterview } from "../../../API/InterviewAPI.js";
 import PopupModal from "../../../components/modal/popup-modal";
 import { useHistory } from "react-router-dom";
 import InterviewCard from "../../../components/card/InterviewCard";
+import { MyContext } from "../component/DashboardLayout.jsx";
 
 const Interviewdb = () => {
   const [dataInterview, setDataInterview] = useState([]);
@@ -14,21 +15,37 @@ const Interviewdb = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false); // Menyimpan status tampilan modal konfirmasi
   const [totalPages, settotalPages] = useState([]);
   const history = useHistory()
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const InterviewData = await getInterviewByPage(page);
-        setDataInterview(InterviewData.data);
-        settotalPages(InterviewData.totalPages)
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching Interview:", error);
-        setLoading(false);
-      }
-    };
+  const keyword = useContext(MyContext)
+  
+  const fetchByPage = async () => {
+    try {
+      const InterviewData = await getInterviewByPage(page);
+      setDataInterview(InterviewData.data);
+      settotalPages(InterviewData.totalPages)
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching Interview:", error);
+      setLoading(false);
+    }
+  };
+  const fetchSearch = async () => {
+    try {
+      const InterviewData = await getSearchInterview(keyword);
+      setDataInterview(InterviewData.data);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching Interview:", error);
+      setLoading(false);
+    }
+  };
 
-    fetchData();
-  }, [page]);
+  useEffect(() => {
+    if(keyword){
+      fetchSearch()
+    }else{
+      fetchByPage();
+    }
+  }, [page,keyword]);
 
   const toCreate =()=>{
     history.push('/dashboard/wawancara/addUpdate')

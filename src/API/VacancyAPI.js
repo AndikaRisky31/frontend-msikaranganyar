@@ -54,3 +54,14 @@ export const deleteVacancy = async(id_vacancy)=>{
         console.error("gagal menghapus Vacancy",error);
     }
 }
+export const getSearchVacancy = async (keyword) => {
+    try {
+        const response = await axiosInstance.get(`/vacancy/search`, {
+          params: { keyword } // Mengirim kata kunci sebagai query parameter
+        });
+        return response.data; // Mengembalikan data berita yang ditemukan
+      } catch (error) {
+        console.error("Gagal fetch search lowongan", error);
+        throw error;
+      }
+}

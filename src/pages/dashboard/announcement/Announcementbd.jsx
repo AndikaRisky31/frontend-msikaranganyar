@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useContext } from "react";
 import { Button, Typography } from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import AnnouncementCard from "../../../components/card/AnnouncementCard";
-import { deleteAnnouncement, getAnnouncementByPage } from "../../../API/AnnouncementAPI";
+import { deleteAnnouncement, getAnnouncementByPage,getSearchAnnouncement } from "../../../API/AnnouncementAPI";
 import PopupModal from "../../../components/modal/popup-modal";
 import { useHistory } from "react-router-dom";
+import { MyContext } from "../component/DashboardLayout";
 
 const Announcementdb = () => {
   const [dataAnnouncement, setDataAnnouncement] = useState([]);
@@ -14,22 +15,37 @@ const Announcementdb = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false); // Menyimpan status tampilan modal konfirmasi
   const [totalPages, settotalPages] = useState([]);
   const history = useHistory()
+  const keyword = useContext(MyContext)
   
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const AnnouncementData = await getAnnouncementByPage(page); // Mengambil data announcement dari halaman saat ini
-        setDataAnnouncement(AnnouncementData.data);
-        settotalPages(AnnouncementData.totalPages)
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching Announcement:", error);
-        setLoading(false);
-      }
-    };
+  const fetchByPage = async () => {
+    try {
+      const AnnouncementData = await getAnnouncementByPage(page); // Mengambil data announcement dari halaman saat ini
+      setDataAnnouncement(AnnouncementData.data);
+      settotalPages(AnnouncementData.totalPages)
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching Announcement:", error);
+      setLoading(false);
+    }
+  };
+  const fetchBySearch = async()=>{
+    try {
+      const AnnouncementData = await getSearchAnnouncement(keyword); // Mengambil data announcement dari halaman saat ini
+      setDataAnnouncement(AnnouncementData.data);
+      setLoading(false);
+    } catch (error) {
+      console.error("eror fetch search announcement",error);
+      setLoading(false)
+    }
+  }
 
-    fetchData();
-  }, [page]);
+  useEffect(() => {
+    if(keyword){
+      fetchBySearch()
+    }else{
+      fetchByPage();
+    }
+  }, [page,keyword]);
 
   const toCreate =()=>{
     history.push('/dashboard/pengumuman/addUpdate')

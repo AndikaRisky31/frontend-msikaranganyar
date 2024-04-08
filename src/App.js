@@ -25,6 +25,7 @@ import FormCreateVacancy from "./pages/dashboard/vacancy/FormCreateVacancy";
 import ProtectedRoute from "./pages/auth/ProtectedRoute";
 import FormCreateInterview from "./pages/dashboard/interview/FormCreateInterview";
 import Interviewdb from "./pages/dashboard/interview/Interviewdb";
+import Pasien from "./pages/dashboard/pasien/Pasien";
 
 function App() {
   return (
@@ -107,6 +108,7 @@ const DashboardRoutes = () => {
         <Route exact path="/dashboard/pengumuman" component={Announcementdb} />
         <Route exact path='/dashboard/lowongan' component={Vacancydb} />
         <Route exact path='/dashboard/wawancara' component={Interviewdb} />
+        <Route exact path='/dashboard/pasien' component={Pasien} />
         <Route
           exact
           path="/dashboard/news/addUpdate"

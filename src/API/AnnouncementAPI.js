@@ -54,3 +54,14 @@ export const deleteAnnouncement = async(id_announcement)=>{
         console.error("gagal menghapus announcement",error);
     }
 }
+export const getSearchAnnouncement = async (keyword) => {
+    try {
+      const response = await axiosInstance.get(`/announcement/search`, {
+        params: { keyword } // Mengirim kata kunci sebagai query parameter
+      });
+      return response.data; // Mengembalikan data berita yang ditemukan
+    } catch (error) {
+      console.error("Gagal fetch search berita", error);
+      throw error;
+    }
+  };
