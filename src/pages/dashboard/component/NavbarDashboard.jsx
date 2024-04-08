@@ -22,9 +22,11 @@ const NavbarDashboard = ({ isOpen, toggleSidebar, onSearchChange }) => {
     setIsModalOpen(false);
   };
 
-  const handleSearchChange = (e) => {
-    const keyword = e.target.value;
-    onSearchChange(keyword);
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      const keyword = e.target.value;
+      onSearchChange(keyword);
+    }
   };
 
   return (
@@ -54,7 +56,7 @@ const NavbarDashboard = ({ isOpen, toggleSidebar, onSearchChange }) => {
               type="text"
               placeholder="Search..."
               className="bg-transparent border-none text-teal-600 focus:outline-none text-xs sm:text-base"
-              onChange={handleSearchChange}
+              onKeyPress={handleKeyPress}
             />
           </div>
           <button onClick={clickLogout} type="button" className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-xs sm:text-sm px-3 sm:px-5 py-2 sm:py-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Logout</button>

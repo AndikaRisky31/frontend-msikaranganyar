@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useContext } from "react";
 import { Button } from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import CardNews from "../../../components/card/card";
-import { getNewsByPage, deleteNews } from "../../../API/NewsAPI";
+import { getNewsByPage, deleteNews,getSearchNews } from "../../../API/NewsAPI";
 import PopupModal from "../../../components/modal/popup-modal";
 import { useHistory } from "react-router-dom";
+import { MyContext } from "../component/DashboardLayout";
 
-const News = ({searchKeyword}) => {
+const News = () => {
   const [dataNews, setDataNews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
@@ -14,8 +15,9 @@ const News = ({searchKeyword}) => {
   const [showDeleteModal, setShowDeleteModal] = useState(false); // Menyimpan status tampilan modal konfirmasi
   const [totalPages, settotalPages] = useState([]);
   const history = useHistory();
+  const searchKeyword = useContext(MyContext);
 
-  const fetchData = async () => {
+  const fetchNews = async () => {
     try {
       const newsData = await getNewsByPage(page); // Mengambil data berita dari halaman saat ini
       setDataNews(newsData.data);
@@ -26,10 +28,23 @@ const News = ({searchKeyword}) => {
       setLoading(false);
     }
   };
+  const searchNews = async ()=>{
+    try {
+      const newsData = await getSearchNews(searchKeyword); // Mengambil data berita dari halaman saat ini
+      setDataNews(newsData.data);
+      setLoading(false);
+    } catch (error) {
+      console.error("error search news",error);
+      setLoading(false)
+    }
+  }
 
   useEffect(() => {
-    console.log(searchKeyword);
-    fetchData();
+    if(searchKeyword){
+      searchNews()
+    }else{
+      fetchNews();
+    }
   }, [page,searchKeyword]);
 
   const toCreate =()=>{

@@ -19,7 +19,7 @@ export const updateAnnouncement = async (id_announcement, announcementData) => {
       const response = await axiosInstanceAuth.patch(`announcement/${id_announcement}`, announcementData);
       return response.data;
     } catch (error) {
-      console.error("gagal mengupdate berita", error);
+      console.error("gagal mengupdate pengumuman", error);
       throw error; // Dilemparkan kembali agar dapat ditangkap oleh pemanggil fungsi
     }
 };

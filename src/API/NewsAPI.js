@@ -59,4 +59,16 @@ const updateNews = async (id_news, newsData) => {
   }
 };
 
+export const getSearchNews = async (keyword) => {
+  try {
+    const response = await axiosInstance.get(`/news/search`, {
+      params: { keyword } // Mengirim kata kunci sebagai query parameter
+    });
+    return response.data; // Mengembalikan data berita yang ditemukan
+  } catch (error) {
+    console.error("Gagal fetch search berita", error);
+    throw error;
+  }
+};
+
 export { getNewsByPage, deleteNews,createNews,getNewsById,updateNews };

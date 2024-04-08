@@ -36,7 +36,7 @@ const HVacancy = () => {
         <div className="flex overflow-x-auto snap-mandatory snap-x gap-5 pb-3">
             {vacancies.map((vacancy) => (
               <div key={vacancy.id_vacancy} className="snap-start">
-                <VacancyCard key={vacancy.id_vacancy} data={vacancy} />
+                <VacancyCard key={vacancy.id_vacancy} VacancyData={vacancy} />
               </div>
             ))}
           </div>
