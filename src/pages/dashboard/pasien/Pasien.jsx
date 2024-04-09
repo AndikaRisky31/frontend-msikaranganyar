@@ -1,6 +1,120 @@
 import React, { useState, useEffect } from 'react';
 import { getPasien, updatePasien } from '../../../API/PasienAPI';
 
+const YearSelector = ({ dataPasien, selectedYear, handleYearChange, showOtherYearInput }) => {
+    return (
+        <div className="flex flex-col items-center justify-center">
+            <select 
+                value={selectedYear} 
+                onChange={handleYearChange} 
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md p-2"
+            >
+                {dataPasien && dataPasien.totalPerYear.map((yearData, index) => (
+                    <option key={index} value={yearData.year}>{yearData.year}</option>
+                ))}
+                <option value="Other">Tahun Baru</option>
+            </select>
+            {showOtherYearInput && 
+                <input 
+                    type="text" 
+                    name="year" 
+                    placeholder="Input Year" 
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md p-2" 
+                />
+            }
+        </div>
+    );
+};
+
+const InputField = ({ name, placeholder, handleInputChange }) => {
+    return (
+        <input 
+            type="text" 
+            name={name} 
+            placeholder={placeholder} 
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md p-2" 
+            onChange={handleInputChange}
+        />
+    );
+};
+
+const DataTable = ({ dataPasien }) => {
+    return (
+        <table className="table-auto w-full">
+            <thead>
+                <tr>
+                    <th className="px-4 py-2">Tahun</th>
+                    <th className="px-4 py-2">Suspect</th>
+                    <th className="px-4 py-2">Terdeteksi</th>
+                    <th className="px-4 py-2">Pengobatan</th>
+                    <th className="px-4 py-2">Sembuh</th>
+                </tr>
+            </thead>
+            <tbody>
+                {dataPasien && dataPasien.totalPerYear.map((yearData, index) => (
+                    <tr key={yearData.id} className="text-center">
+                        <td className="px-4 py-2"><i className="text-red-500 mx-2 fa-sm fas fa-trash-alt hover:text-red-600 cursor-pointer" />{yearData.year}</td>
+                        <td className="px-4 py-2">{yearData.total_suspect}</td>
+                        <td className="px-4 py-2">{yearData.total_detect}</td>
+                        <td className="px-4 py-2">{yearData.total_treatment}</td>
+                        <td className="px-4 py-2">{yearData.total_recovery}</td>
+                    </tr>
+                ))}
+                {dataPasien && dataPasien.totalAllYears && // Menambahkan pengecekan
+                    <tr className="font-semibold text-center">
+                        <td className="px-4 py-2">Total</td>
+                        <td className="px-4 py-2">{dataPasien.totalAllYears.total_suspect}</td>
+                        <td className="px-4 py-2">{dataPasien.totalAllYears.total_detect}</td>
+                        <td className="px-4 py-2">{dataPasien.totalAllYears.total_treatment}</td>
+                        <td className="px-4 py-2">{dataPasien.totalAllYears.total_recovery}</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    );
+};
+
+
+const Form = ({ handleSubmit, selectedYear, handleYearChange, showOtherYearInput, handleInputChange,dataPasien }) => {
+    return (
+        <form onSubmit={handleSubmit}>
+            <table className="table-auto w-full">
+                <tbody>
+                    <tr className="font-semibold text-center">
+                        <td className="px-4 py-2">
+                        <YearSelector 
+                            dataPasien={dataPasien} 
+                            selectedYear={selectedYear} 
+                            handleYearChange={handleYearChange} 
+                            showOtherYearInput={showOtherYearInput} 
+                        />
+                        </td>
+                        <td className="px-4 py-2">
+                            <InputField name="suspect" placeholder="Input Suspect" handleInputChange={handleInputChange} />
+                        </td>
+                        <td className="px-4 py-2">
+                            <InputField name="detect" placeholder="Input Detect" handleInputChange={handleInputChange} />
+                        </td>
+                        <td className="px-4 py-2">
+                            <InputField name="treatment" placeholder="Input Treatment" handleInputChange={handleInputChange} />
+                        </td>
+                        <td className="px-4 py-2">
+                            <InputField name="recovery" placeholder="Input Recovery" handleInputChange={handleInputChange} />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <button 
+                type="submit" 
+                className="m-5 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+            >
+                Submit
+            </button>
+        </form>
+    );
+};
+
+
 const Pasien = () => {
     const [dataPasien, setDataPasien] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
@@ -9,6 +123,7 @@ const Pasien = () => {
     const [showOtherYearInput, setShowOtherYearInput] = useState(false);
 
     const fetchPasien = async () => {
+        setIsLoading(true);
         try {
             const PasienData = await getPasien();
             setDataPasien(PasienData);
@@ -71,103 +186,23 @@ const Pasien = () => {
 
     return (
         <div className="overflow-x-auto">
-            <form onSubmit={handleSubmit}>
-                <table className="table-auto w-full">
-                    <thead>
-                        <tr>
-                            <th className="px-4 py-2">Tahun</th>
-                            <th className="px-4 py-2">Suspect</th>
-                            <th className="px-4 py-2">Terdeteksi</th>
-                            <th className="px-4 py-2">Pengobatan</th>
-                            <th className="px-4 py-2">Sembuh</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {dataPasien && dataPasien.totalPerYear.map((yearData, index) => (
-                            <tr key={index} className="text-center">
-                                <td className="px-4 py-2">{yearData.year}</td>
-                                <td className="px-4 py-2">{yearData.total_suspect}</td>
-                                <td className="px-4 py-2">{yearData.total_detect}</td>
-                                <td className="px-4 py-2">{yearData.total_treatment}</td>
-                                <td className="px-4 py-2">{yearData.total_recovery}</td>
-                            </tr>
-                        ))}
-                        <tr className="font-semibold text-center">
-                            <td className="px-4 py-2">Total</td>
-                            <td className="px-4 py-2">{dataPasien.totalAllYears.total_suspect}</td>
-                            <td className="px-4 py-2">{dataPasien.totalAllYears.total_detect}</td>
-                            <td className="px-4 py-2">{dataPasien.totalAllYears.total_treatment}</td>
-                            <td className="px-4 py-2">{dataPasien.totalAllYears.total_recovery}</td>
-                        </tr>
-                        <tr className="font-semibold text-center">
-                            <td className="px-4 py-2">
-                                <div className="flex flex-col items-center justify-center">
-                                    <select 
-                                        value={selectedYear} 
-                                        onChange={handleYearChange} 
-                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md p-2"
-                                    >
-                                        {dataPasien && dataPasien.totalPerYear.map((yearData, index) => (
-                                            <option key={index} value={yearData.year}>{yearData.year}</option>
-                                        ))}
-                                        <option value="Other">Tahun Baru</option>
-                                    </select>
-                                    {showOtherYearInput && 
-                                        <input 
-                                            type="text" 
-                                            name="year" 
-                                            placeholder="Input Year" 
-                                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md p-2" 
-                                        />
-                                    }
-                                </div>
-                            </td>
-                            <td className="px-4 py-2">
-                                <input 
-                                    type="text" 
-                                    name="suspect" 
-                                    placeholder="Input Suspect" 
-                                    className="text-center bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md p-2" 
-                                    onChange={handleInputChange} // Menambahkan event listener
-                                />
-                            </td>
-                            <td className="px-4 py-2">
-                                <input 
-                                    type="text" 
-                                    name="detect" 
-                                    placeholder="Input Detect" 
-                                    className="text-center bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md p-2" 
-                                    onChange={handleInputChange} // Menambahkan event listener
-                                />
-                            </td>
-                            <td className="px-4 py-2">
-                                <input 
-                                    type="text" 
-                                    name="treatment" 
-                                    placeholder="Input Treatment" 
-                                    className="text-center bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md p-2" 
-                                    onChange={handleInputChange} // Menambahkan event listener
-                                />
-                            </td>
-                            <td className="px-4 py-2">
-                                <input 
-                                    type="text" 
-                                    name="recovery" 
-                                    placeholder="Input Recovery" 
-                                    className="text-center bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md p-2" 
-                                    onChange={handleInputChange} // Menambahkan event listener
-                                />
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <button 
-                    type="submit" 
-                    className="m-5 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-                >
-                    Submit
-                </button>
-            </form>
+            {isLoading ? (
+                <p>Loading...</p>
+            ) : error ? (
+                <p>Error: {error}</p>
+            ) : (
+                <>
+                    <DataTable dataPasien={dataPasien} />
+                    <Form 
+                        handleSubmit={handleSubmit}
+                        dataPasien={dataPasien} 
+                        selectedYear={selectedYear} 
+                        handleYearChange={handleYearChange} 
+                        showOtherYearInput={showOtherYearInput} 
+                        handleInputChange={handleInputChange} 
+                    />
+                </>
+            )}
         </div>
     );
 }
