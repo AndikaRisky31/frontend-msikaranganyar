@@ -82,7 +82,7 @@ const Vacancydb = () => {
   return (
     <div className="mt-3">
       <button type="button" onClick={toCreate} className="rounded-md focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Tambah Vacancy</button>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 justify-items-center">
         {loading ? (
           <Button variant="text" loading={true}>
             Loading

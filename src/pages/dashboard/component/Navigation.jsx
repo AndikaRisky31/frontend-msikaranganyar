@@ -33,7 +33,7 @@ const menuItems = [
     ],
   },
   {
-    title: "Admin",
+    title: "Super Admin",
     list: [
       {
         title: "Daftar Admin",
@@ -68,7 +68,7 @@ const Navigation = ({ isOpen }) => {
     if (isAdminSuperAdmin) {
       setListSidebar(menuItems);
     } else {
-      setListSidebar(menuItems.filter(item => item.title !== "Admin"));
+      setListSidebar(menuItems.filter(item => item.title !== "Super Admin"));
     }
   }, []);
 
@@ -77,7 +77,7 @@ const Navigation = ({ isOpen }) => {
   };
 
   return (
-    <div>
+    <div className="h-screen">
       <div className="flex items-center px-4 py-2 w-full">
         <div className="cursor-pointer" onClick={redirectToHome}>
           <h3 className="text-2xl font-semibold">Mentari Sehat Indonesia</h3>

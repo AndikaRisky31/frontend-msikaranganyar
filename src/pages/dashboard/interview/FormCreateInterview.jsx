@@ -23,8 +23,6 @@ const FormCreateInterview = () => {
       formData.append("time_schedule", timeSchedule);
       formData.append("participants",removeEmptyLines(participants))
 
-      console.log(formData);
-
       if (id_schedule_interview) {
         await updateInterview(id_schedule_interview, formData);
       } else {

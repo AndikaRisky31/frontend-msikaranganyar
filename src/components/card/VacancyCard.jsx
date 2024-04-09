@@ -15,7 +15,7 @@ const VacancyCard = ({ VacancyData,showButton = false ,handleDeleteVacancy}) => 
   }
   return (
     <>
-      <div className='shadow-lg p-10 text-center flex flex-col justify-between w-[270px] h-[400px]' >
+      <div className={`shadow-lg p-10 text-center flex flex-col justify-between w-[270px] bg-white ${showButton ? 'h-[300px]': 'h-[200px]'}`} >
         <div onClick={toDetailVacancy} className="cursor-pointer">
           <div>
             <h4 className="font-semibold">{VacancyData.title}</h4>         
@@ -44,9 +44,7 @@ const VacancyCard = ({ VacancyData,showButton = false ,handleDeleteVacancy}) => 
           </CardFooter>
           </div>
         ) : (
-          <button onClick={toDetailVacancy} className="bg-teal-500 px-10 py-3 text-white hover:bg-teal-600 hover:shadow-md">
-            DETAIL
-          </button>
+          <></>
         )}
 
         </div>

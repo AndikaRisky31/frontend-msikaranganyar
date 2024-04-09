@@ -20,3 +20,12 @@ export const updatePasien = async(formData)=>{
         throw error
     }
 }
+export const deleteYear = async(id)=>{
+    try {
+        const response = await axiosInstanceAuth.delete(`/announcement/tbc/${id}`)
+        return response.data
+    } catch (error) {
+        console.error("gagal menghapus tahun jumlah pasien dari server",error);
+        throw error
+    }
+}

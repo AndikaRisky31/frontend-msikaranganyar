@@ -1,10 +1,9 @@
 import React from "react";
 import "./App.css";
 import Header from "./components/common/header/Header";
-import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import About from "./pages/user/About";
 import Team from "./components/team/Team";
-import Vacancy from "./pages/user/Vacancy";
 import Contact from "./pages/user/Contact";
 import Footer from "./components/common/footer/Footer";
 import Home from "./pages/user/Home";
@@ -26,13 +25,18 @@ import ProtectedRoute from "./pages/auth/ProtectedRoute";
 import FormCreateInterview from "./pages/dashboard/interview/FormCreateInterview";
 import Interviewdb from "./pages/dashboard/interview/Interviewdb";
 import Pasien from "./pages/dashboard/pasien/Pasien";
+import Profile from "./pages/dashboard/admin/profile";
+import DaftarAdmin from "./pages/dashboard/admin/DaftarAdmin";
+import SuperAdminProtect from "./pages/auth/SuperAdminProtect";
+import TambahAdmin from "./pages/dashboard/admin/TambahAdmin";
 
 function App() {
   return (
     <Router>
       <div>
-        <Switch>
-        <Route exact path='/'>
+        <Switch> 
+          <Route exact path="/login" component={LoginPage} />
+          <Route exact path='/'>
             <Header showHead={true} />
             <LandingPage />
             <Footer />
@@ -40,11 +44,6 @@ function App() {
           <Route exact path='/SSR'>
             <Header showHead={true} />
             <Home />
-            <Footer />
-          </Route>
-          <Route exact path='/lowongan'>
-            <Header showHead={true} />
-            <Vacancy />
             <Footer />
           </Route>
           <Route exact path='/pengumuman'>
@@ -93,7 +92,6 @@ function App() {
             <Footer />
           </Route>
           <ProtectedRoute path="/dashboard" component={DashboardRoutes} />
-          <Route exact path="/login" component={LoginPage} />
         </Switch>
       </div>
     </Router>
@@ -105,50 +103,25 @@ const DashboardRoutes = () => {
     <DashboardLayout>
       <Switch>
         <Route exact path="/dashboard/news" component={News} />
+        <Route exact path="/dashboard/news/addUpdate" component={FormCreateNews}/>
+        <Route exact path="/dashboard/news/addUpdate/:id_news" component={FormCreateNews}/>
+
         <Route exact path="/dashboard/pengumuman" component={Announcementdb} />
+        <Route exact path="/dashboard/pengumuman/addUpdate" component={FormCreateAnnouncement}/>
+        <Route exact path="/dashboard/pengumuman/addUpdate/:id_announcement" component={FormCreateAnnouncement}/>
+
         <Route exact path='/dashboard/lowongan' component={Vacancydb} />
+        <Route exact path="/dashboard/lowongan/addUpdate" component={FormCreateVacancy}/>
+        <Route exact path="/dashboard/lowongan/addUpdate/:id_vacancy" component={FormCreateVacancy}/>
+
         <Route exact path='/dashboard/wawancara' component={Interviewdb} />
+        <Route exact path="/dashboard/wawancara/addUpdate" component={FormCreateInterview}/>
+        <Route exact path="/dashboard/wawancara/addUpdate/:id_schedule_interview" component={FormCreateInterview}/>
+
         <Route exact path='/dashboard/pasien' component={Pasien} />
-        <Route
-          exact
-          path="/dashboard/news/addUpdate"
-          component={FormCreateNews}
-        />
-        <Route
-          exact
-          path="/dashboard/news/addUpdate/:id_news"
-          component={FormCreateNews}
-        />
-        <Route
-          exact
-          path="/dashboard/pengumuman/addUpdate"
-          component={FormCreateAnnouncement}
-        />
-        <Route
-          exact
-          path="/dashboard/pengumuman/addUpdate/:id_announcement"
-          component={FormCreateAnnouncement}
-        />
-        <Route
-          exact
-          path="/dashboard/lowongan/addUpdate"
-          component={FormCreateVacancy}
-        />
-        <Route
-          exact
-          path="/dashboard/lowongan/addUpdate/:id_vacancy"
-          component={FormCreateVacancy}
-        />
-        <Route
-          exact
-          path="/dashboard/wawancara/addUpdate"
-          component={FormCreateInterview}
-        />
-        <Route
-          exact
-          path="/dashboard/wawancara/addUpdate/:id_schedule_interview"
-          component={FormCreateInterview}
-        />
+        <Route exact path='/dashboard/profile' component={Profile}/>
+        <SuperAdminProtect exact path='/dashboard/admin' component={DaftarAdmin}/>
+        <SuperAdminProtect exact path='/dashboard/createadmin' component={TambahAdmin}/>
       </Switch>
     </DashboardLayout>
   );

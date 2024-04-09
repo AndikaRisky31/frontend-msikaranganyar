@@ -39,7 +39,7 @@ const LoginPage = () => {
   }
 
   const handleBack = () => {
-    history.goBack(); // fungsi untuk kembali ke halaman sebelumnya
+    history.push('/');
   };
 
   return (

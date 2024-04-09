@@ -27,7 +27,7 @@ const Footer = () => {
 
     if (type === 'announcement') {
       // Navigasi ke halaman pengumuman
-      history.push(`/announcement/${singleData.id_annoucement}`);
+      history.push(`/pengumuman/${singleData.id_announcement}`);
     } else if (type === 'news') {
       // Navigasi ke halaman berita
       history.push(`/news/${singleData.id_news}`);
@@ -35,8 +35,7 @@ const Footer = () => {
       // Navigasi ke halaman lowongan
       history.push(`/lowongan/${singleData.id_vacancy}`);
     }else if(type === 'scheduleInterview'){
-
-      history.push(`/scheduleinterview/${singleData.id_schedule_interview}`);
+      history.push(`/wawancara/${singleData.id_schedule_interview}`);
     }
   };
   return (

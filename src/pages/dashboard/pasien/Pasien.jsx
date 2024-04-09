@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { getPasien, updatePasien } from '../../../API/PasienAPI';
+import { getPasien, updatePasien,deleteYear } from '../../../API/PasienAPI';
+import PopupModal from '../../../components/modal/popup-modal';
 
 const YearSelector = ({ dataPasien, selectedYear, handleYearChange, showOtherYearInput }) => {
     return (
@@ -12,7 +13,7 @@ const YearSelector = ({ dataPasien, selectedYear, handleYearChange, showOtherYea
                 {dataPasien && dataPasien.totalPerYear.map((yearData, index) => (
                     <option key={index} value={yearData.year}>{yearData.year}</option>
                 ))}
-                <option value="Other">Tahun Baru</option>
+                <option value="Tambah">Tahun Baru</option>
             </select>
             {showOtherYearInput && 
                 <input 
@@ -38,7 +39,7 @@ const InputField = ({ name, placeholder, handleInputChange }) => {
     );
 };
 
-const DataTable = ({ dataPasien }) => {
+const DataTable = ({ dataPasien, handleDelete }) => {
     return (
         <table className="table-auto w-full">
             <thead>
@@ -51,16 +52,22 @@ const DataTable = ({ dataPasien }) => {
                 </tr>
             </thead>
             <tbody>
-                {dataPasien && dataPasien.totalPerYear.map((yearData, index) => (
+                {dataPasien && dataPasien.totalPerYear.map((yearData) => (
                     <tr key={yearData.id} className="text-center">
-                        <td className="px-4 py-2"><i className="text-red-500 mx-2 fa-sm fas fa-trash-alt hover:text-red-600 cursor-pointer" />{yearData.year}</td>
+                        <td className="px-4 py-2">
+                            <i 
+                                className="text-red-500 mx-3 fa-xs fas fa-trash-alt hover:text-red-600 cursor-pointer" 
+                                onClick={() => handleDelete(yearData.id)} 
+                            />
+                            {yearData.year}
+                        </td>
                         <td className="px-4 py-2">{yearData.total_suspect}</td>
                         <td className="px-4 py-2">{yearData.total_detect}</td>
                         <td className="px-4 py-2">{yearData.total_treatment}</td>
                         <td className="px-4 py-2">{yearData.total_recovery}</td>
                     </tr>
                 ))}
-                {dataPasien && dataPasien.totalAllYears && // Menambahkan pengecekan
+                {dataPasien && dataPasien.totalAllYears && (
                     <tr className="font-semibold text-center">
                         <td className="px-4 py-2">Total</td>
                         <td className="px-4 py-2">{dataPasien.totalAllYears.total_suspect}</td>
@@ -68,7 +75,7 @@ const DataTable = ({ dataPasien }) => {
                         <td className="px-4 py-2">{dataPasien.totalAllYears.total_treatment}</td>
                         <td className="px-4 py-2">{dataPasien.totalAllYears.total_recovery}</td>
                     </tr>
-                }
+                )}
             </tbody>
         </table>
     );
@@ -78,32 +85,33 @@ const DataTable = ({ dataPasien }) => {
 const Form = ({ handleSubmit, selectedYear, handleYearChange, showOtherYearInput, handleInputChange,dataPasien }) => {
     return (
         <form onSubmit={handleSubmit}>
-            <table className="table-auto w-full">
+            <table className="w-full">
                 <tbody>
-                    <tr className="font-semibold text-center">
-                        <td className="px-4 py-2">
-                        <YearSelector 
-                            dataPasien={dataPasien} 
-                            selectedYear={selectedYear} 
-                            handleYearChange={handleYearChange} 
-                            showOtherYearInput={showOtherYearInput} 
-                        />
+                    <tr className="font-semibold">
+                        <td className="px-4 py-2 w-1/5">
+                            <YearSelector 
+                                dataPasien={dataPasien} 
+                                selectedYear={selectedYear} 
+                                handleYearChange={handleYearChange} 
+                                showOtherYearInput={showOtherYearInput} 
+                            />
                         </td>
-                        <td className="px-4 py-2">
+                        <td className="px-4 py-2 w-auto">
                             <InputField name="suspect" placeholder="Input Suspect" handleInputChange={handleInputChange} />
                         </td>
-                        <td className="px-4 py-2">
+                        <td className="px-4 py-2 w-auto">
                             <InputField name="detect" placeholder="Input Detect" handleInputChange={handleInputChange} />
                         </td>
-                        <td className="px-4 py-2">
+                        <td className="px-4 py-2 w-auto">
                             <InputField name="treatment" placeholder="Input Treatment" handleInputChange={handleInputChange} />
                         </td>
-                        <td className="px-4 py-2">
+                        <td className="px-4 py-2 w-auto">
                             <InputField name="recovery" placeholder="Input Recovery" handleInputChange={handleInputChange} />
                         </td>
                     </tr>
                 </tbody>
             </table>
+
             <button 
                 type="submit" 
                 className="m-5 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
@@ -121,9 +129,10 @@ const Pasien = () => {
     const [error, setError] = useState(null);
     const [selectedYear, setSelectedYear] = useState("");
     const [showOtherYearInput, setShowOtherYearInput] = useState(false);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [deleteId, setDeleteId] = useState(null);
 
     const fetchPasien = async () => {
-        setIsLoading(true);
         try {
             const PasienData = await getPasien();
             setDataPasien(PasienData);
@@ -155,7 +164,7 @@ const Pasien = () => {
         formData.append("recovery", event.target.elements.recovery.value);
 
         let selectedYearValue;
-        if (selectedYear === "Other") {
+        if (selectedYear === "Tambah") {
             selectedYearValue = event.target.elements.year.value;
         } else {
             selectedYearValue = selectedYear;
@@ -174,14 +183,23 @@ const Pasien = () => {
     const handleYearChange = (e) => {
         const selectedValue = e.target.value;
         setSelectedYear(selectedValue);
-        setShowOtherYearInput(selectedValue === "Other");
+        setShowOtherYearInput(selectedValue === "Tambah");
     }
 
-    // Fungsi untuk memastikan hanya angka dan tanda minus yang diterima
     const handleInputChange = (e) => {
         const { value } = e.target;
-        const filteredValue = value.replace(/[^0-9-]/g, ""); // Hanya membiarkan angka dan tanda minus
+        const filteredValue = value.replace(/[^0-9-]/g, "");
         e.target.value = filteredValue;
+    }
+
+    const handleDeleteYear = async () => {
+        try {
+            await deleteYear(deleteId);
+            fetchPasien();
+            setShowDeleteModal(false); // Tutup modal setelah penghapusan berhasil
+        } catch (error) {
+            console.error("gagal menghapus tahun");
+        }
     }
 
     return (
@@ -192,7 +210,13 @@ const Pasien = () => {
                 <p>Error: {error}</p>
             ) : (
                 <>
-                    <DataTable dataPasien={dataPasien} />
+                    <DataTable 
+                        dataPasien={dataPasien} 
+                        handleDelete={(id) => {
+                            setDeleteId(id);
+                            setShowDeleteModal(true);
+                        }} 
+                    />
                     <Form 
                         handleSubmit={handleSubmit}
                         dataPasien={dataPasien} 
@@ -200,6 +224,14 @@ const Pasien = () => {
                         handleYearChange={handleYearChange} 
                         showOtherYearInput={showOtherYearInput} 
                         handleInputChange={handleInputChange} 
+                    />
+                    <PopupModal
+                        title="Apakah Anda yakin menghapus tahun ini?"
+                        trueChoice="Confirm"
+                        falseChoice="Cancel"
+                        isOpen={showDeleteModal}
+                        toggleModal={() => setShowDeleteModal(!showDeleteModal)}
+                        handleConfirmDelete={handleDeleteYear}
                     />
                 </>
             )}

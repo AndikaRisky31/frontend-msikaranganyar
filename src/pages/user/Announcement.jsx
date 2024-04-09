@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import Heading from "../../components/common/heading/Heading";
 import InterviewCard from "../../components/card/InterviewCard";
 import AnnouncementCard from "../../components/card/AnnouncementCard";
+import VacancyCard from "../../components/card/VacancyCard";
 
 
 
@@ -11,6 +12,9 @@ const Announcement = () => {
   const [pengumuman, setPengumuman] = useState([]);
   const [scheduleInterview, setScheduleInterview] = useState([]);
   const history = useHistory()
+  const [vacancies, setVacancies] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
   
   const toAnnouncement = (id_announcement) =>{
     history.push(`/pengumuman/${id_announcement}`)
@@ -40,10 +44,38 @@ const Announcement = () => {
     getPengumuman();
     getScheduleInterview()
   }, []);
+
+  useEffect(() => {
+    const fetchVacancyData = async (page = 1, limit = 10) => {
+      try {
+        const url = `${process.env.REACT_APP_BASE_URL}/vacancy/?page=${page}&limit=${limit}`;
+        const response = await axios.get(url);
+        setVacancies(response.data.data);
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Error fetching vacancy data:", error);
+        setIsError(true);
+        setIsLoading(false);
+      }
+    };
+
+    fetchVacancyData();
+  }, []);
+
+  if (isLoading) return <div className="loading">Loading...</div>;
+  if (isError) return <div className="error">Error fetching vacancy data</div>;
   
   return (
     <section className="Announcement w-5/6 sm:w-9/12 lg:w-3/6 mx-auto py-10">
-      <Heading title="Jadwal Interview" subtitle="Apa yang baru?"/>
+      <Heading title="Lowongan" subtitle="Apa yang baru?"/>
+      <div className='flex justify-start overflow-x-auto snap-mandatory snap-x gap-5 h-56'>
+          {vacancies.map((vacancy) => (
+            <div key={vacancy.id_vacancy} className="mx-auto">
+              <VacancyCard VacancyData={vacancy} />
+            </div>
+          ))}
+        </div>
+      <h1 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-semibold my-5 text-center">Jadwal Interview</h1>
       <div className="flex justify-start overflow-x-auto snap-mandatory snap-x gap-5 h-48">
       {scheduleInterview && scheduleInterview.map((interview) => (
         <InterviewCard 
