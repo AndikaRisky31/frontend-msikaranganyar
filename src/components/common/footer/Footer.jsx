@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import {formatDate,jenisPost,sliceContent} from '../../../utils/helper';
-import ListContact from '../../contact/ListContact.jsx';
+import ListContact from '../../item/ListContact.jsx';
 
 const Footer = () => {
   const history = useHistory();

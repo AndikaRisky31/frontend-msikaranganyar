@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { axiosInstanceAuth } from "../../../API/axios";
-import InputField from "../../../components/inputField";
+import InputField from "../../../components/item/inputField";
 
 const TambahAdmin = () => {
   const [name, setName] = useState("");

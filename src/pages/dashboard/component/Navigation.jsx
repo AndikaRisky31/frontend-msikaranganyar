@@ -27,6 +27,10 @@ const menuItems = [
         path: "/dashboard/pasien",
       },
       {
+        title: "Tim",
+        path: "/dashboard/tim",
+      },
+      {
         title: "Profile",
         path: "/dashboard/profile",
       },

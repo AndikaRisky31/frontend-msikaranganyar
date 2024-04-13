@@ -1,9 +1,9 @@
 import React from "react";
 import Back from "../../components/common/back/Back";
-import AboutCard from "../../components/about/AboutCard";
+import AboutCard from "../../components/card/AboutCard";
 import { homeAbout } from "../../dummydata";
 import Heading from "../../components/common/heading/Heading";
-import DataPasien from "../../components/about/DataPasien";
+import DataPasien from "../../components/card/DataPasienCard";
 
 const About = () => {
   console.log(homeAbout);

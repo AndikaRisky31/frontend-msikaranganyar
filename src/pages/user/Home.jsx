@@ -1,12 +1,12 @@
 import React from "react"
-import AboutCard from "../../components/about/AboutCard"
+import AboutCard from "../../components/card/AboutCard"
 import Hblog from "../../components/home/Hblog"
 import { homeAbout } from "../../dummydata"
 import HVacancy from "../../components/home/HVacancy"
-import DataPasien from "../../components/about/DataPasien"
-import Faq from "../../components/vacancy/Faq"
-import Testimonal from "../../components/testimonal/Testimonal"
-import Hero from "../../components/Hero"
+import DataPasien from "../../components/card/DataPasienCard"
+import Faq from "../../components/item/Faq"
+import Testimonal from "../../components/card/TestimonalCard"
+import Hero from "../../components/common/Hero"
 
 const Home = () => {
   return (

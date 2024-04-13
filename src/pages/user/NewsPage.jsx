@@ -2,7 +2,7 @@ import React, { useState, useEffect} from 'react';
 import axios from 'axios';
 import { sliceContent, formatDate } from '../../utils/helper';
 import { useParams, useHistory } from 'react-router-dom';
-import ListParagraf from '../../components/news/ItemParagraf';
+import ListParagraf from '../../components/item/ItemParagraf';
 
 const NewsPage = () => {
   const { id_news } = useParams();

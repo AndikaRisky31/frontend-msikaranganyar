@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import InputField from '../../../components/inputField'
+import InputField from '../../../components/item/inputField'
 import { createNews, getNewsById,updateNews } from "../../../API/NewsAPI";
 import { useHistory, useParams } from "react-router-dom";
 

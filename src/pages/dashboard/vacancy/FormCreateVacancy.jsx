@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import InputField from '../../../components/inputField'
+import InputField from '../../../components/item/inputField'
 import { createVacancy, getVacancyById,updateVacancy } from "../../../API/VacancyAPI";
 import { useHistory, useParams } from "react-router-dom";
 import { formatDateForInputDate,removeEmptyLines } from "../../../utils/helper";

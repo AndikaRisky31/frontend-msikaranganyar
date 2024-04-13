@@ -3,7 +3,7 @@ import "./App.css";
 import Header from "./components/common/header/Header";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import About from "./pages/user/About";
-import Team from "./components/team/Team";
+import Team from "./pages/user/Team";
 import Contact from "./pages/user/Contact";
 import Footer from "./components/common/footer/Footer";
 import Home from "./pages/user/Home";
@@ -29,6 +29,7 @@ import Profile from "./pages/dashboard/admin/profile";
 import DaftarAdmin from "./pages/dashboard/admin/DaftarAdmin";
 import SuperAdminProtect from "./pages/auth/SuperAdminProtect";
 import TambahAdmin from "./pages/dashboard/admin/TambahAdmin";
+import TeamList from "./pages/dashboard/tim/TeamList";
 
 function App() {
   return (
@@ -120,6 +121,7 @@ const DashboardRoutes = () => {
 
         <Route exact path='/dashboard/pasien' component={Pasien} />
         <Route exact path='/dashboard/profile' component={Profile}/>
+        <Route exact path='/dashboard/tim' component={TeamList}/>
         <SuperAdminProtect exact path='/dashboard/admin' component={DaftarAdmin}/>
         <SuperAdminProtect exact path='/dashboard/createadmin' component={TambahAdmin}/>
       </Switch>

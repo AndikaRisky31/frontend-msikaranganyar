@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { formatDate } from "../../utils/helper"
-import ListPlace from "../../components/ListPlace";
+import ListPlace from "../../components/item/ListPlace";
 import Heading from "../../components/common/heading/Heading";
 
 const VacancyPage = () => {

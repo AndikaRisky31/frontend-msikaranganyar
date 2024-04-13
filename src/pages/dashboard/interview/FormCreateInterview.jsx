@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import InputField from "../../../components/inputField";
+import InputField from "../../../components/item/inputField";
 import { createInterview, getInterviewById, updateInterview } from "../../../API/InterviewAPI";
 import { useHistory, useParams } from "react-router-dom";
 import { formatDateForInputDateTime,removeEmptyLines } from "../../../utils/helper";

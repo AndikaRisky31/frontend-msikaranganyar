@@ -2,7 +2,7 @@ import React from "react";
 import { CardFooter,Button } from '@material-tailwind/react';
 import { useHistory } from 'react-router-dom';
 import { FaTrash, FaRegEdit } from "react-icons/fa";
-import ListPlace from "../ListPlace";
+import ListPlace from "../item/ListPlace";
 import { formatDate, getTime } from "../../utils/helper";
 
 const VacancyCard = ({ VacancyData,showButton = false ,handleDeleteVacancy}) => {

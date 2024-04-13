@@ -1,5 +1,5 @@
 import React from "react";
-import TeamCard from "../team/TeamCard";
+import TeamCard from "../card/TeamCard";
 
 
 const HStruktur = ()=>{

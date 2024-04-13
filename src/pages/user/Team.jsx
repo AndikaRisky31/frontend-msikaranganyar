@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Back from "../common/back/Back";
-import TeamCard from "./TeamCard";
+import Back from "../../components/common/back/Back";
+import TeamCard from "../../components/card/TeamCard";
 import axios from "axios";
 
 const Team = () => {

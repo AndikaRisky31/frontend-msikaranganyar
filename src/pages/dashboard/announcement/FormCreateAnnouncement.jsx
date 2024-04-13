@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import InputField from '../../../components/inputField'
+import InputField from '../../../components/item/inputField'
 import { createAnnouncement, getAnnouncementById, updateAnnouncement } from "../../../API/AnnouncementAPI";
 import { useHistory, useParams } from "react-router-dom";
 

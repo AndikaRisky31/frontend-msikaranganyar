@@ -1,8 +1,7 @@
 import React from "react"
-import Heading from "../../components/common/heading/Heading"
 import HStruktur from "../../components/home/HStruktur"
-import Hero from "../../components/Hero"
-import AboutCard from "../../components/about/AboutCard"
+import Hero from "../../components/common/Hero"
+import AboutCard from "../../components/card/AboutCard"
 import { Link } from "react-router-dom"
 
 const LandingPage = () => {
