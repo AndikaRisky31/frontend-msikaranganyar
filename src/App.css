@@ -155,3 +155,10 @@ p {
   box-shadow: 0 5px 25px -2px rgb(0 0 0 / 6%);
   background-color: #fff;
 }
+
+@font-face {
+    font-family: 'Avenir';
+    src: url('../public/fonts/avenir_roman_12.woff') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}

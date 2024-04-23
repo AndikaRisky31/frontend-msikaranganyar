@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { axiosInstance, axiosInstanceAuth } from "../../../API/axios";
 import PopupModal from "../../../components/modal/popup-modal";
 
@@ -12,7 +13,7 @@ const TeamList = () => {
   const [listTeam, setListTeam] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedTeamId, setSelectedTeamId] = useState(null);
-
+  const history = useHistory()
   const fetchListTeam = async () => {
     try {
         const response = await axiosInstance.get('/management/all')
@@ -21,6 +22,9 @@ const TeamList = () => {
         console.error("gagal mengambil data dari server",error);
     }
   };
+  const toCreate = ()=>{
+    history.push('/dashboard/tim/create')
+  }
 
   useEffect(() => {
     fetchListTeam();
@@ -43,6 +47,7 @@ const TeamList = () => {
 
   return (
     <>
+    <button type="button" onClick={toCreate} className="rounded-md focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Tambah Vacancy</button>
       <table className="min-w-full divide-y divide-gray-200 overflow-x-auto">
         <thead className="bg-gray-50">
           <tr>
@@ -126,12 +131,13 @@ const TableContent = ({ team, handleDeleteClick,fetchListTeam }) => {
   };
 
   return (
+    <>
     <tr>
       <td className="px-3 py-2 whitespace-nowrap">
         <div className="flex items-center space-x-6">
             {!editMode ? (
-                <div className="flex items-center"> {/* Container menggunakan flexbox dengan item flex */}
-                    <img id='preview_img' className="h-16 w-16 object-cover rounded-full" src={imagePreview} alt="Current profile photo" />
+              <div className="flex items-center"> {/* Container menggunakan flexbox dengan item flex */}
+                    <img id='preview_img' className="h-16 w-16 object-cover rounded-full" src={imagePreview} alt="Current" />
                     <div className="text-sm font-medium text-gray-900 ml-2">{team.name}</div> {/* Gunakan margin left (ml) untuk memberi jarak antara gambar dan teks */}
                 </div>
             ):
@@ -143,7 +149,7 @@ const TableContent = ({ team, handleDeleteClick,fetchListTeam }) => {
                             id='preview_img'
                             className="h-16 w-16 object-cover rounded-full cursor-pointer"
                             src={imagePreview}
-                            alt="Current profile photo"
+                            alt="Current"
                             onClick={() => document.getElementById('file_input').click()} // Memicu input file saat gambar diklik
                             />
                         <input
@@ -155,7 +161,7 @@ const TableContent = ({ team, handleDeleteClick,fetchListTeam }) => {
                     </div>
                 </div>
             </form>
-            <input type="text" value={editedName} onChange={(e) => setEditedName(e.target.value)} className="form-input block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+            <input type="text" value={editedName} onChange={(e) => setEditedName(e.target.value)} className="form-input block w-full border-gray-300 rounded-md shadow-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
             </>
             }
         </div>
@@ -163,8 +169,8 @@ const TableContent = ({ team, handleDeleteClick,fetchListTeam }) => {
       <td className="px-3 py-4 whitespace-nowrap">
         {editMode ? (
             <div className="flex-row">
-                <input type="text" value={editedJobTitle} onChange={(e) => setEditedJobTitle(e.target.value)} className="form-input block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
-                <input type="text" value={editedPenempatan} onChange={(e) => setEditedPenempatan(e.target.value)} className="form-input block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+                <input type="text" value={editedJobTitle} onChange={(e) => setEditedJobTitle(e.target.value)} placeholder="Masukan Jabatan" className="form-input block w-full border-gray-300 rounded-md shadow-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+                <input type="text" value={editedPenempatan} onChange={(e) => setEditedPenempatan(e.target.value)} placeholder="Masukan Penempatan" className="form-input block w-full border-gray-300 rounded-md shadow-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm mt-1" />
             </div>
         ) : (
           <>
@@ -178,7 +184,7 @@ const TableContent = ({ team, handleDeleteClick,fetchListTeam }) => {
           <select
             value={editedTingkat}
             onChange={(e) => setEditedTingkat(e.target.value)}
-            className="form-select block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className="form-select block w-full border-gray-300 rounded-md shadow-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           >
             <option value="1">1</option>
             <option value="2">2</option>
@@ -193,7 +199,7 @@ const TableContent = ({ team, handleDeleteClick,fetchListTeam }) => {
       </td>
       <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
         {editMode ? (
-          <input type="text" value={editedWhatsApp} onChange={(e) => setEditedWhatsApp(e.target.value)} className="form-input block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+          <input type="text" value={editedWhatsApp} onChange={(e) => setEditedWhatsApp(e.target.value)} placeholder="Masukan WhatsApp" className="form-input block w-full border-gray-300 rounded-md shadow-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
         ) : (
             <div className="text-sm text-gray-500">{team.WhatsApp}</div>
         )}
@@ -212,6 +218,7 @@ const TableContent = ({ team, handleDeleteClick,fetchListTeam }) => {
         )}
       </td>
     </tr>
+    </>
   );
 };
 

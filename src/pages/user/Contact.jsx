@@ -43,7 +43,7 @@ const Contact = () => {
             <div className='items'>
               <div className='box'>
                 <h4 className="font-medium">EMAIL</h4>
-                <p>ssrmsi.kabkaranganyar@gmail.com</p>
+                <p>msi.kabkaranganyar@gmail.com</p>
               </div>
               <div className='box'>
                 <h4 className="font-medium">WhatsApp</h4>

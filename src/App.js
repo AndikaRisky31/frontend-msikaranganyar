@@ -30,6 +30,8 @@ import DaftarAdmin from "./pages/dashboard/admin/DaftarAdmin";
 import SuperAdminProtect from "./pages/auth/SuperAdminProtect";
 import TambahAdmin from "./pages/dashboard/admin/TambahAdmin";
 import TeamList from "./pages/dashboard/tim/TeamList";
+import FormTeam from "./pages/dashboard/tim/FormTeam";
+import Publish from "./pages/user/Publish";
 
 function App() {
   return (
@@ -70,6 +72,11 @@ function App() {
           <Route exact path='/news/:id_news'>
             <Header showHead={false} />
             <NewsPage />
+            <Footer />
+          </Route>
+          <Route exact path='/document'>
+            <Header showHead={false} />
+            <Publish />
             <Footer />
           </Route>
           <Route exact path='/contact'>
@@ -119,9 +126,12 @@ const DashboardRoutes = () => {
         <Route exact path="/dashboard/wawancara/addUpdate" component={FormCreateInterview}/>
         <Route exact path="/dashboard/wawancara/addUpdate/:id_schedule_interview" component={FormCreateInterview}/>
 
+        <Route exact path='/dashboard/tim' component={TeamList}/>
+        <Route exact path='/dashboard/tim/create' component={FormTeam}/>
+
         <Route exact path='/dashboard/pasien' component={Pasien} />
         <Route exact path='/dashboard/profile' component={Profile}/>
-        <Route exact path='/dashboard/tim' component={TeamList}/>
+
         <SuperAdminProtect exact path='/dashboard/admin' component={DaftarAdmin}/>
         <SuperAdminProtect exact path='/dashboard/createadmin' component={TambahAdmin}/>
       </Switch>

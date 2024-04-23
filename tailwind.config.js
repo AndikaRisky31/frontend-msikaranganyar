@@ -6,6 +6,7 @@ export default withMT({
     extend: {
       fontFamily: {
         sans: ['Roboto', 'sans-serif'],
+        avenir: ['Avenir', 'sans-serif'],
       },
       gridAutoColumns: {
         '2fr': 'minmax(0, 2fr)',

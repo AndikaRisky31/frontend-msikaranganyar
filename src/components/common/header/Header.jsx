@@ -68,6 +68,7 @@ const Header = ({ showHead }) => {
             <NavItem to='/pengumuman' title='Pengumuman' />
             <NavItem to='/about' title='Tentang Kami' />
             <NavItem to='/team' title='Tim' />
+            <NavItem to='/document' title='Dokumen' />
             <NavItem to='/contact' title='Kontak' />
             </ul>
           </div>
