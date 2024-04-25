@@ -1,6 +1,6 @@
 import { axiosInstance, axiosInstanceAuth } from "./axios";
 
-export const getDocumentByPage = async (page, limit,tipe) => {
+export const getDocumentByPage = async (tipe,page = 1, limit=10) => {
     try {
         // Membuat panggilan API untuk mengambil data dokumen dengan halaman dan batasan tertentu
         const response = await axiosInstance.get(`/document/${tipe}`, {

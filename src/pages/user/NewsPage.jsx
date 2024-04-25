@@ -3,6 +3,7 @@ import axios from 'axios';
 import { sliceContent, formatDate } from '../../utils/helper';
 import { useParams, useHistory } from 'react-router-dom';
 import ListParagraf from '../../components/item/ItemParagraf';
+import EmptyState from '../../components/modal/EmptyState';
 
 const NewsPage = () => {
   const { id_news } = useParams();
@@ -130,7 +131,7 @@ const NewsPage = () => {
           </div>
         </div>
       ) : (
-        <p>Loading...</p>
+        <EmptyState dataName="berita"/>
       )}
     </>
   );

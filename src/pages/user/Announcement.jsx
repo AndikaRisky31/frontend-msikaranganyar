@@ -5,7 +5,7 @@ import Heading from "../../components/common/heading/Heading";
 import InterviewCard from "../../components/card/InterviewCard";
 import AnnouncementCard from "../../components/card/AnnouncementCard";
 import VacancyCard from "../../components/card/VacancyCard";
-
+import EmptyState from "../../components/modal/EmptyState";
 
 
 const Announcement = () => {
@@ -64,38 +64,62 @@ const Announcement = () => {
 
   if (isLoading) return <div className="loading">Loading...</div>;
   if (isError) return <div className="error">Error fetching vacancy data</div>;
-  
+
   return (
-    <section className="Announcement w-5/6 sm:w-9/12 lg:w-3/6 mx-auto py-10">
-      <Heading title="Lowongan" subtitle="Apa yang baru?"/>
-      <div className='flex justify-start overflow-x-auto snap-mandatory snap-x gap-5 h-56'>
-          {vacancies.map((vacancy) => (
-            <div key={vacancy.id_vacancy} className="mx-auto">
-              <VacancyCard VacancyData={vacancy} />
+    <>
+      {((!vacancies || vacancies.length === 0) && 
+        (!scheduleInterview || scheduleInterview.length === 0) &&
+        (!pengumuman || pengumuman.length === 0)) ? (
+        <EmptyState dataName="pengumuman"/>
+      ) : (
+        <section className="Announcement w-5/6 sm:w-9/12 lg:w-3/6 mx-auto py-10">
+          {/* Bagian Lowongan */}
+          {vacancies && vacancies.length > 0 && (
+            <div>
+              <Heading title="Lowongan" subtitle="Apa yang baru?" />
+              <div className='flex justify-start overflow-x-auto snap-mandatory snap-x gap-5 h-56'>
+                {vacancies.map((vacancy) => (
+                  <div key={vacancy.id_vacancy} className="mx-auto">
+                    <VacancyCard VacancyData={vacancy} />
+                  </div>
+                ))}
+              </div>
             </div>
-          ))}
-        </div>
-      <h1 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-semibold my-5 text-center">Jadwal Interview</h1>
-      <div className="flex justify-start overflow-x-auto snap-mandatory snap-x gap-5 h-48">
-      {scheduleInterview && scheduleInterview.map((interview) => (
-        <InterviewCard 
-          key={interview.id_schedule_interview} 
-          interview={interview} 
-          
-        />
-      ))}
-      </div>
-      <h1 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-semibold my-5 text-center">Pengumuman</h1>
-      <div className="grid grid-cols-1 gap-10">
-        {pengumuman && pengumuman.map((announcement) => (
-          <AnnouncementCard
-            key={announcement.id_announcement}
-            announcement={announcement}
-            onClick={() => toAnnouncement(announcement.id_announcement)}
-          />
-        ))}
-      </div>
-    </section>
+          )}
+  
+          {/* Bagian Jadwal Interview */}
+          {scheduleInterview && scheduleInterview.length > 0 && (
+            <div>
+              <h1 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-semibold my-5 text-center">Jadwal Interview</h1>
+              <div className="flex justify-start overflow-x-auto snap-mandatory snap-x gap-5 h-48">
+                {scheduleInterview.map((interview) => (
+                  <InterviewCard 
+                    key={interview.id_schedule_interview} 
+                    interview={interview} 
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+  
+          {/* Bagian Pengumuman */}
+          {pengumuman && pengumuman.length > 0 && (
+            <div>
+              <h1 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-semibold my-5 text-center">Pengumuman</h1>
+              <div className="grid grid-cols-1 gap-10">
+                {pengumuman.map((announcement) => (
+                  <AnnouncementCard
+                    key={announcement.id_announcement}
+                    announcement={announcement}
+                    onClick={() => toAnnouncement(announcement.id_announcement)}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+        </section>
+      )}
+    </>
   );
 };
 

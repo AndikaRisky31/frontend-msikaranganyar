@@ -1,5 +1,4 @@
 import React from "react"
-import { useLocation } from "react-router-dom"
 
 const Back = ({ title }) => {
   return (
@@ -10,7 +9,7 @@ const Back = ({ title }) => {
           <h1 className="font-normal text-7xl sm:text-[80px] lg:text-[100px] w-full text-center">{title}</h1>
         </div>
       </section>
-      <div className='min-[10px]:mt-[70%] md:mt-[45%] lg:mt-[40%]'></div>
+      <div className='mt-[80%] sm:mt-[55%] md:mt-[50%] lg:mt-[40%]'></div>
     </>
   )
 }

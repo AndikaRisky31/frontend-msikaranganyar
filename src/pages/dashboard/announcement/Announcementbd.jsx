@@ -6,6 +6,7 @@ import { deleteAnnouncement, getAnnouncementByPage,getSearchAnnouncement } from 
 import PopupModal from "../../../components/modal/popup-modal";
 import { useHistory } from "react-router-dom";
 import { MyContext } from "../component/DashboardLayout";
+import EmptyState from "../../../components/modal/EmptyState";
 
 const Announcementdb = () => {
   const [dataAnnouncement, setDataAnnouncement] = useState([]);
@@ -82,47 +83,50 @@ const Announcementdb = () => {
 
   return (
     <div className="mt-3">
-      <button type="button" onClick={toCreate} className="rounded-md focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Tambah announcement</button>      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
-        {loading ? (
-          <Button variant="text" loading={true}>
-            Loading
+      {dataAnnouncement.length > 0 ? (
+        <>
+        <button type="button" onClick={toCreate} className="rounded-md focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Tambah announcement</button>      
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
+            {dataAnnouncement.map((Announcement) => (
+                <AnnouncementCard
+                    key={Announcement.id_announcement}
+                    announcement={Announcement}
+                    showButton={true}
+                    // Saat tombol delete di-klik, simpan ID announcement dan tampilkan modal konfirmasi
+                    handleDeleteAnnouncement={() => {
+                        setDeleteId(Announcement.id_announcement);
+                        setShowDeleteModal(true);
+                    }}
+                />
+            ))}
+        </div>
+        <div className="flex items-center justify-center gap-4 mt-5">
+          <Button
+            variant="outlined"
+            color="gray"
+            className="flex items-center gap-2"
+            onClick={prev}
+            disabled={page === 1}
+          >
+            <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
           </Button>
-        ) : (
-          dataAnnouncement.map((Announcement) => (
-            <AnnouncementCard
-              key={Announcement.id_announcement}
-              announcement={Announcement}
-              showButton={true}
-              // Saat tombol delete di-klik, simpan ID announcement dan tampilkan modal konfirmasi
-              handleDeleteAnnouncement={() => {
-                setDeleteId(Announcement.id_announcement);
-                setShowDeleteModal(true);
-              }}
-            />
-          ))
-        )}
-      </div>
-      <div className="flex items-center justify-center gap-4 mt-5">
-        <Button
-          variant="outlined"
-          color="gray"
-          className="flex items-center gap-2"
-          onClick={prev}
-          disabled={page === 1}
-        >
-          <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
-        </Button>
-        <Button
-          variant="outlined"
-          color="teal"
-          className="flex items-center gap-2"
-          onClick={next}
-          disabled={page === totalPages} // Menonaktifkan tombol "Next" jika tidak ada data announcement
-        >
-          Next
-          <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
-        </Button>
-      </div>
+          <Button
+            variant="outlined"
+            color="teal"
+            className="flex items-center gap-2"
+            onClick={next}
+            disabled={page === totalPages} // Menonaktifkan tombol "Next" jika tidak ada data announcement
+          >
+            Next
+            <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
+          </Button>
+        </div>
+        </>
+    ) : (
+        <EmptyState dataName="Pengumuman" create={toCreate} />
+    )}
+
+      
 
       {/* Tambahkan komponen PopupModal di sini */}
       <PopupModal
