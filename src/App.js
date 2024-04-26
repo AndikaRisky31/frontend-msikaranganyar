@@ -32,6 +32,7 @@ import TambahAdmin from "./pages/dashboard/admin/TambahAdmin";
 import TeamList from "./pages/dashboard/tim/TeamList";
 import FormTeam from "./pages/dashboard/tim/FormTeam";
 import Publish from "./pages/user/Publish";
+import Document from "./pages/dashboard/document/Document";
 
 function App() {
   return (
@@ -131,6 +132,8 @@ const DashboardRoutes = () => {
 
         <Route exact path='/dashboard/pasien' component={Pasien} />
         <Route exact path='/dashboard/profile' component={Profile}/>
+
+        <Route exact path='/dashboard/dokumen' component={Document}/>
 
         <SuperAdminProtect exact path='/dashboard/admin' component={DaftarAdmin}/>
         <SuperAdminProtect exact path='/dashboard/createadmin' component={TambahAdmin}/>

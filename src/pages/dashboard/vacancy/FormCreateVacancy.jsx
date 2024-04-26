@@ -1,105 +1,99 @@
-import React, { useState, useEffect } from "react";
-import InputField from '../../../components/item/inputField'
-import { createVacancy, getVacancyById,updateVacancy } from "../../../API/VacancyAPI";
+import React, { useEffect } from "react";
+import { useFormik } from "formik";
+import * as yup from "yup";
+import InputField from '../../../components/item/inputField';
+import { createVacancy, getVacancyById, updateVacancy } from "../../../API/VacancyAPI";
 import { useHistory, useParams } from "react-router-dom";
-import { formatDateForInputDate,removeEmptyLines } from "../../../utils/helper";
+import {removeEmptyLines } from "../../../utils/helper";
 
 const FormCreateVacancy = () => {
-    const [title, setTitle] = useState('');
-    const [qualification, setQualification] = useState('');
-    const [recruitment, setRecruitment] = useState('');
-    const [place, setPlace] = useState('');
-    const [closing_date, setClosingDate] = useState('');
-    const [kuota, setKuota] = useState('');
-    const [apply_url, setApplyUrl] = useState('');
-    const { id_vacancy } = useParams();
-    const history = useHistory()
+  const { id_vacancy } = useParams();
+  const history = useHistory();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-          // Tambahkan waktu 23:59 pada closing_date sebelum disimpan
-          const closingDateWithTime = new Date(closing_date + 'T23:59'); // Tambahkan waktu 23:59 pada tanggal penutupan
-          const formattedClosingDate = closingDateWithTime.toISOString(); // Format tanggal penutupan menjadi ISO string
-        
-          const formData = new FormData();
-          formData.append("title", title);
-          formData.append("qualification", removeEmptyLines(qualification));
-          formData.append("recruitment", removeEmptyLines(recruitment));
-          formData.append("place", removeEmptyLines(place));
-          formData.append("closing_date", formattedClosingDate); // Gunakan tanggal penutupan yang sudah diformat
-          formData.append("kuota", kuota);
-          formData.append("apply_url", apply_url);
-      
-          if (id_vacancy) {
-            // Jika id_vacancy tersedia, maka lakukan pembaruan (update) lowongan
-            await updateVacancy(id_vacancy, formData);
-          } else {
-            // Jika id_vacancy tidak tersedia, maka lakukan pembuatan (create) lowongan baru
-            await createVacancy(formData);
-          }
-      
-          // Navigasi ke halaman dashboard/Vacancy setelah berhasil membuat atau memperbarui lowongan
-          history.push("/dashboard/lowongan");
-        } catch (error) {
-          console.error("Error:", error);
-          // Handle error if needed
-        }
-      };      
-  
+  // Skema validasi menggunakan yup
+  const validationSchema = yup.object().shape({
+    title: yup.string().required('Posisi diperlukan'),
+    qualification: yup.string().required('Kualifikasi diperlukan'),
+    recruitment: yup.string().required('Persyaratan diperlukan'),
+    place: yup.string().required('Penempatan diperlukan'),
+    closing_date: yup.date().required('Tanggal penutupan diperlukan'),
+    kuota: yup.number().required('Kuota diperlukan').positive('Kuota harus positif').integer('Kuota harus bilangan bulat'),
+    apply_url: yup.string().required('Link Gform diperlukan'),
+  });
 
-  const fetchVacancy = async () => {
+  // Fungsi onSubmit untuk menangani pengiriman formulir
+  const onSubmit = async (values) => {
     try {
-      const data = await getVacancyById(id_vacancy); // Panggil getVacancyById dengan id_vacancy
-      setTitle(data.title); // Set nilai title dari lowongan
-      setQualification(data.qualification); // Set nilai qualification dari lowongan
-      setRecruitment(data.recruitment); // Set nilai recruitment dari lowongan
-      setPlace(data.place); // Set nilai place dari lowongan
-      setClosingDate(data.closing_date); // Set nilai closing_date dari lowongan
-      setKuota(data.kuota); // Set nilai kuota dari lowongan
-      setApplyUrl(data.apply_url); // Set nilai apply_url dari lowongan
-      // Anda mungkin perlu menangani nilai image dari lowongan jika diperlukan
+      const closingDateWithTime = new Date(values.closing_date + 'T23:59');
+      const formattedClosingDate = closingDateWithTime.toISOString();
+  
+      const formData = new FormData();
+      formData.append("title", values.title);
+      formData.append("qualification", removeEmptyLines(values.qualification));
+      formData.append("recruitment", removeEmptyLines(values.recruitment));
+      formData.append("place", removeEmptyLines(values.place));
+      formData.append("closing_date", formattedClosingDate);
+      formData.append("kuota", values.kuota);
+      formData.append("apply_url", values.apply_url);
+  
+      if (id_vacancy) {
+        await updateVacancy(id_vacancy, formData);
+      } else {
+        await createVacancy(formData);
+      }
+  
+      history.push("/dashboard/lowongan");
     } catch (error) {
-      console.error("Gagal mengatur lowongan ", error);
+      console.error("Error:", error);
+      // Handle error if needed
     }
   };
-  
 
-  useEffect(() => {
-    if (id_vacancy) {
-      fetchVacancy();
-    }
-  }, [id_vacancy]);
+  // Menggunakan useFormik untuk manajemen formulir dan validasi
+  const formik = useFormik({
+    initialValues: {
+      title: '',
+      qualification: '',
+      recruitment: '',
+      place: '',
+      closing_date: '',
+      kuota: '',
+      apply_url: '',
+    },
+    validationSchema: validationSchema,
+    onSubmit: onSubmit,
+  });
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-lg mx-auto grid grid-cols-2 gap-4">
+    <form onSubmit={formik.handleSubmit} className="max-w-lg mx-auto grid grid-cols-2 gap-4">
       <div className="mb-4 col-span-2">
         <label htmlFor="title" className="block mb-1 text-sm font-medium text-gray-900">
           Posisi
         </label>
         <InputField
           id="title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          name="title"
+          value={formik.values.title}
+          onChange={formik.handleChange}
           placeholder="Masukkan Judul"
           required={true}
+          error={formik.touched.title && formik.errors.title}
         />
       </div>
       <div className="mb-4">
-          <label htmlFor="place" className="block mb-1 text-sm font-medium text-gray-900">
-              Penempatan
-          </label>
-          <textarea
-              id="place"
-              value={place}
-              onChange={(e) => setPlace(e.target.value)}
-              placeholder="Masukkan Tempat"
-              required={true}
-              rows={2} // Set jumlah baris menjadi 2
-              className="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring focus:border-blue-400"
-          ></textarea>
+        <label htmlFor="place" className="block mb-1 text-sm font-medium text-gray-900">
+          Penempatan
+        </label>
+        <InputField
+          id="place"
+          name="place"
+          value={formik.values.place}
+          onChange={formik.handleChange}
+          placeholder="Masukkan Tempat"
+          required={true}
+          error={formik.touched.place && formik.errors.place}
+        />
       </div>
-  
       <div className="mb-4">
         <label htmlFor="kuota" className="block mb-1 text-sm font-medium text-gray-900">
           Kuota
@@ -107,19 +101,14 @@ const FormCreateVacancy = () => {
         <InputField
           type="number"
           id="kuota"
-          value={kuota}
-          onChange={(e) => {
-            const inputValue = parseInt(e.target.value);
-            // Memastikan nilai yang dimasukkan adalah angka positif dan minimal 1
-            if (!isNaN(inputValue) && inputValue >= 1) {
-              setKuota(inputValue);
-            }
-          }}
+          name="kuota"
+          value={formik.values.kuota}
+          onChange={formik.handleChange}
           placeholder="Masukkan Kuota"
           required={true}
+          error={formik.touched.kuota && formik.errors.kuota}
         />
       </div>
-      {/* Tambahan kode untuk kolom kedua */}
       <div className="mb-4">
         <label htmlFor="closing_date" className="block mb-1 text-sm font-medium text-gray-900">
           Tanggal Penutupan
@@ -127,9 +116,11 @@ const FormCreateVacancy = () => {
         <InputField
           type="date"
           id="closing_date"
-          value={formatDateForInputDate(closing_date)}
-          onChange={(e) => setClosingDate(e.target.value)}
+          name="closing_date"
+          value={formik.values.closing_date}
+          onChange={formik.handleChange}
           required={true}
+          error={formik.touched.closing_date && formik.errors.closing_date}
         />
       </div>
       <div className="mb-4">
@@ -138,33 +129,37 @@ const FormCreateVacancy = () => {
         </label>
         <InputField
           id="apply_url"
-          value={apply_url}
-          onChange={(e) => setApplyUrl(e.target.value)}
+          name="apply_url"
+          value={formik.values.apply_url}
+          onChange={formik.handleChange}
           placeholder="Masukkan Apply URL"
           required={true}
+          error={formik.touched.apply_url && formik.errors.apply_url}
         />
       </div>
-      <div className="mb-4">
+      <div className="mb-4 col-span-2">
         <label htmlFor="qualification" className="block mb-1 text-sm font-medium text-gray-900">
           Kualifikasi
         </label>
         <textarea
           id="qualification"
-          value={qualification}
-          onChange={(e) => setQualification(e.target.value)}
+          name="qualification"
+          value={formik.values.qualification}
+          onChange={formik.handleChange}
           required={true}
           rows={5}
           className="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring focus:border-blue-400"
         ></textarea>
       </div>
-      <div className="mb-4">
+      <div className="mb-4 col-span-2">
         <label htmlFor="recruitment" className="block mb-1 text-sm font-medium text-gray-900">
           Persyaratan
         </label>
         <textarea
           id="recruitment"
-          value={recruitment}
-          onChange={(e) => setRecruitment(e.target.value)}
+          name="recruitment"
+          value={formik.values.recruitment}
+          onChange={formik.handleChange}
           required={true}
           rows={5}
           className="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring focus:border-blue-400"
@@ -174,7 +169,7 @@ const FormCreateVacancy = () => {
         Submit
       </button>
     </form>
-  );  
+  );
 };
 
 export default FormCreateVacancy;

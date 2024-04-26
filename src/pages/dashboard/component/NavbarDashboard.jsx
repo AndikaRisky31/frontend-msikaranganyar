@@ -53,6 +53,8 @@ const NavbarDashboard = ({ isOpen, toggleSidebar, onSearchChange }) => {
           <div className="flex items-center gap-1 p-2 bg-teal-100 rounded-lg">
             <MdSearch className="text-gray-800" />
             <input
+              id="search"
+              name="search"
               type="text"
               placeholder="Search..."
               className="bg-transparent border-none text-teal-600 focus:outline-none text-xs sm:text-base"

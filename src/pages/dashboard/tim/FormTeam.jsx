@@ -1,103 +1,83 @@
-import React, { useState } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
 import { axiosInstanceAuth } from "../../../API/axios";
 import InputField from "../../../components/item/inputField";
+import { useFormik } from "formik";
+import * as yup from "yup";
 
 const FormTeam = () => {
-  const [formData, setFormData] = useState({
-    images: null,
-    name: "",
-    job_title: "",
-    penempatan: "",
-    tingkat: 1,
-    whatsapp: ""
-  });
   const history = useHistory();
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    setFormData({ ...formData, images: file });
-    const reader = new FileReader();
-    reader.onload = function(event) {
-      document.getElementById('preview_img').src = event.target.result;
-    };
-    reader.readAsDataURL(file);
-  };
+  const validationSchema = yup.object().shape({
+    name: yup.string().required('Nama diperlukan'),
+    job_title: yup.string().required('Jabatan diperlukan'),
+    penempatan: yup.string().required('Penempatan diperlukan'),
+    tingkat: yup.number().required('Level diperlukan'),
+    whatsapp: yup.string().required('Nomor WhatsApp diperlukan'),
+  });
 
-  const handleNameChange = (e) => {
-    setFormData({ ...formData, name: e.target.value });
-  };
+  const formik = useFormik({
+    initialValues: {
+      images: null,
+      name: "",
+      job_title: "",
+      penempatan: "",
+      tingkat: 1,
+      whatsapp: ""
+    },
+    validationSchema: validationSchema,
+    onSubmit: async (values) => {
+      try {
+        const formDataToSend = new FormData();
+        formDataToSend.append('name', values.name);
+        formDataToSend.append('job_title', values.job_title);
+        formDataToSend.append('penempatan', values.penempatan);
+        formDataToSend.append('tingkat', values.tingkat);
+        formDataToSend.append('whatsapp', values.whatsapp);
+        formDataToSend.append('images', values.images);
 
-  const handlePositionChange = (e) => {
-    setFormData({ ...formData, job_title: e.target.value });
-  };
-
-  const handlePlacementChange = (e) => {
-    setFormData({ ...formData, penempatan: e.target.value });
-  };
-
-  const handleLevelChange = (e) => {
-    setFormData({ ...formData, tingkat: e.target.value });
-  };
-
-  const handleWhatsAppChange = (e) => {
-    setFormData({ ...formData, whatsapp: e.target.value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    // Basic form validation
-    if (!formData.name || !formData.job_title || !formData.penempatan || !formData.tingkat || !formData.whatsapp) {
-      alert("Please fill in all fields");
-      return;
-    }
-    
-    try {
-      const formDataToSend = new FormData();
-      formDataToSend.append('name', formData.name);
-      formDataToSend.append('job_title', formData.job_title);
-      formDataToSend.append('penempatan', formData.penempatan);
-      formDataToSend.append('tingkat', formData.tingkat);
-      formDataToSend.append('whatsapp', formData.whatsapp);
-      formDataToSend.append('images', formData.images);
-      
-      const response = await axiosInstanceAuth.post('/management/create', formDataToSend);
-      history.push('/dashboard/tim');
-    } catch (error) {
-      console.error("gagal menambahkan tim ke server", error.response.message);
-    }
-  };
+        await axiosInstanceAuth.post('/management/create', formDataToSend);
+        history.push('/dashboard/tim');
+      } catch (error) {
+        console.error("gagal menambahkan tim ke server", error.response.message);
+      }
+    },
+  });
 
   return (
     <div className="container mx-auto mt-10 px-4">
-      <form onSubmit={handleSubmit} className="max-w-lg mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+      <form onSubmit={formik.handleSubmit} className="max-w-lg mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <InputField
           id="name"
           label="Nama"
+          name="name"
           type="text"
           placeholder="Masukkan Nama"
-          value={formData.name}
-          onChange={handleNameChange}
+          value={formik.values.name}
+          onChange={formik.handleChange}
           required
+          error={formik.touched.name && formik.errors.name}
         />
         <InputField
           id="position"
           label="Jabatan"
           type="text"
+          name="position"
           placeholder="Masukkan Jabatan"
-          value={formData.job_title}
-          onChange={handlePositionChange}
+          value={formik.values.position}
+          onChange={formik.handleChange}
           required
+          error={formik.touched.position && formik.errors.position}
         />
         <InputField
           id="placement"
           label="Penempatan"
           type="text"
           placeholder="Masukkan Penempatan"
-          value={formData.penempatan}
-          onChange={handlePlacementChange}
+          value={formik.values.placement}
+          onChange={formik.handleChange}
           required
+          error={formik.touched.placement && formik.errors.placement}
         />
         <div className="mb-3">
           <label htmlFor="level" className="block mb-1 text-sm font-medium text-gray-900 dark:text-white">
@@ -106,8 +86,8 @@ const FormTeam = () => {
           <select
             id="level"
             name="level"
-            value={formData.tingkat}
-            onChange={handleLevelChange}
+            value={formik.values.level}
+            onChange={formik.handleChange}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             required
           >
@@ -116,23 +96,27 @@ const FormTeam = () => {
             <option value="3">3</option>
             <option value="4">4</option>
           </select>
+          {formik.touched.level && formik.errors.level ? (
+            <div className="text-red-500">{formik.errors.level}</div>
+          ) : null}
         </div>
         <InputField
           id="whatsapp"
           label="WhatsApp"
           type="text"
           placeholder="Masukkan Nomor WhatsApp"
-          value={formData.whatsapp}
-          onChange={handleWhatsAppChange}
+          value={formik.values.whatsapp}
+          onChange={formik.handleChange}
           required
+          error={formik.touched.whatsapp && formik.errors.whatsapp}
         />
         <div className="flex items-center space-x-6 mt-4">
           <div className="shrink-0">
-            <img id='preview_img' className="h-16 w-16 object-cover rounded-full" src={formData.images ? URL.createObjectURL(formData.images) : "https://lh3.googleusercontent.com/a-/AFdZucpC_6WFBIfaAbPHBwGM9z8SxyM1oV4wB4Ngwp_UyQ=s96-c"} alt="" />
+            <img id="preview_img" className="h-16 w-16 object-cover rounded-full" src={formik.values.images ? URL.createObjectURL(formik.values.images) : "https://lh3.googleusercontent.com/a-/AFdZucpC_6WFBIfaAbPHBwGM9z8SxyM1oV4wB4Ngwp_UyQ=s96-c"} alt="" />
           </div>
-          <label className="block">
+          <label htmlFor="profile_photo" className="block">
             <span className="sr-only">Choose profile photo</span>
-            <input type="file" onChange={handleImageChange} className="block w-full text-sm text-slate-500
+            <input type="file" id="profile_photo" onChange={(event) => formik.setFieldValue('images', event.target.files[0])} className="block w-full text-sm text-slate-500
               file:mr-4 file:py-2 file:px-4
               file:rounded-full file:border-0
               file:text-sm file:font-semibold
@@ -147,6 +131,7 @@ const FormTeam = () => {
       </form>
     </div>
   );
+
 };
 
 export default FormTeam;

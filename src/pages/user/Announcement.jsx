@@ -70,7 +70,7 @@ const Announcement = () => {
       {((!vacancies || vacancies.length === 0) && 
         (!scheduleInterview || scheduleInterview.length === 0) &&
         (!pengumuman || pengumuman.length === 0)) ? (
-        <EmptyState dataName="pengumuman"/>
+        <EmptyState dataName="Pengumuman"/>
       ) : (
         <section className="Announcement w-5/6 sm:w-9/12 lg:w-3/6 mx-auto py-10">
           {/* Bagian Lowongan */}

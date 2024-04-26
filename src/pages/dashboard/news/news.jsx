@@ -127,7 +127,7 @@ const News = () => {
       </div>
       </>
       ) : (
-        <EmptyState dataName="berita" create={toCreate} />
+        <EmptyState dataName="Berita" create={toCreate} />
     )}
 
       {/* Tambahkan komponen PopupModal di sini */}

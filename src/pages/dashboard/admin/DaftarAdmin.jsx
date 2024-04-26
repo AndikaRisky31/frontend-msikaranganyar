@@ -93,8 +93,8 @@ const DaftarAdmin = () => {
                 <tbody className="bg-white divide-y divide-gray-200">
                     {admins.map((admin) => (
                         <tr key={admin.id_admin}>
-                            <td className="px-6 py-4 whitespace-nowrap">{editingId === admin.id_admin ? <input type="text" value={editedName} onChange={(e) => setEditedName(e.target.value)} /> : admin.name}</td>
-                            <td className="px-6 py-4 whitespace-nowrap">{editingId === admin.id_admin ? <input type="text" value={editedEmail} onChange={(e) => setEditedEmail(e.target.value)} /> : admin.email}</td>
+                            <td className="px-6 py-4 whitespace-nowrap">{editingId === admin.id_admin ? <input id="name" name="name" type="text" value={editedName} onChange={(e) => setEditedName(e.target.value)} /> : admin.name}</td>
+                            <td className="px-6 py-4 whitespace-nowrap">{editingId === admin.id_admin ? <input id='email' name ='email' type="text" value={editedEmail} onChange={(e) => setEditedEmail(e.target.value)} /> : admin.email}</td>
                             <td className="px-6 py-4 whitespace-nowrap">{admin.totalNews}</td>
                             <td className="px-6 py-4 whitespace-nowrap">{editingId === admin.id_admin ? <select value={editedRole} onChange={(e) => setEditedRole(e.target.value)}>
                                 <option value="superadmin">superadmin</option>

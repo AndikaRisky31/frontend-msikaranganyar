@@ -31,6 +31,10 @@ const menuItems = [
         path: "/dashboard/tim",
       },
       {
+        title: "Dokumen",
+        path: "/dashboard/dokumen",
+      },
+      {
         title: "Profile",
         path: "/dashboard/profile",
       },

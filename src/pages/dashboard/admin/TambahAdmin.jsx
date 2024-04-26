@@ -1,107 +1,120 @@
-import React, { useState } from "react";
+import React from "react";
+import { useFormik } from "formik";
+import * as yup from "yup";
 import { useHistory } from "react-router-dom";
 import { axiosInstanceAuth } from "../../../API/axios";
 import InputField from "../../../components/item/inputField";
 
 const TambahAdmin = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [message, setMessage] = useState("");
   const history = useHistory();
 
-  const handleNameChange = (e) => {
-    setName(e.target.value);
-  };
+  // Formik form validation schema using Yup
+  const validationSchema = yup.object().shape({
+    name: yup.string().required("Name is required"),
+    email: yup.string().email("Invalid email").required("Email is required"),
+    password: yup.string().required("Password is required"),
+    confirmPassword: yup
+      .string()
+      .oneOf([yup.ref("password"), null], "Passwords must match")
+      .required("Confirm Password is required"),
+  });
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
+  // Formik form handling
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    },
+    validationSchema: validationSchema,
+    onSubmit: async (values, { setSubmitting, setErrors }) => {
+      const formData = new FormData();
+      formData.append("name", values.name);
+      formData.append("email", values.email);
+      formData.append("password", values.password);
 
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const handleConfirmPasswordChange = (e) => {
-    const value = e.target.value;
-    setConfirmPassword(value);
-    // Validasi langsung saat ada perubahan pada field confirmPassword
-    if (value !== password) {
-      setMessage("Password and confirm password do not match");
-    } else {
-      setMessage("");
-    }
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (password !== confirmPassword) {
-      setMessage("Password and confirm password do not match");
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append("name", name);
-    formData.append("email", email);
-    formData.append("password", password);
-
-    try {
-      await axiosInstanceAuth.post('/admin/create', formData);
-      history.push('/dashboard/admin')
-    } catch (error) {
-      if (error.response) {
-        setMessage(error.response.data.message);
-      } else if (error.request) {
-        console.error('No response received:', error.request);
-      } else {
-        console.error('Error:', error.message);
+      try {
+        await axiosInstanceAuth.post("/admin/create", formData);
+        history.push("/dashboard/admin");
+      } catch (error) {
+        if (error.response) {
+          setErrors({ confirmPassword: error.response.data.message });
+        } else if (error.request) {
+          console.error("No response received:", error.request);
+        } else {
+          console.error("Error:", error.message);
+        }
+      } finally {
+        setSubmitting(false);
       }
-    }
-  };
+    },
+  });
 
   return (
     <div className="max-w-md mx-auto p-4 bg-white shadow-md rounded-md">
       <h1 className="text-lg font-semibold mb-4">Tambah Admin</h1>
-      {message && <p className="text-red-500 mb-4">{message}</p>}
-      <form onSubmit={handleSubmit}>
-        <InputField
-          id="name"
-          label="Name"
-          type="text"
-          placeholder="Enter name"
-          value={name}
-          onChange={handleNameChange}
-          required={true}
-        />
-        <InputField
-          id="email"
-          label="Email"
-          type="email"
-          placeholder="Enter email"
-          value={email}
-          onChange={handleEmailChange}
-          required={true}
-        />
-        <InputField
-          id="password"
-          label="Password"
-          type="password"
-          placeholder="Enter password"
-          value={password}
-          onChange={handlePasswordChange}
-          required={true}
-        />
-        <InputField
-          id="confirmPassword"
-          label="Confirm Password"
-          type="password"
-          placeholder="Confirm password"
-          value={confirmPassword}
-          onChange={handleConfirmPasswordChange}
-          required={true}
-        />
+      <form onSubmit={formik.handleSubmit}>
+      <InputField
+        id="name"
+        name="name" // Tambahkan name
+        label="Name"
+        type="text"
+        placeholder="Enter name"
+        value={formik.values.name}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+        error={
+          formik.touched.name && formik.errors.name ? formik.errors.name : ""
+        }
+        required={true}
+      />
+      <InputField
+        id="email"
+        name="email" // Tambahkan name
+        label="Email"
+        type="email"
+        placeholder="Enter email"
+        value={formik.values.email}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+        error={
+          formik.touched.email && formik.errors.email ? formik.errors.email : ""
+        }
+        required={true}
+      />
+      <InputField
+        id="password"
+        name="password" // Tambahkan name
+        label="Password"
+        type="password"
+        placeholder="Enter password"
+        value={formik.values.password}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+        error={
+          formik.touched.password && formik.errors.password
+            ? formik.errors.password
+            : ""
+        }
+        required={true}
+      />
+      <InputField
+        id="confirmPassword"
+        name="confirmPassword" // Tambahkan name
+        label="Confirm Password"
+        type="password"
+        placeholder="Confirm password"
+        value={formik.values.confirmPassword}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+        error={
+          formik.touched.confirmPassword && formik.errors.confirmPassword
+            ? formik.errors.confirmPassword
+            : ""
+        }
+        required={true}
+      />
         <button
           type="submit"
           className="bg-blue-500 text-white px-4 py-2 mt-4 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"

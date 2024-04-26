@@ -6,6 +6,7 @@ const YearSelector = ({ dataPasien, selectedYear, handleYearChange, showOtherYea
     return (
         <div className="flex flex-col items-center justify-center">
             <select 
+                id="year" // Add id attribute
                 value={selectedYear} 
                 onChange={handleYearChange} 
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md p-2"
@@ -18,6 +19,7 @@ const YearSelector = ({ dataPasien, selectedYear, handleYearChange, showOtherYea
             {showOtherYearInput && 
                 <input 
                     type="text" 
+                    id="yearInput" // Add id attribute
                     name="year" 
                     placeholder="Input Year" 
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md p-2" 
@@ -31,6 +33,7 @@ const InputField = ({ name, placeholder, handleInputChange }) => {
     return (
         <input 
             type="text" 
+            id={name} // Add id attribute
             name={name} 
             placeholder={placeholder} 
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md p-2" 
@@ -38,6 +41,7 @@ const InputField = ({ name, placeholder, handleInputChange }) => {
         />
     );
 };
+
 
 const DataTable = ({ dataPasien, handleDelete }) => {
     return (
@@ -97,16 +101,16 @@ const Form = ({ handleSubmit, selectedYear, handleYearChange, showOtherYearInput
                             />
                         </td>
                         <td className="px-4 py-2 w-auto">
-                            <InputField name="suspect" placeholder="Input Suspect" handleInputChange={handleInputChange} />
+                            <InputField id="suspect" name="suspect" placeholder="Input Suspect" handleInputChange={handleInputChange} />
                         </td>
                         <td className="px-4 py-2 w-auto">
-                            <InputField name="detect" placeholder="Input Detect" handleInputChange={handleInputChange} />
+                            <InputField id="detect" name="detect" placeholder="Input Detect" handleInputChange={handleInputChange} />
                         </td>
                         <td className="px-4 py-2 w-auto">
-                            <InputField name="treatment" placeholder="Input Treatment" handleInputChange={handleInputChange} />
+                            <InputField id="treatment" name="treatment" placeholder="Input Treatment" handleInputChange={handleInputChange} />
                         </td>
                         <td className="px-4 py-2 w-auto">
-                            <InputField name="recovery" placeholder="Input Recovery" handleInputChange={handleInputChange} />
+                            <InputField id="recovery" name="recovery" placeholder="Input Recovery" handleInputChange={handleInputChange} />
                         </td>
                     </tr>
                 </tbody>
@@ -121,6 +125,7 @@ const Form = ({ handleSubmit, selectedYear, handleYearChange, showOtherYearInput
         </form>
     );
 };
+
 
 
 const Pasien = () => {

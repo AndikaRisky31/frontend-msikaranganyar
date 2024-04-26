@@ -17,8 +17,15 @@ const FormCreateAnnouncement = () => {
   };
 
   const validationSchema = yup.object().shape({
-    title: yup.string().required("Judul diperlukan"),
-    content: yup.string().required("Konten diperlukan")
+    title: yup.string()
+      .required("Judul diperlukan")
+      .max(50, "Judul tidak boleh lebih dari 50 karakter"),
+    content: yup.string().required("Konten diperlukan"),
+    image: id_announcement ? yup.mixed().notRequired() : yup.mixed()
+      .required("Gambar diperlukan")
+      .test("fileFormat", "Mohon upload gambar jpg/png/jpeg", (value) => {
+        return value && ["image/jpeg", "image/png", "image/jpg"].includes(value.type);
+      }),
   });
 
   const onSubmit = async (values) => {
@@ -76,6 +83,7 @@ const FormCreateAnnouncement = () => {
         </label>
         <InputField
           id="title"
+          name="title" // Tambahkan name
           value={values.title}
           onChange={handleChange}
           placeholder="Masukan Judul"
@@ -89,6 +97,7 @@ const FormCreateAnnouncement = () => {
         </label>
         <textarea
           id="content"
+          name="content" // Tambahkan name
           value={values.content}
           onChange={handleChange}
           rows={5}
@@ -112,6 +121,7 @@ const FormCreateAnnouncement = () => {
         <InputField
           type="file"
           id="image"
+          name="image" // Tambahkan name
           onChange={(e) => setFieldValue("image", e.target.files[0])}
           accept="image/*"
           required={id_announcement ? false : true}

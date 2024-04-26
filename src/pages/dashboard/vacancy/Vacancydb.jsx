@@ -128,7 +128,7 @@ const Vacancydb = () => {
       </div>
       </>
       ) : (
-        <EmptyState dataName="lowongan" create={toCreate} />
+        <EmptyState dataName="Lowongan" create={toCreate} />
     )}
 
       {/* Tambahkan komponen PopupModal di sini */}

@@ -131,7 +131,7 @@ const NewsPage = () => {
           </div>
         </div>
       ) : (
-        <EmptyState dataName="berita"/>
+        <EmptyState dataName="Berita"/>
       )}
     </>
   );
