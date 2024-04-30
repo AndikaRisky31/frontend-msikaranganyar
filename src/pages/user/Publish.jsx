@@ -4,6 +4,7 @@ import LaporanTahunan from '../../components/card/LaporanTahunan';
 import TBPediaCard from '../../components/card/TBPediaCard';
 import {getDocumentByPage} from '../../API/DocumentAPI';
 import HeadingOnly from '../../components/common/heading/HeadingOnly';
+import EmptyState from '../../components/modal/EmptyState';
 
 const Publish = () => {
     const [listTbPedia, setListTbPedia] = useState([]);
@@ -63,9 +64,8 @@ const Publish = () => {
 
     return (
         <>
-        <div className="m-auto w-[90%] md:max-w-[85%] mt-10">
-            {
-                listLaporan && listLaporan.length > 0 && (
+            <div className="m-auto w-[90%] md:max-w-[85%] mt-10">
+                {(listLaporan && listLaporan.length > 0) ? (
                     <div>
                         <HeadingOnly title="Laporan Tahunan"/>
                         <div className="mx-auto">
@@ -78,10 +78,8 @@ const Publish = () => {
                             </div>
                         </div>
                     </div>
-                )
-            }
-            {
-                listDokumen && listDokumen.length > 0 && (
+                ) : null}
+                {(listDokumen && listDokumen.length > 0) ? (
                     <div className="mt-10">
                         <HeadingOnly title="Dokumen Publish"/>
                         <div className="mx-auto">
@@ -94,10 +92,8 @@ const Publish = () => {
                             </div>
                         </div>
                     </div>
-                )
-            }
-            {
-                listTbPedia && listTbPedia.length > 0 && (
+                ) : null}
+                {(listTbPedia && listTbPedia.length > 0) ? (
                     <div className="mt-10">
                         <HeadingOnly title="TBPedia"/>      
                         <div className="mx-auto">
@@ -110,18 +106,20 @@ const Publish = () => {
                             </div>
                         </div>
                     </div>
+                ) : null}
+                {(listLaporan.length === 0 && listDokumen.length === 0 && listTbPedia.length === 0) && (
+                    <EmptyState dataName="Dokumen"/>
                 )}
-
-                {listTbPedia && listTbPedia.length > 0 && (
+                {(listTbPedia && listTbPedia.length > 0) && (
                     <div className="flex justify-center mt-6">
                         <button onClick={prevPage} disabled={currentPage === 1} className="px-4 py-2 mr-2 bg-gray-200 border border-gray-300 rounded-md cursor-pointer hover:bg-gray-300">Previous</button>
                         <span className="text-lg font-bold">{currentPage} / {totalPages}</span>
                         <button onClick={nextPage} disabled={currentPage === totalPages} className="px-4 py-2 ml-2 bg-gray-200 border border-gray-300 rounded-md cursor-pointer hover:bg-gray-300">Next</button>
                     </div>
                 )}
-          </div>
+            </div>
         </>
-    );
+    );    
 };
 
 export default Publish;

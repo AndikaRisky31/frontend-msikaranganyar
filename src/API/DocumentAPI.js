@@ -42,4 +42,14 @@ export const deleteDocument = async (id) => {
       throw error;
     }
   };
+
+export const searchDocument = async(title)=>{
+    try {
+        const response = await axiosInstance.get(`/document/search/${title}`)
+        return response.data
+    } catch (error) {
+        console.error("Error fetching search document",error);
+        throw error
+    }
+}
   
