@@ -1,14 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import InputField from '../../../components/item/inputField';
 import { createVacancy, getVacancyById, updateVacancy } from "../../../API/VacancyAPI";
 import { useHistory, useParams } from "react-router-dom";
 import {removeEmptyLines } from "../../../utils/helper";
+import SubmitButton from "../../../components/button/SubmitButton";
 
 const FormCreateVacancy = () => {
   const { id_vacancy } = useParams();
   const history = useHistory();
+  const [submitting, setSubmitting] = useState(false);
 
   // Skema validasi menggunakan yup
   const validationSchema = yup.object().shape({
@@ -23,6 +25,7 @@ const FormCreateVacancy = () => {
 
   // Fungsi onSubmit untuk menangani pengiriman formulir
   const onSubmit = async (values) => {
+    setSubmitting(true)
     try {
       const closingDateWithTime = new Date(values.closing_date + 'T23:59');
       const formattedClosingDate = closingDateWithTime.toISOString();
@@ -46,6 +49,8 @@ const FormCreateVacancy = () => {
     } catch (error) {
       console.error("Error:", error);
       // Handle error if needed
+    }finally{
+      setSubmitting(false)
     }
   };
 
@@ -165,9 +170,7 @@ const FormCreateVacancy = () => {
           className="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring focus:border-blue-400"
         ></textarea>
       </div>
-      <button type="submit" className="col-span-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
-        Submit
-      </button>
+      <SubmitButton submitting={submitting} />
     </form>
   );
 };

@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { formatDate } from "../../utils/helper"
+import { formatDate } from "../../utils/helper";
 import ListPlace from "../../components/item/ListPlace";
 import Heading from "../../components/common/heading/Heading";
+import LoadingState from "../../components/modal/LoadingState"; // Import komponen LoadingState
 
 const VacancyPage = () => {
   const { id_vacancy } = useParams();
   const [content, setContent] = useState(null);
+  const [isLoading, setIsLoading] = useState(true); // State untuk menampilkan status loading
 
-  const toGform = (link) =>{
+  const toGform = (link) => {
     window.open(link, '_blank');
-  }
+  };
 
   const addLineNumbers = (text) => {
     const lines = text.split('\n');
@@ -27,6 +29,7 @@ const VacancyPage = () => {
       const data = response.data.data;
       data.qualification = addLineNumbers(data.qualification); // Add line numbers to qualification
       setContent(data);
+      setIsLoading(false); // Setelah data terambil, atur status loading menjadi false
     } catch (error) {
       console.error('Failed to fetch vacancy', error);
     }
@@ -38,7 +41,9 @@ const VacancyPage = () => {
 
   return (
     <>
-        {content && (
+        {isLoading ? ( // Tampilkan komponen LoadingState saat data sedang dimuat
+          <LoadingState />
+        ) : (
           <div className="mx-auto py-10 px-4 sm:px-6 md:px-20">
             <Heading title={content.title} subtitle="Lowongan Kerja" />
             <div className="grid grid-cols-1 sm:grid-cols-2">

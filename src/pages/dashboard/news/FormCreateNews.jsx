@@ -4,16 +4,18 @@ import * as Yup from "yup";
 import InputField from '../../../components/item/inputField'
 import { createNews, getNewsById, updateNews } from "../../../API/NewsAPI";
 import { useHistory, useParams } from "react-router-dom";
+import SubmitButton from "../../../components/button/SubmitButton";
 
 const FormCreateNews = () => {
   const [berita, setBerita] = useState({});
   const { id_news } = useParams();
   const history = useHistory();
+  const [submitting, setSubmitting] = useState(false);
 
   const validationSchema = Yup.object().shape({
     title: Yup.string()
       .required("Judul diperlukan")
-      .max(50, "Judul tidak boleh lebih dari 50 karakter"),
+      .max(80, "Judul tidak boleh lebih dari 80 karakter"),
     content: Yup.string().required("Konten diperlukan"),
     image: id_news ? Yup.mixed().notRequired() : Yup.mixed()
       .required("Gambar diperlukan")
@@ -30,6 +32,7 @@ const FormCreateNews = () => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
+      setSubmitting(true)
       try {
         const formData = new FormData();
         formData.append("title", values.title);
@@ -45,6 +48,8 @@ const FormCreateNews = () => {
         history.push("/dashboard/news");
       } catch (error) {
         console.error("Error:", error);
+      }finally{
+        setSubmitting(false)
       }
     },
   });
@@ -127,9 +132,7 @@ const FormCreateNews = () => {
         ) : null}
         <h2 className="text-red-500 text-sm font-semibold">Untuk hasil yang bagus gunakan foto landscape 16:9</h2>
       </div>
-      <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
-        Submit
-      </button>
+      <SubmitButton submitting={submitting} />
     </form>
   );
 };

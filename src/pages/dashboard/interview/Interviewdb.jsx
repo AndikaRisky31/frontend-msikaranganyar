@@ -7,6 +7,8 @@ import { useHistory } from "react-router-dom";
 import InterviewCard from "../../../components/card/InterviewCard";
 import { MyContext } from "../component/DashboardLayout.jsx";
 import EmptyState from "../../../components/modal/EmptyState.jsx";
+import LoadingState from "../../../components/modal/LoadingState.jsx";
+import SpinnerOverlay from "../../../components/modal/SpinnerOverlay.jsx";
 
 const Interviewdb = () => {
   const [dataInterview, setDataInterview] = useState([]);
@@ -15,10 +17,12 @@ const Interviewdb = () => {
   const [deleteId, setDeleteId] = useState(null); // Menyimpan ID wawancara yang akan dihapus
   const [showDeleteModal, setShowDeleteModal] = useState(false); // Menyimpan status tampilan modal konfirmasi
   const [totalPages, settotalPages] = useState([]);
+  const [showSpinner, setShowSpinner] = useState(false);
   const history = useHistory()
   const keyword = useContext(MyContext)
   
   const fetchByPage = async () => {
+    setLoading(true)
     try {
       const InterviewData = await getInterviewByPage(page);
       setDataInterview(InterviewData.data);
@@ -30,6 +34,7 @@ const Interviewdb = () => {
     }
   };
   const fetchSearch = async () => {
+    setLoading(true)
     try {
       const InterviewData = await getSearchInterview(keyword);
       setDataInterview(InterviewData.data);
@@ -53,6 +58,8 @@ const Interviewdb = () => {
   }
 
   const handleDeleteInterview = async () => {
+    setShowDeleteModal(false); // Tutup modal setelah berhasil menghapus
+    setShowSpinner(true)
     try {
       const success = await deleteInterview(deleteId); // Menghapus wawancara dengan ID yang disimpan
       if (success) {
@@ -67,7 +74,7 @@ const Interviewdb = () => {
     } catch (error) {
       console.error(`Gagal menghapus wawancara dengan ID ${deleteId}:`, error);
     } finally {
-      setShowDeleteModal(false); // Sembunyikan modal konfirmasi setelah penghapusan selesai
+      setShowSpinner(false)
     }
   };
 
@@ -82,65 +89,65 @@ const Interviewdb = () => {
 
   return (
     <div className="mt-3">
-      {dataInterview.length > 0 ? (
-        <>
-      <button type="button" onClick={toCreate} className="rounded-md focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Tambah wawancara</button>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         {loading ? (
-          <Button variant="text" loading={true}>
-            Loading
-          </Button>
+            <LoadingState />
         ) : (
-          dataInterview.map((Interview) => (
-            <InterviewCard
-              key={Interview.id_schedule_interview}
-              interview={Interview}
-              showButton={true}
-              // Saat tombol delete di-klik, simpan ID wawancara dan tampilkan modal konfirmasi
-              handleDeleteInterview={() => {
-                setDeleteId(Interview.id_schedule_interview);
-                setShowDeleteModal(true);
-              }}
-            />
-          ))
+            <>
+                {dataInterview.length > 0 ? (
+                    <>
+                        <button type="button" onClick={toCreate} className="rounded-md focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Tambah wawancara</button>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                            {dataInterview.map((Interview) => (
+                                <InterviewCard
+                                    key={Interview.id_schedule_interview}
+                                    interview={Interview}
+                                    showButton={true}
+                                    // Saat tombol delete di-klik, simpan ID wawancara dan tampilkan modal konfirmasi
+                                    handleDeleteInterview={() => {
+                                        setDeleteId(Interview.id_schedule_interview);
+                                        setShowDeleteModal(true);
+                                    }}
+                                />
+                            ))}
+                        </div>
+                        <div className="flex items-center justify-center gap-4 mt-5">
+                            <Button
+                                variant="outlined"
+                                color="gray"
+                                className="flex items-center gap-2"
+                                onClick={prev}
+                                disabled={page === 1}
+                            >
+                                <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
+                            </Button>
+                            <Button
+                                variant="outlined"
+                                color="gray"
+                                className="flex items-center gap-2"
+                                onClick={next}
+                                disabled={page === totalPages} // Menonaktifkan tombol "Next" jika tidak ada data wawancara
+                            >
+                                Next
+                                <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
+                            </Button>
+                        </div>
+                    </>
+                ) : (
+                    <EmptyState dataName="Jadwal Wawancara" create={toCreate} />
+                )}
+            </>
         )}
-      </div>
-      <div className="flex items-center justify-center gap-4 mt-5">
-        <Button
-          variant="outlined"
-          color="gray"
-          className="flex items-center gap-2"
-          onClick={prev}
-          disabled={page === 1}
-        >
-          <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
-        </Button>
-        <Button
-          variant="outlined"
-          color="gray"
-          className="flex items-center gap-2"
-          onClick={next}
-          disabled={page === totalPages} // Menonaktifkan tombol "Next" jika tidak ada data wawancara
-        >
-          Next
-          <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
-        </Button>
-      </div>
-      </>
-      ) : (
-        <EmptyState dataName="Jadwal Wawancara" create={toCreate} />
-    )}
-
-      {/* Tambahkan komponen PopupModal di sini */}
-      <PopupModal
-        title="Apakah anda yakin menghapus wawancara ini?"
-        trueChoice ="Confirm"
-        falseChoice = "Batal"
-        isOpen={showDeleteModal}
-        toggleModal={() => setShowDeleteModal(!showDeleteModal)}
-        handleConfirmDelete={handleDeleteInterview}
-      />
-    </div>
+        {/* Tambahkan komponen PopupModal di sini */}
+        <PopupModal
+            title="Apakah anda yakin menghapus wawancara ini?"
+            trueChoice="Confirm"
+            falseChoice="Batal"
+            isOpen={showDeleteModal}
+            toggleModal={() => setShowDeleteModal(!showDeleteModal)}
+            handleConfirmDelete={handleDeleteInterview}
+        />
+        {showSpinner && <SpinnerOverlay />}
+    </div>  
   );
 };
 

@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { axiosInstanceAuth } from '../../../API/axios';
+import LoadingState from '../../../components/modal/LoadingState';
 import PopupModal from '../../../components/modal/popup-modal';
+import SpinnerOverlay from '../../../components/modal/SpinnerOverlay';
 
 const DaftarAdmin = () => {
     const [admins, setAdmins] = useState([]);
@@ -11,6 +13,8 @@ const DaftarAdmin = () => {
     const [editedRole, setEditedRole] = useState('');
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [selectedAdminId, setSelectedAdminId] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [showSpinner, setShowSpinner] = useState(false);
     const history = useHistory()
 
     useEffect(() => {
@@ -21,6 +25,7 @@ const DaftarAdmin = () => {
         try {
             const response = await axiosInstanceAuth.get('/admin/all');
             setAdmins(response.data.admins);
+            setIsLoading(false);
         } catch (error) {
             console.error('Failed to fetch admins:', error);
         }
@@ -67,17 +72,24 @@ const DaftarAdmin = () => {
     }
 
     const handleConfirmDelete = async () => {
+        setShowDeleteModal(false)
+        setShowSpinner(true)
         try {
             await axiosInstanceAuth.delete(`/admin/${selectedAdminId}`);
             fetchAllAdmin();
-            setShowDeleteModal(false);
             setSelectedAdminId(null);
         } catch (error) {
             console.error('Failed to delete admin:', error);
+        }finally{
+            setShowSpinner(false)
         }
     };
     
     return (
+        <>
+        {isLoading ? (
+            <LoadingState/>
+        ):(
         <>
         <button onClick={handleTambahAdmin} type="button" className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Tambah Admin</button>
             <table className="min-w-full divide-y divide-gray-200">
@@ -125,6 +137,9 @@ const DaftarAdmin = () => {
                 toggleModal={() => setShowDeleteModal(!showDeleteModal)}
                 handleConfirmDelete={handleConfirmDelete}
             />
+            {showSpinner && <SpinnerOverlay />}
+            </>
+        )}
         </>
     );
 };

@@ -1,12 +1,14 @@
-import React from "react";
+import React,{useState} from "react";
 import { useHistory } from "react-router-dom";
 import { axiosInstanceAuth } from "../../../API/axios";
 import InputField from "../../../components/item/inputField";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import SubmitButton from "../../../components/button/SubmitButton";
 
 const FormTeam = () => {
   const history = useHistory();
+  const [submitting, setSubmitting] = useState();
 
   const validationSchema = yup.object().shape({
     name: yup.string().required('Nama diperlukan'),
@@ -27,6 +29,7 @@ const FormTeam = () => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
+      setSubmitting(true)
       try {
         const formDataToSend = new FormData();
         formDataToSend.append('name', values.name);
@@ -40,6 +43,8 @@ const FormTeam = () => {
         history.push('/dashboard/tim');
       } catch (error) {
         console.error("gagal menambahkan tim ke server", error.response.message);
+      }finally{
+        setSubmitting(false)
       }
     },
   });
@@ -125,9 +130,7 @@ const FormTeam = () => {
             />
           </label>
         </div>
-        <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mt-4">
-          Submit
-        </button>
+        <SubmitButton submitting={submitting} />
       </form>
     </div>
   );

@@ -12,6 +12,7 @@ import PopupModal from "../../../components/modal/popup-modal";
 import { MyContext } from "../component/DashboardLayout";
 import EmptyState from "../../../components/modal/EmptyState";
 import SubmitButton from "../../../components/button/SubmitButton";
+import SpinnerOverlay from "../../../components/modal/SpinnerOverlay";
 
 const Document = () => {
   const [listDokumen, setlistDokumen] = useState([]);
@@ -23,6 +24,7 @@ const Document = () => {
   const [tipeDokumen, setTipeDokumen] = useState('tbpedia');
   const [totalPages, settotalPages] = useState([]);
   const [page, setPage] = useState(1);
+  const [showSpinner, setShowSpinner] = useState(false);
   const searchKeyword = useContext(MyContext);
 
   const fetchDokumen = async () => {
@@ -56,6 +58,8 @@ const Document = () => {
   };
 
   const fetchDelete = async () => {
+    setShowDeleteModal(false); // Tutup modal setelah berhasil menghapus
+    setShowSpinner(true)
     try {
         await deleteDocument(documentIdToDelete); // Menggunakan id
         console.log("Document deleted successfully");
@@ -64,10 +68,11 @@ const Document = () => {
         // Perbarui daftar dokumen secara lokal
         setlistDokumen(prevList => prevList.filter(dokumen => dokumen.id !== documentIdToDelete));
 
-        setShowDeleteModal(false); // Tutup modal setelah berhasil menghapus
     } catch (error) {
         console.error("Gagal menghapus dokumen", error);
         // Tambahkan logika lain jika diperlukan untuk menangani kesalahan saat menghapus dokumen
+    }finally{
+        setShowSpinner(false)
     }
 };
 
@@ -243,6 +248,7 @@ const Document = () => {
               toggleModal={() => setShowDeleteModal(!showDeleteModal)}
               handleConfirmDelete={() => fetchDelete()} // Mengirimkan parameter id ke handleDelete
           />
+          {showSpinner && <SpinnerOverlay />}
       </div>
   );
 };

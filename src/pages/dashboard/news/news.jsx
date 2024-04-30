@@ -7,6 +7,7 @@ import PopupModal from "../../../components/modal/popup-modal";
 import { useHistory } from "react-router-dom";
 import { MyContext } from "../component/DashboardLayout";
 import EmptyState from "../../../components/modal/EmptyState";
+import LoadingState from "../../../components/modal/LoadingState";
 
 const News = () => {
   const [dataNews, setDataNews] = useState([]);
@@ -15,10 +16,12 @@ const News = () => {
   const [deleteId, setDeleteId] = useState(null); // Menyimpan ID berita yang akan dihapus
   const [showDeleteModal, setShowDeleteModal] = useState(false); // Menyimpan status tampilan modal konfirmasi
   const [totalPages, settotalPages] = useState([]);
+  const [showSpinner, setShowSpinner] = useState(false);
   const history = useHistory();
   const searchKeyword = useContext(MyContext);
 
   const fetchNews = async () => {
+    setLoading(true)
     try {
       const newsData = await getNewsByPage(page); // Mengambil data berita dari halaman saat ini
       setDataNews(newsData.data);
@@ -30,6 +33,7 @@ const News = () => {
     }
   };
   const searchNews = async ()=>{
+    setLoading(true)
     try {
       const newsData = await getSearchNews(searchKeyword); // Mengambil data berita dari halaman saat ini
       setDataNews(newsData.data);
@@ -53,6 +57,8 @@ const News = () => {
   }
 
   const handleDeleteNews = async () => {
+    setShowDeleteModal(false); // Tutup modal setelah berhasil menghapus
+    setShowSpinner(true)
     try {
       const success = await deleteNews(deleteId); // Menghapus berita dengan ID yang disimpan
       if (success) {
@@ -67,7 +73,7 @@ const News = () => {
     } catch (error) {
       console.error(`Gagal menghapus berita dengan ID ${deleteId}:`, error);
     } finally {
-      setShowDeleteModal(false); // Sembunyikan modal konfirmasi setelah penghapusan selesai
+      setShowSpinner(false)
     }
   };
 
@@ -82,53 +88,49 @@ const News = () => {
 
   return (
     <div className="mt-3">
-      {dataNews.length > 0 ? (
+      {loading ? (
+        <LoadingState /> // Tampilkan komponen LoadingState saat loading true
+      ) : dataNews.length > 0 ? (
         <>
-      <button type="button" onClick={toCreate} className="rounded-md focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Tambah Berita</button>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-        {loading ? (
-          <Button variant="text" loading={true}>
-            Loading
-          </Button>
-        ) : (
-          dataNews.map((news) => (
-            <CardNews
-              key={news.id_news}
-              {...news}
-              // Saat tombol delete di-klik, simpan ID berita dan tampilkan modal konfirmasi
-              handleDeleteNews={() => {
-                setDeleteId(news.id_news);
-                setShowDeleteModal(true);
-              }}
-            />
-          ))
-        )}
-      </div>
-      <div className="flex items-center justify-center gap-4 mt-5">
-        <Button
-          variant="outlined"
-          color="gray"
-          className="flex items-center gap-2"
-          onClick={prev}
-          disabled={page === 1}
-        >
-          <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
-        </Button>
-        <Button
-          variant="outlined"
-          color="gray"
-          className="flex items-center gap-2"
-          onClick={next}
-          disabled={page === totalPages} // Menonaktifkan tombol "Next" jika tidak ada data berita
-        >
-          Next
-          <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
-        </Button>
-      </div>
-      </>
+          <button type="button" onClick={toCreate} className="rounded-md focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Tambah Berita</button>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+            {dataNews.map((news) => (
+              <CardNews
+                key={news.id_news}
+                {...news}
+                // Saat tombol delete di-klik, simpan ID berita dan tampilkan modal konfirmasi
+                handleDeleteNews={() => {
+                  setDeleteId(news.id_news);
+                  setShowDeleteModal(true);
+                }}
+              />
+            ))}
+          </div>
+          <div className="flex items-center justify-center gap-4 mt-5">
+            <Button
+              variant="outlined"
+              color="gray"
+              className="flex items-center gap-2"
+              onClick={prev}
+              disabled={page === 1}
+            >
+              <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
+            </Button>
+            <Button
+              variant="outlined"
+              color="gray"
+              className="flex items-center gap-2"
+              onClick={next}
+              disabled={page === totalPages} // Menonaktifkan tombol "Next" jika tidak ada data berita
+            >
+              Next
+              <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
+            </Button>
+          </div>
+        </>
       ) : (
         <EmptyState dataName="Berita" create={toCreate} />
-    )}
+      )}
 
       {/* Tambahkan komponen PopupModal di sini */}
       <PopupModal

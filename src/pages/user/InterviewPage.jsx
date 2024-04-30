@@ -4,11 +4,13 @@ import axios from "axios";
 import { formatDate, getTime, splitTextByNewLine } from '../../utils/helper'
 import ListPlace from "../../components/item/ListPlace";
 import Heading from "../../components/common/heading/Heading";
+import LoadingState from "../../components/modal/LoadingState";// Import komponen LoadingState
 
 const InterviewPage = () => {
   const { id_schedule } = useParams();
   const [content, setContent] = useState(null);
-  const [participant, setparticipant] = useState([]);
+  const [participant, setParticipant] = useState([]);
+  const [isLoading, setIsLoading] = useState(true); // State untuk menampilkan status loading
 
   const getScheduleById = async () => {
     try {
@@ -16,8 +18,9 @@ const InterviewPage = () => {
         `${process.env.REACT_APP_BASE_URL}/interview/${id_schedule}`
       );
       const data = response.data.data
-      setparticipant(splitTextByNewLine(data.participants));
+      setParticipant(splitTextByNewLine(data.participants));
       setContent(data);
+      setIsLoading(false); // Setelah data terambil, atur status loading menjadi false
     } catch (error) {
       console.error('Failed to fetch vacancy', error);
     }
@@ -29,7 +32,9 @@ const InterviewPage = () => {
 
   return (
     <>
-        {content && (
+        {isLoading ? ( // Jika sedang loading, tampilkan komponen LoadingState
+          <LoadingState />
+        ) : (
           <div className="mx-auto py-10 px-4 sm:px-6 md:px-20">
             <Heading title={content.title} subtitle="Jadwal Interview" />
             <div className="grid grid-cols-1 sm:grid-cols-2 mx-5 lg:mx-24">

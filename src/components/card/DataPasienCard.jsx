@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { formatIntegerWithCommas } from '../../utils/helper';
+import LoadingState from "../modal/LoadingState";
 
 const DataPasien = () => {
   const [dataPasien, setDataPasien] = useState([]);
@@ -23,7 +24,7 @@ const DataPasien = () => {
     fetchDataPasien();
   }, []);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <LoadingState/>;
   if (isError) return <div>Error fetching data pasien</div>;
 
   return (

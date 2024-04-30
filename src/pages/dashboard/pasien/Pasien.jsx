@@ -1,47 +1,148 @@
 import React, { useState, useEffect } from 'react';
-import { getPasien, updatePasien,deleteYear } from '../../../API/PasienAPI';
+import { getPasien, updatePasien, deleteYear } from '../../../API/PasienAPI';
+import SubmitButton from '../../../components/button/SubmitButton';
+import LoadingState from '../../../components/modal/LoadingState';
 import PopupModal from '../../../components/modal/popup-modal';
+import SpinnerOverlay from '../../../components/modal/SpinnerOverlay';
 
-const YearSelector = ({ dataPasien, selectedYear, handleYearChange, showOtherYearInput }) => {
+const Pasien = () => {
+    const [dataPasien, setDataPasien] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [selectedYear, setSelectedYear] = useState(0);
+    const [showOtherYearInput, setShowOtherYearInput] = useState(false);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [deleteId, setDeleteId] = useState(null);
+    const [submitting, setSubmitting] = useState(false);
+    const [showSpinner, setShowSpinner] = useState(false);
+
+    const fetchPasien = async () => {
+        try {
+            const PasienData = await getPasien();
+            setDataPasien(PasienData);
+        } catch (error) {
+            console.error("gagal fetch pasien", error);
+            setError(error.message);
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
+    useEffect(() => {
+        fetchPasien();
+    }, []);
+
+    useEffect(() => {
+        if (dataPasien && dataPasien.totalPerYear.length > 0) {
+            setSelectedYear(dataPasien.totalPerYear[dataPasien.totalPerYear.length - 1].year);
+        }
+    }, [dataPasien]);
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        setSubmitting(true);
+    
+        // Inisialisasi FormData
+        const formData = new FormData();
+    
+        // Memasukkan nilai dari setiap input ke dalam FormData
+        formData.append("suspect", event.target.elements.suspect.value);
+        formData.append("detect", event.target.elements.detect.value);
+        formData.append("treatment", event.target.elements.treatment.value);
+        formData.append("recovery", event.target.elements.recovery.value);
+        
+        let selectedYearValue;
+        if (selectedYear === "Tambah" || selectedYear === 0) {
+            // Jika tahun yang dipilih adalah "Tambah", ambil nilai dari input tahun
+            selectedYearValue = event.target.elements.yearInput.value;
+        } else {
+            // Jika tidak, gunakan nilai tahun yang dipilih
+            selectedYearValue = selectedYear;
+        }
+        
+        // Memasukkan nilai tahun ke dalam FormData
+        formData.append("year", selectedYearValue);
+        try {
+            // Mengirimkan data ke server
+            await updatePasien(formData);
+            
+            // Memuat ulang data pasien setelah pembaruan berhasil
+            fetchPasien();
+            
+            // Mengosongkan formulir
+            event.target.reset();
+        } catch (error) {
+            console.error("gagal mengirimkan update pasien");
+        } finally {
+            // Menghentikan status submitting
+            setShowOtherYearInput(false)
+            setSubmitting(false);
+        }
+    }
+    
+
+    const handleYearChange = (value) => {
+        setSelectedYear(value);
+        setShowOtherYearInput(value === "Tambah");
+    }
+
+    const handleInputChange = (e) => {
+        const { value } = e.target;
+        const filteredValue = value.replace(/[^0-9-]/g, "");
+        e.target.value = filteredValue;
+    }
+
+    const handleDeleteYear = async () => {
+        setShowDeleteModal(false);
+        setShowSpinner(true)
+        try {
+            await deleteYear(deleteId);
+            fetchPasien();
+        } catch (error) {
+            console.error("gagal menghapus tahun");
+        }finally{
+            setShowSpinner(false)
+        }
+    }
+
     return (
-        <div className="flex flex-col items-center justify-center">
-            <select 
-                id="year" // Add id attribute
-                value={selectedYear} 
-                onChange={handleYearChange} 
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md p-2"
-            >
-                {dataPasien && dataPasien.totalPerYear.map((yearData, index) => (
-                    <option key={index} value={yearData.year}>{yearData.year}</option>
-                ))}
-                <option value="Tambah">Tahun Baru</option>
-            </select>
-            {showOtherYearInput && 
-                <input 
-                    type="text" 
-                    id="yearInput" // Add id attribute
-                    name="year" 
-                    placeholder="Input Year" 
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md p-2" 
-                />
-            }
+        <div className="overflow-x-auto">
+            {isLoading ? (
+                <LoadingState/>
+            ) : error ? (
+                <p>Error: {error}</p>
+            ) : (
+                <>
+                    <DataTable 
+                        dataPasien={dataPasien} 
+                        handleDelete={(id) => {
+                            setDeleteId(id);
+                            setShowDeleteModal(true);
+                        }} 
+                    />
+                    <Form 
+                        handleSubmit={handleSubmit}
+                        dataPasien={dataPasien} 
+                        selectedYear={selectedYear} 
+                        handleYearChange={handleYearChange} 
+                        showOtherYearInput={showOtherYearInput} 
+                        handleInputChange={handleInputChange} 
+                        submitting={submitting}
+                    />
+                    <PopupModal
+                        title="Apakah Anda yakin menghapus tahun ini?"
+                        trueChoice="Confirm"
+                        falseChoice="Cancel"
+                        isOpen={showDeleteModal}
+                        toggleModal={() => setShowDeleteModal(!showDeleteModal)}
+                        handleConfirmDelete={handleDeleteYear}
+                    />
+                    {showSpinner && <SpinnerOverlay />}
+                </>
+            )}
         </div>
     );
-};
-
-const InputField = ({ name, placeholder, handleInputChange }) => {
-    return (
-        <input 
-            type="text" 
-            id={name} // Add id attribute
-            name={name} 
-            placeholder={placeholder} 
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md p-2" 
-            onChange={handleInputChange}
-        />
-    );
-};
-
+}
 
 const DataTable = ({ dataPasien, handleDelete }) => {
     return (
@@ -85,8 +186,7 @@ const DataTable = ({ dataPasien, handleDelete }) => {
     );
 };
 
-
-const Form = ({ handleSubmit, selectedYear, handleYearChange, showOtherYearInput, handleInputChange,dataPasien }) => {
+const Form = ({ handleSubmit, selectedYear, handleYearChange, showOtherYearInput, handleInputChange,dataPasien,submitting }) => {
     return (
         <form onSubmit={handleSubmit}>
             <table className="w-full">
@@ -115,133 +215,54 @@ const Form = ({ handleSubmit, selectedYear, handleYearChange, showOtherYearInput
                     </tr>
                 </tbody>
             </table>
-
-            <button 
-                type="submit" 
-                className="m-5 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-            >
-                Submit
-            </button>
+            <SubmitButton submitting={submitting} />
         </form>
     );
 };
 
+const InputField = ({ id, name, placeholder, handleInputChange }) => {
+    return (
+        <input 
+            type="text" 
+            id={id} 
+            name={name} 
+            placeholder={placeholder} 
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md p-2" 
+            onChange={handleInputChange}
+        />
+    );
+};
 
-
-const Pasien = () => {
-    const [dataPasien, setDataPasien] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const [selectedYear, setSelectedYear] = useState("");
-    const [showOtherYearInput, setShowOtherYearInput] = useState(false);
-    const [showDeleteModal, setShowDeleteModal] = useState(false);
-    const [deleteId, setDeleteId] = useState(null);
-
-    const fetchPasien = async () => {
-        try {
-            const PasienData = await getPasien();
-            setDataPasien(PasienData);
-        } catch (error) {
-            console.error("gagal fetch pasien", error);
-            setError(error.message);
-        } finally {
-            setIsLoading(false);
-        }
-    }
-
-    useEffect(() => {
-        fetchPasien();
-    }, []);
-
-    useEffect(() => {
-        if (dataPasien && dataPasien.totalPerYear.length > 0) {
-            setSelectedYear(dataPasien.totalPerYear[dataPasien.totalPerYear.length - 1].year);
-        }
-    }, [dataPasien]);
-
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        const formData = new FormData();
-
-        formData.append("suspect", event.target.elements.suspect.value);
-        formData.append("detect", event.target.elements.detect.value);
-        formData.append("treatment", event.target.elements.treatment.value);
-        formData.append("recovery", event.target.elements.recovery.value);
-
-        let selectedYearValue;
-        if (selectedYear === "Tambah") {
-            selectedYearValue = event.target.elements.year.value;
-        } else {
-            selectedYearValue = selectedYear;
-        }
-        formData.append("year", selectedYearValue);
-
-        try {
-            await updatePasien(formData);
-            fetchPasien();
-            event.target.reset();
-        } catch (error) {
-            console.error("gagal mengirimkan update pasien");
-        }
-    }
-
-    const handleYearChange = (e) => {
-        const selectedValue = e.target.value;
-        setSelectedYear(selectedValue);
-        setShowOtherYearInput(selectedValue === "Tambah");
-    }
-
-    const handleInputChange = (e) => {
-        const { value } = e.target;
-        const filteredValue = value.replace(/[^0-9-]/g, "");
-        e.target.value = filteredValue;
-    }
-
-    const handleDeleteYear = async () => {
-        try {
-            await deleteYear(deleteId);
-            fetchPasien();
-            setShowDeleteModal(false); // Tutup modal setelah penghapusan berhasil
-        } catch (error) {
-            console.error("gagal menghapus tahun");
-        }
-    }
+const YearSelector = ({ dataPasien, selectedYear, handleYearChange, showOtherYearInput }) => {
+    // Fungsi untuk menangani perubahan nilai selectedYear dari select atau input teks
 
     return (
-        <div className="overflow-x-auto">
-            {isLoading ? (
-                <p>Loading...</p>
-            ) : error ? (
-                <p>Error: {error}</p>
-            ) : (
-                <>
-                    <DataTable 
-                        dataPasien={dataPasien} 
-                        handleDelete={(id) => {
-                            setDeleteId(id);
-                            setShowDeleteModal(true);
-                        }} 
-                    />
-                    <Form 
-                        handleSubmit={handleSubmit}
-                        dataPasien={dataPasien} 
-                        selectedYear={selectedYear} 
-                        handleYearChange={handleYearChange} 
-                        showOtherYearInput={showOtherYearInput} 
-                        handleInputChange={handleInputChange} 
-                    />
-                    <PopupModal
-                        title="Apakah Anda yakin menghapus tahun ini?"
-                        trueChoice="Confirm"
-                        falseChoice="Cancel"
-                        isOpen={showDeleteModal}
-                        toggleModal={() => setShowDeleteModal(!showDeleteModal)}
-                        handleConfirmDelete={handleDeleteYear}
-                    />
-                </>
+        <div className="flex flex-col items-center justify-center">
+            {dataPasien && dataPasien.totalPerYear.length > 0 && (
+                <select 
+                    id="year" 
+                    value={selectedYear} 
+                    onChange={(e) => handleYearChange(e.target.value)} // Menggunakan fungsi handleYearChange untuk mengatur nilai selectedYear
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md p-2"
+                >
+                    {dataPasien.totalPerYear.map((yearData, index) => (
+                        <option key={index} value={yearData.year}>{yearData.year}</option>
+                    ))}
+                    <option value="Tambah">Tahun Baru</option>
+                </select>
+            )}
+            {(dataPasien.totalPerYear.length === 0 || showOtherYearInput) && (
+                <input 
+                    type="text" 
+                    id="yearInput" 
+                    name="year" 
+                    placeholder="Input Year" 
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md p-2" 
+                    // onChange={handleYearInputChange} // Menggunakan fungsi handleYearInputChange untuk menangani perubahan nilai input teks
+                />
             )}
         </div>
     );
-}
+};
 
 export default Pasien;

@@ -6,6 +6,7 @@ import InterviewCard from "../../components/card/InterviewCard";
 import AnnouncementCard from "../../components/card/AnnouncementCard";
 import VacancyCard from "../../components/card/VacancyCard";
 import EmptyState from "../../components/modal/EmptyState";
+import LoadingState from "../../components/modal/LoadingState";
 
 
 const Announcement = () => {
@@ -62,7 +63,7 @@ const Announcement = () => {
     fetchVacancyData();
   }, []);
 
-  if (isLoading) return <div className="loading">Loading...</div>;
+  if (isLoading) return <LoadingState/>;
   if (isError) return <div className="error">Error fetching vacancy data</div>;
 
   return (

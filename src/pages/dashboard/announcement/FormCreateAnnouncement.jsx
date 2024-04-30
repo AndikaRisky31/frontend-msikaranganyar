@@ -4,10 +4,12 @@ import * as yup from "yup";
 import InputField from '../../../components/item/inputField'
 import { createAnnouncement, getAnnouncementById, updateAnnouncement } from "../../../API/AnnouncementAPI";
 import { useHistory, useParams } from "react-router-dom";
+import SubmitButton from "../../../components/button/SubmitButton";
 
 const FormCreateAnnouncement = () => {
   const [pengumuman, setpengumuman] = useState([]);
   const { id_announcement } = useParams();
+  const [submitting, setSubmitting] = useState(false);
   const history = useHistory()
 
   const initialValues = {
@@ -29,6 +31,7 @@ const FormCreateAnnouncement = () => {
   });
 
   const onSubmit = async (values) => {
+    setSubmitting(true)
     try {
       const formData = new FormData();
       formData.append("title", values.title);
@@ -47,6 +50,8 @@ const FormCreateAnnouncement = () => {
       history.push("/dashboard/pengumuman")
     } catch (error) {
       console.error("Error:", error);
+    }finally{
+      setSubmitting(false)
     }
   };
 
@@ -127,9 +132,7 @@ const FormCreateAnnouncement = () => {
           required={id_announcement ? false : true}
         />
       </div>
-      <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
-        Submit
-      </button>
+      <SubmitButton submitting={submitting}/>
     </form>
   );
 };

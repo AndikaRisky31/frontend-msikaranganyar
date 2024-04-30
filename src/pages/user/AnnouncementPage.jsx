@@ -3,10 +3,12 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { formatDate, getTime } from "../../utils/helper"
 import Heading from "../../components/common/heading/Heading";
+import LoadingState from "../../components/modal/LoadingState"; // Import komponen LoadingState
 
 const AnnouncementPage = () => {
   const { id_announcement } = useParams();
   const [content, setContent] = useState(null);
+  const [isLoading, setIsLoading] = useState(true); // State untuk menampilkan status loading
 
   const getAnnouncementById = async () => {
     try {
@@ -15,6 +17,7 @@ const AnnouncementPage = () => {
       );
       const data = response.data.data;
       setContent(data);
+      setIsLoading(false); // Setelah data terambil, atur status loading menjadi false
     } catch (error) {
       console.error('Failed to fetch vacancy', error);
     }
@@ -26,7 +29,9 @@ const AnnouncementPage = () => {
 
   return (
     <>
-        {content && (
+        {isLoading ? ( // Jika sedang loading, tampilkan komponen LoadingState
+          <LoadingState />
+        ) : (
           <div className="mx-auto w-full py-10 px-4 sm:px-6 md:px-20 lg:w-3/4">
             <Heading title={content.title} subtitle="pengumuman"/>
             <div className="grid grid-cols-1 mx-5 lg:mx-24">

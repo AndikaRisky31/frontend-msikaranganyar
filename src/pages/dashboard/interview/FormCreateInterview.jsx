@@ -1,14 +1,16 @@
-import React, {useEffect } from "react";
+import React, {useEffect,useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import InputField from "../../../components/item/inputField";
 import { createInterview, getInterviewById, updateInterview } from "../../../API/InterviewAPI";
 import { useHistory, useParams } from "react-router-dom";
 import { formatDateForInputDateTime, removeEmptyLines } from "../../../utils/helper";
+import SubmitButton from "../../../components/button/SubmitButton";
 
 const FormCreateInterview = () => {
   const { id_schedule_interview } = useParams();
   const history = useHistory();
+  const [submitting, setSubmitting] = useState(false);
 
   const initialValues = {
     title: "",
@@ -27,6 +29,7 @@ const FormCreateInterview = () => {
   });
 
   const onSubmit = async (values) => {
+    setSubmitting(true);
     try {
       const formData = new FormData();
       formData.append("title", values.title);
@@ -44,6 +47,8 @@ const FormCreateInterview = () => {
       history.push("/dashboard/wawancara");
     } catch (error) {
       console.error("Error:", error);
+    }finally {
+      setSubmitting(false);
     }
   };
 
@@ -159,9 +164,7 @@ const FormCreateInterview = () => {
           <div className="text-red-500">{errors.participants}</div>
         ) : null}
       </div>
-      <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
-        Submit
-      </button>
+      <SubmitButton submitting={submitting} />
     </form>
   );
 };

@@ -42,6 +42,10 @@ export const sliceContent = (fullContent,size)=>{
     return slicedText;
 };
 export const formatIntegerWithCommas = (number) => {
+        // Handle jika number null atau undefined
+    if (number == null || typeof number === 'undefined') {
+        return '0';
+    }
     // Ubah angka menjadi string
     const numberString = number.toString();
 

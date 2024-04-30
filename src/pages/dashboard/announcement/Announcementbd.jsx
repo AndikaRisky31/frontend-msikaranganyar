@@ -7,6 +7,8 @@ import PopupModal from "../../../components/modal/popup-modal";
 import { useHistory } from "react-router-dom";
 import { MyContext } from "../component/DashboardLayout";
 import EmptyState from "../../../components/modal/EmptyState";
+import LoadingState from "../../../components/modal/LoadingState";
+import SpinnerOverlay from "../../../components/modal/SpinnerOverlay";
 
 const Announcementdb = () => {
   const [dataAnnouncement, setDataAnnouncement] = useState([]);
@@ -15,10 +17,12 @@ const Announcementdb = () => {
   const [deleteId, setDeleteId] = useState(null); // Menyimpan ID announcement yang akan dihapus
   const [showDeleteModal, setShowDeleteModal] = useState(false); // Menyimpan status tampilan modal konfirmasi
   const [totalPages, settotalPages] = useState([]);
+  const [showSpinner, setShowSpinner] = useState(false);
   const history = useHistory()
   const keyword = useContext(MyContext)
   
   const fetchByPage = async () => {
+    setLoading(true)
     try {
       const AnnouncementData = await getAnnouncementByPage(page); // Mengambil data announcement dari halaman saat ini
       setDataAnnouncement(AnnouncementData.data);
@@ -30,6 +34,7 @@ const Announcementdb = () => {
     }
   };
   const fetchBySearch = async()=>{
+    setLoading(true)
     try {
       const AnnouncementData = await getSearchAnnouncement(keyword); // Mengambil data announcement dari halaman saat ini
       setDataAnnouncement(AnnouncementData.data);
@@ -53,6 +58,8 @@ const Announcementdb = () => {
   }
 
   const handleDeleteAnnouncement = async () => {
+    setShowDeleteModal(false); 
+    setShowSpinner(true)
     try {
       const success = await deleteAnnouncement(deleteId); // Menghapus announcement dengan ID yang disimpan
       if (success) {
@@ -68,7 +75,7 @@ const Announcementdb = () => {
     } catch (error) {
       console.error(`Gagal menghapus announcement dengan ID ${deleteId}:`, error);
     } finally {
-      setShowDeleteModal(false); // Sembunyikan modal konfirmasi setelah penghapusan selesai
+      setShowSpinner(false)
     }
   };
 
@@ -83,12 +90,16 @@ const Announcementdb = () => {
 
   return (
     <div className="mt-3">
-      {dataAnnouncement.length > 0 ? (
+      {loading ? ( // Tampilkan komponen LoadingState saat data sedang dimuat
+        <LoadingState />
+      ) : (
         <>
-        <button type="button" onClick={toCreate} className="rounded-md focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Tambah announcement</button>      
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
-            {dataAnnouncement.map((Announcement) => (
-                <AnnouncementCard
+          {dataAnnouncement.length > 0 ? (
+            <>
+              <button type="button" onClick={toCreate} className="rounded-md focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Tambah announcement</button>      
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
+                {dataAnnouncement.map((Announcement) => (
+                  <AnnouncementCard
                     key={Announcement.id_announcement}
                     announcement={Announcement}
                     showButton={true}
@@ -97,48 +108,49 @@ const Announcementdb = () => {
                         setDeleteId(Announcement.id_announcement);
                         setShowDeleteModal(true);
                     }}
-                />
-            ))}
-        </div>
-        <div className="flex items-center justify-center gap-4 mt-5">
-          <Button
-            variant="outlined"
-            color="gray"
-            className="flex items-center gap-2"
-            onClick={prev}
-            disabled={page === 1}
-          >
-            <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
-          </Button>
-          <Button
-            variant="outlined"
-            color="teal"
-            className="flex items-center gap-2"
-            onClick={next}
-            disabled={page === totalPages} // Menonaktifkan tombol "Next" jika tidak ada data announcement
-          >
-            Next
-            <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
-          </Button>
-        </div>
+                  />
+                ))}
+              </div>
+              <div className="flex items-center justify-center gap-4 mt-5">
+                <Button
+                  variant="outlined"
+                  color="gray"
+                  className="flex items-center gap-2"
+                  onClick={prev}
+                  disabled={page === 1}
+                >
+                  <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
+                </Button>
+                <Button
+                  variant="outlined"
+                  color="teal"
+                  className="flex items-center gap-2"
+                  onClick={next}
+                  disabled={page === totalPages} // Menonaktifkan tombol "Next" jika tidak ada data announcement
+                >
+                  Next
+                  <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
+                </Button>
+              </div>
+            </>
+          ) : (
+            <EmptyState dataName="Pengumuman" create={toCreate} />
+          )}
+          {/* Tambahkan komponen PopupModal di sini */}
+          <PopupModal
+            title="Apakah anda yakin menghapus pengumuman ini?"
+            trueChoice="Confirm"
+            falseChoice="Batal"
+            isOpen={showDeleteModal}
+            toggleModal={() => setShowDeleteModal(!showDeleteModal)}
+            handleConfirmDelete={handleDeleteAnnouncement}
+          />
+          {showSpinner && <SpinnerOverlay />}
         </>
-    ) : (
-        <EmptyState dataName="Pengumuman" create={toCreate} />
-    )}
-
-      
-
-      {/* Tambahkan komponen PopupModal di sini */}
-      <PopupModal
-        title="Apakah anda yakin menghapus pengumuman ini?"
-        trueChoice ="Confirm"
-        falseChoice = "Batal"
-        isOpen={showDeleteModal}
-        toggleModal={() => setShowDeleteModal(!showDeleteModal)}
-        handleConfirmDelete={handleDeleteAnnouncement}
-      />
+      )}
     </div>
   );
+  
 };
 
 export default Announcementdb;

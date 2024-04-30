@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { axiosInstanceAuth } from "../../../API/axios";
+import LoadingState from "../../../components/modal/LoadingState";
 
 const Profile = () => {
     const [profile, setProfile] = useState({}); // Initialize with an empty object
     const [countNews, setCountNews] = useState();
+    const [loading, setLoading] = useState(true);
 
     const fetchAdmin = async () => {
         try {
             const response = await axiosInstanceAuth('/admin');
             setCountNews(response.data.numberOfNews)
             setProfile(response.data.data);
+            setLoading(false)
         } catch (error) {
            console.error("gagal mengambil data admin", error);
         }
@@ -20,7 +23,11 @@ const Profile = () => {
     }, []);
 
     return (
-        <div className="bg-white overflow-hidden shadow rounded-lg border">
+        <>
+        {loading ? (
+            <LoadingState/>
+        ):(
+            <div className="bg-white overflow-hidden shadow rounded-lg border">
             <div className="px-4 py-5 sm:px-6">
                 <h3 className="text-lg leading-6 font-medium text-gray-900">
                     Admin Profile
@@ -66,6 +73,8 @@ const Profile = () => {
                 </dl>
             </div>
         </div>
+        )}
+        </>
     );
 }
 
