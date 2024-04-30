@@ -20,6 +20,9 @@ const Pasien = () => {
         try {
             const PasienData = await getPasien();
             setDataPasien(PasienData);
+            if (dataPasien && dataPasien.totalPerYear.length > 0) {
+                setSelectedYear(dataPasien.totalPerYear[dataPasien.totalPerYear.length - 1].year);
+            }
         } catch (error) {
             console.error("gagal fetch pasien", error);
             setError(error.message);
@@ -32,11 +35,6 @@ const Pasien = () => {
         fetchPasien();
     }, []);
 
-    useEffect(() => {
-        if (dataPasien && dataPasien.totalPerYear.length > 0) {
-            setSelectedYear(dataPasien.totalPerYear[dataPasien.totalPerYear.length - 1].year);
-        }
-    }, [dataPasien]);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -52,8 +50,7 @@ const Pasien = () => {
         formData.append("recovery", event.target.elements.recovery.value);
         
         let selectedYearValue;
-        if (selectedYear === "Tambah" || selectedYear === 0) {
-            // Jika tahun yang dipilih adalah "Tambah", ambil nilai dari input tahun
+        if (event.target.elements.yearInput.value) {
             selectedYearValue = event.target.elements.yearInput.value;
         } else {
             // Jika tidak, gunakan nilai tahun yang dipilih
@@ -198,6 +195,7 @@ const Form = ({ handleSubmit, selectedYear, handleYearChange, showOtherYearInput
                                 selectedYear={selectedYear} 
                                 handleYearChange={handleYearChange} 
                                 showOtherYearInput={showOtherYearInput} 
+                                handleInputChange={handleInputChange}
                             />
                         </td>
                         <td className="px-4 py-2 w-auto">
@@ -233,7 +231,7 @@ const InputField = ({ id, name, placeholder, handleInputChange }) => {
     );
 };
 
-const YearSelector = ({ dataPasien, selectedYear, handleYearChange, showOtherYearInput }) => {
+const YearSelector = ({ dataPasien, selectedYear, handleYearChange, showOtherYearInput,handleInputChange }) => {
     // Fungsi untuk menangani perubahan nilai selectedYear dari select atau input teks
 
     return (
@@ -258,7 +256,7 @@ const YearSelector = ({ dataPasien, selectedYear, handleYearChange, showOtherYea
                     name="year" 
                     placeholder="Input Year" 
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md p-2" 
-                    // onChange={handleYearInputChange} // Menggunakan fungsi handleYearInputChange untuk menangani perubahan nilai input teks
+                    onChange={handleInputChange} // Menggunakan fungsi handleYearInputChange untuk menangani perubahan nilai input teks
                 />
             )}
         </div>
