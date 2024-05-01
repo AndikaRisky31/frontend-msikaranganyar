@@ -13,6 +13,7 @@ import { MyContext } from "../component/DashboardLayout";
 import EmptyState from "../../../components/modal/EmptyState";
 import SubmitButton from "../../../components/button/SubmitButton";
 import SpinnerOverlay from "../../../components/modal/SpinnerOverlay";
+import { useHistory } from "react-router-dom";
 
 const Document = () => {
   const [listDokumen, setlistDokumen] = useState([]);
@@ -26,22 +27,29 @@ const Document = () => {
   const [page, setPage] = useState(1);
   const [showSpinner, setShowSpinner] = useState(false);
   const searchKeyword = useContext(MyContext);
+  const history = useHistory();
 
   const fetchDokumen = async () => {
-      try {
-          const data = await getDocumentByPage(tipeDokumen, page,5);
-          setlistDokumen(data.dokumen);
-          settotalPages(data.totalPages)
-      } catch (error) {
-          console.error("gagal mengambil data dokumen", error);
-      }
+    setShowSpinner(true)
+    try {
+        const data = await getDocumentByPage(tipeDokumen, page,5);
+        setlistDokumen(data.dokumen);
+        settotalPages(data.totalPages)
+    } catch (error) {
+        console.error("gagal mengambil data dokumen", error);
+    }finally{
+        setShowSpinner(false)
+    }
   };
   const fetchSearchDokumen = async()=>{
+    setShowSpinner(true)
     try {
         const response = await searchDocument(searchKeyword)
         setlistDokumen(response.dokumen)
     } catch (error) {
      console.error("gagal mencari dokumen",error);   
+    }finally{
+        setShowSpinner(false)
     }
   }
 
@@ -112,7 +120,8 @@ const Document = () => {
           } else {
               await axiosInstanceAuth.post("/document/create", formData);
           }
-
+          
+          fetchDokumen();
           handleShowForm();
       } catch (error) {
           console.error("Gagal mengirim data:", error);
@@ -126,7 +135,7 @@ const Document = () => {
       isFormDataEmpty: yup.boolean(), // Tentukan tipe data untuk isFormDataEmpty
       title: yup.string()
         .required("Judul diperlukan")
-        .max(50, "Judul tidak boleh lebih dari 50 karakter"),
+        .max(80, "Judul tidak boleh lebih dari 50 karakter"),
       documentType: yup.string().required("Jenis dokumen diperlukan"),
       year: yup.string().required("Tahun diperlukan"),
       file: yup
@@ -181,6 +190,9 @@ const Document = () => {
           formik.setFieldValue("file", file);
       }
   };
+  const toDocument = (link)=>{
+    window.location.href = process.env.REACT_APP_IMAGE_URL+link
+  }
 
   return (
       <div className="flex flex-col p-5">
@@ -208,6 +220,7 @@ const Document = () => {
                 handleDelete={handleDelete} 
                 tipeDokumen={tipeDokumen}
                 setTipeDokumen={setTipeDokumen}
+                onClick={toDocument}
                 />
           </div>
           {listDokumen.length !== 0 ? (
@@ -255,7 +268,7 @@ const Document = () => {
 
 
 
-const DaftarDokumen = ({ listDokumen, fetchId,handleDelete,tipeDokumen,setTipeDokumen}) => {
+const DaftarDokumen = ({ listDokumen, fetchId,handleDelete,tipeDokumen,setTipeDokumen,onClick}) => {
   return (
     <table className="min-w-full divide-y divide-gray-200 overflow-x-auto">
       <thead className="bg-gray-50">
@@ -289,7 +302,7 @@ const DaftarDokumen = ({ listDokumen, fetchId,handleDelete,tipeDokumen,setTipeDo
                             src={process.env.REACT_APP_IMAGE_URL + dokumen.imageURL}
                             alt={dokumen.nama}
                         />
-                        <div className="text-sm font-medium text-gray-900 ml-2">{dokumen.nama}</div>
+                        <div onClick={() => onClick(dokumen.nama_file)} className="cursor-pointer text-sm font-medium text-gray-900 ml-2">{dokumen.nama}</div>
                     </div>
                 </div>
             </td>

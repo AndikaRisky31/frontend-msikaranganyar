@@ -10,7 +10,7 @@ const DocumentCard = ({ Document, toPdf }) => {
       </div>
       <div className="h-full flex flex-col justify-between p-4 md:p-5 md:w-2/3">
         <h5 className="mb-1 md:mb-2 text-lg md:text-xl font-bold tracking-tight text-gray-900 dark:text-white">{Document.nama}</h5>
-        <button type="button" onClick={toPdf} className="text-white mb-5 bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium font-avenir rounded-full text-sm md:text-lg px-3 md:px-5 py-1.5 md:py-2 mt-1 md:mt-2 md:self-start dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Download PDF<i className="fas fa-download"></i></button>
+        <button type="button" onClick={toPdf} className="text-white mb-5 bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium font-avenir rounded-full text-sm md:text-base px-3 md:px-5 py-1.5 md:py-2 mt-1 md:mt-2 md:self-start dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Download PDF<i className="fas fa-download"></i></button>
       </div>
     </div>
   );

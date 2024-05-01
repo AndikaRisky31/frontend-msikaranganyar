@@ -23,7 +23,7 @@ const News = () => {
   const fetchNews = async () => {
     setLoading(true)
     try {
-      const newsData = await getNewsByPage(page); // Mengambil data berita dari halaman saat ini
+      const newsData = await getNewsByPage(page,8); // Mengambil data berita dari halaman saat ini
       setDataNews(newsData.data);
       settotalPages(newsData.totalPages)
       setLoading(false);

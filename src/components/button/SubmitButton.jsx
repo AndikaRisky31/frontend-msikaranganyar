@@ -1,12 +1,11 @@
 import React from 'react';
 
-const SubmitButton = ({ submitting,text ="submit", onClick }) => {
+const SubmitButton = ({ submitting,text ="Simpan"}) => {
     return (
         <button
             type="submit"
             className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 flex items-center justify-center"
             disabled={submitting}
-            onClick={onClick}
         >
             {submitting && (
                 <svg

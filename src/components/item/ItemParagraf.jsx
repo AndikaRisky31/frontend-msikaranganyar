@@ -5,9 +5,9 @@ const ListParagraf = ({ content }) => {
     const Text = splitTextByNewLine(content);
 
     return (
-        <div>
+        <div style={{ fontFamily: 'PT Serif, serif' }}>
             {Text.map((item, index) => (
-                <p key={index} className="text-justify py-3 md:py-4">{`\t${item}`}</p>
+                <p key={index} className="leading-6 text-xl text-justify py-3 md:py-4">{`\t${item}`}</p>
             ))}
         </div>
     );
