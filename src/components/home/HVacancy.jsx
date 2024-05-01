@@ -3,6 +3,7 @@ import axios from "axios";
 import Heading from "../common/heading/Heading";
 import VacancyCard from "../card/VacancyCard";
 import '../../css/vacancy.css'
+import LoadingState from "../modal/LoadingState";
 
 const HVacancy = () => {
   const [vacancies, setVacancies] = useState([]);
@@ -26,12 +27,12 @@ const HVacancy = () => {
     fetchVacancyData();
   }, []);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <LoadingState/>;
   if (isError) return <div>Error fetching vacancy data</div>;
 
   return (
-    <>
-      <section className='m-auto max-w-[85%] my-10'>
+    <>{ vacancies.length > 0 && (
+        <section className='m-auto max-w-[85%] my-10'>
         <Heading subtitle='LOWONGAN' title='Bergabunglah dengan Tim Kami!' link="/lowongan"/>
         <div className="flex overflow-x-auto snap-mandatory snap-x gap-5 pb-3">
             {vacancies.map((vacancy) => (
@@ -41,6 +42,8 @@ const HVacancy = () => {
             ))}
           </div>
       </section>
+      )
+    }
     </>
   );
 };

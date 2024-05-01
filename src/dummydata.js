@@ -51,23 +51,23 @@ export const faq = [
 export const testimonal = [
   {
     id: 1,
-    name: "ROGER SCOTT",
-    post: "KARYAWAN",
+    name: "Fuadi Murolin",
+    post: "Karyawan Swasta",
     desc: "Setelah melalui perjuangan yang panjang, saya berhasil sembuh dari TBC. Terima kasih kepada tim medis yang selalu memberikan dukungan dan perawatan terbaik.",
-    cover: "./images/testo/t1.webp",
+    cover: "./images/testo/t1.jpg",
   },
   {
     id: 2,
-    name: "TATANG",
-    post: "PEGAWAI BANK",
+    name: "Sugito Parlan",
+    post: "Petani",
     desc: "Saya merasa sangat bersyukur telah sembuh dari penyakit TBC. Ini adalah pengalaman hidup yang mengajarkan saya untuk lebih memperhatikan kesehatan.",
-    cover: "./images/testo/t2.webp",
+    cover: "./images/testo/t2.jpeg",
   },
   {
     id: 3,
-    name: "PARTONO",
-    post: "PETANI",
+    name: "Siti Masruroh",
+    post: "Ibu Rumah Tangga",
     desc: "Mengatasi TBC memang tidak mudah, tetapi dengan dukungan keluarga dan perawatan medis yang tepat, saya berhasil melaluinya. Semoga pengalaman saya dapat memberi harapan bagi yang sedang berjuang melawan penyakit ini.",
-    cover: "./images/testo/t3.webp",
+    cover: "./images/testo/t3.jpeg",
   },
 ]

@@ -11,7 +11,7 @@ const Testimonal = () => {
             {testimonal.map((val) => (
               <div key={val.id} className="snap-start m-4 shadow-md p-4 flex-shrink-0 w-[350px]">
                 <div className="relative flex items-center">
-                  <img src={val.cover} alt="" className="w-24 h-24 rounded-full object-cover" />
+                  <img src={val.cover} alt="" className="blur-sm w-24 h-24 rounded-full object-cover" />
                   <i className="fa fa-quote-left absolute bottom-0 left-4 bg-teal-500 text-white p-2 rounded-full"></i>
                   <div className="ml-4">
                     <h2 className="text-lg font-bold">{val.name}</h2>

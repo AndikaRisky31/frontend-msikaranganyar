@@ -11,7 +11,7 @@ const HNews = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const url = `${process.env.REACT_APP_BASE_URL}/news/?page=1&limit=3`;
+        const url = `${process.env.REACT_APP_BASE_URL}/news/?page=1&limit=5`;
         const response = await axios.get(url);
         setBlogs(response.data.data);
       } catch (error) {

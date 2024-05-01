@@ -92,7 +92,7 @@ const NewsPage = () => {
         <>
           {newsContent ? (
             <div className="grid grid-cols-2 md:grid-cols-3 gap-1 pt-2">
-              <div className="px-5 sm:px-10 md:px-16 lg:px-32 col-span-2 h-full order-1">
+              <div className="px-10 md:px-16 lg:px-32 col-span-2 h-full order-1">
                 {newsContent.imageURL ? (
                   <img src={process.env.REACT_APP_IMAGE_URL + newsContent.imageURL} alt="Large News" className="w-full object-cover aspect-video" />
                 ) : (
@@ -129,7 +129,7 @@ const NewsPage = () => {
                   <button onClick={nextPage} disabled={currentPage === totalPages} className="px-4 py-2 ml-2 bg-gray-200 border border-gray-300 rounded-md cursor-pointer hover:bg-gray-300">Next</button>
                 </div>
               </div>
-              <div className="px-5 sm:px-10 md:px-16 lg:px-32 col-span-2 row-span-2 text-gray-500 order-2 md:order-3">
+              <div className="px-10 md:px-16 lg:px-32 col-span-2 row-span-2 text-gray-500 order-2 md:order-3">
                 <div className="py-5 text-justify">
                   <p className="text-sm text-gray-500">{formatDate(newsContent.created_at, true)} <i className="fas fa-circle fa-xs"></i> By, {newsContent.admin_name} </p>
                   <h2 className="text-xl font-semibold pt-1">{newsContent.title}</h2>

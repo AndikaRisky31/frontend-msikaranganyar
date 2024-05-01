@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
-import {formatDate,jenisPost,sliceContent} from '../../../utils/helper';
+import {formatDate,jenisPost,sliceContent,scrollToTop} from '../../../utils/helper';
 import ListContact from '../../item/ListContact.jsx';
 
 const Footer = () => {
@@ -61,7 +61,11 @@ const Footer = () => {
           <div className="p-4">
             <h3 className="text-lg font-semibold">Recent Post</h3>
             {recentPosts.map((val, index) => (
-              <div key={index} className="mt-3 flex items-center cursor-pointer" onClick={() => handleContainerClick(val)}>
+              <div key={index} className="mt-3 flex items-center cursor-pointer" onClick={() => 
+                {
+                  handleContainerClick(val);
+                  scrollToTop()
+                }}>
                 <div className="group hover:bg-teal-600 w-full pl-3 py-2">
                   <h4 className="text-gray-800 font-medium group-hover:text-white ease-in-out">{val.type === 'scheduleInterview' ? sliceContent(val.description, 5) : val.title}</h4>
                   <span className="block text-gray-600 group-hover:text-white">
