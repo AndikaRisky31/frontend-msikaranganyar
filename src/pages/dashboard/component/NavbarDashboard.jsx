@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import PopupModal from "../../../components/modal/popup-modal";
 import { MdSearch, MdKeyboardDoubleArrowRight, MdKeyboardDoubleArrowLeft } from "react-icons/md";
+import { deleteToken } from "../../../utils/auth";
 
 const NavbarDashboard = ({ isOpen, toggleSidebar, onSearchChange }) => {
   const history = useHistory();
@@ -12,8 +13,7 @@ const NavbarDashboard = ({ isOpen, toggleSidebar, onSearchChange }) => {
   };
 
   const handleConfirmDelete = () => {
-    localStorage.removeItem("access_token");
-    localStorage.removeItem("role");
+    deleteToken()
     history.push("/login");
     setIsModalOpen(false);
   };

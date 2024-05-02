@@ -8,6 +8,7 @@ import { useHistory } from "react-router-dom";
 import { MyContext } from "../component/DashboardLayout";
 import EmptyState from "../../../components/modal/EmptyState";
 import LoadingState from "../../../components/modal/LoadingState";
+import SpinnerOverlay from "../../../components/modal/SpinnerOverlay";
 
 const News = () => {
   const [dataNews, setDataNews] = useState([]);
@@ -15,7 +16,7 @@ const News = () => {
   const [page, setPage] = useState(1);
   const [deleteId, setDeleteId] = useState(null); // Menyimpan ID berita yang akan dihapus
   const [showDeleteModal, setShowDeleteModal] = useState(false); // Menyimpan status tampilan modal konfirmasi
-  const [totalPages, settotalPages] = useState([]);
+  const [totalPages, settotalPages] = useState(0);
   const [showSpinner, setShowSpinner] = useState(false);
   const history = useHistory();
   const searchKeyword = useContext(MyContext);
@@ -141,6 +142,7 @@ const News = () => {
         toggleModal={() => setShowDeleteModal(!showDeleteModal)}
         handleConfirmDelete={handleDeleteNews}
       />
+      {showSpinner && <SpinnerOverlay />}
     </div>
   );
 };

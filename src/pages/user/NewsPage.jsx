@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from 'react';
 import axios from 'axios';
-import { sliceContent, formatDate } from '../../utils/helper';
+import { sliceContent, formatDate, scrollToTop } from '../../utils/helper';
 import { useParams, useHistory } from 'react-router-dom';
 import ListParagraf from '../../components/item/ItemParagraf';
 import EmptyState from '../../components/modal/EmptyState';
@@ -112,7 +112,7 @@ const NewsPage = () => {
                       </div>
                       <div className="flex flex-col p-2">
                         <div>
-                          <h2 className="text-base lg:text-lg font-semibold cursor-pointer" onClick={() => navigateToNews(item.id_news)}>{sliceContent(item.title, 11)}</h2>
+                          <h2 className="text-base lg:text-lg font-semibold cursor-pointer" onClick={() => {navigateToNews(item.id_news);scrollToTop()}}>{sliceContent(item.title, 11)}</h2>
                         </div>
                         <div className="my-1">
                           <p className="text-xs lg:text-sm text-gray-500">{formatDate(item.created_at)} <i className="fas fa-circle fa-xs"></i> By, {item.admin_name} </p>

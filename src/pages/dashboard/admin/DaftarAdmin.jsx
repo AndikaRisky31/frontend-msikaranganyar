@@ -72,18 +72,18 @@ const DaftarAdmin = () => {
     }
 
     const handleConfirmDelete = async () => {
-        setShowDeleteModal(false)
-        setShowSpinner(true)
+        setShowDeleteModal(false);
+        setShowSpinner(true);
         try {
             await axiosInstanceAuth.delete(`/admin/${selectedAdminId}`);
-            fetchAllAdmin();
+            await fetchAllAdmin(); // Memanggil fetchAllAdmin setelah penghapusan berhasil selesai
             setSelectedAdminId(null);
         } catch (error) {
             console.error('Failed to delete admin:', error);
-        }finally{
-            setShowSpinner(false)
+        } finally {
+            setShowSpinner(false);
         }
-    };
+    };    
     
     return (
         <>

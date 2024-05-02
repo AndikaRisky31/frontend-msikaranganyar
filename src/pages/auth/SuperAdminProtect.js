@@ -1,15 +1,16 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
+import { getToken, isSuperAdmin } from "../../utils/auth";
 
 const SuperAdminProtect = ({ component: Component, ...rest }) => {
-    const isAdmin = localStorage.getItem("access_token");
-    const isSuperAdmin = localStorage.getItem("role") === "superadmin";
+    const isAdmin = getToken();
+    const superAdmin = isSuperAdmin();
   
     return (
       <Route
         {...rest}
         render={(props) =>
-            isSuperAdmin ? (
+            superAdmin ? (
               <Component {...props} />
             ) : (
                 isAdmin ? (

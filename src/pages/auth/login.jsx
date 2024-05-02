@@ -3,6 +3,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { login } from "../../API/AuthAPI";
 import { Redirect, useHistory } from "react-router-dom";
+import { getToken,saveToken } from "../../utils/auth";
 import {
   Card,
   Typography,
@@ -30,8 +31,7 @@ const LoginPage = () => {
     onSubmit: async (values, { setSubmitting, setErrors }) => {
       try {
         const { token, role } = await login(values.email, values.password);
-        localStorage.setItem("access_token", token);
-        localStorage.setItem("role", role);
+        saveToken(token,role)
         history.push("/dashboard/news");
       } catch (error) {
         setErrors({ password: error.message });
@@ -42,7 +42,7 @@ const LoginPage = () => {
   });
 
   // Jika pengguna sudah terautentikasi, redirect ke dashboard
-  if (localStorage.getItem("access_token")) {
+  if (getToken()) {
     return <Redirect to="/dashboard/news" />;
   }
 

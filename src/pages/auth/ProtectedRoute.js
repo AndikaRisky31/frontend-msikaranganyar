@@ -1,8 +1,9 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
+import { getToken } from '../../utils/auth';
 
 const ProtectedRoute = ({ component: Component, ...rest }) => {
-  const isLoggedIn = localStorage.getItem('access_token'); // Check apakah pengguna sudah login atau belum
+  const isLoggedIn = getToken(); // Check apakah pengguna sudah login atau belum
 
   return (
     <Route

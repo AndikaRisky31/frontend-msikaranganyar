@@ -15,7 +15,7 @@ const FormCreateNews = () => {
   const validationSchema = Yup.object().shape({
     title: Yup.string()
       .required("Judul diperlukan")
-      .max(80, "Judul tidak boleh lebih dari 80 karakter"),
+      .max(100, "Judul tidak boleh lebih dari 100 karakter"),
     content: Yup.string().required("Konten diperlukan"),
     image: id_news ? Yup.mixed().notRequired() : Yup.mixed()
       .required("Gambar diperlukan")
