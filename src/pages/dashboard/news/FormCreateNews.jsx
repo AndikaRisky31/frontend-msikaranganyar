@@ -83,6 +83,7 @@ const FormCreateNews = () => {
         <InputField
           id="title"
           name="title"
+          maxLength={100}
           value={formik.values.title}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
@@ -103,7 +104,7 @@ const FormCreateNews = () => {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           rows={10}
-          className="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring focus:border-blue-400"
+          className="border text-xs border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring focus:border-blue-400 text-justify"
         ></textarea>
         {formik.touched.content && formik.errors.content ? (
           <div className="text-red-500 text-sm">{formik.errors.content}</div>

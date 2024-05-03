@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Head from "./Head";
 import NavItem from "./NavItem";
 import { useHistory } from "react-router-dom";
+import { scrollToTop } from "../../../utils/helper";
 
 const Header = ({ showHead }) => {
   const [click, setClick] = useState(false);
@@ -41,6 +42,10 @@ const Header = ({ showHead }) => {
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
+  const handleClick = ()=>{
+    setClick(false);
+    scrollToTop();
+  }
 
   return (
     <>
@@ -53,23 +58,23 @@ const Header = ({ showHead }) => {
           </button>
           <div className={`${click ? 'absolute top-24 right-0 w-1/2 bg-teal-600 mobile-nav' : ''}`} ref={dropdownRef}>
             <ul className={`hidden md:flex flex-col items-center md:flex-row gap-3 ${click ? 'flex py-2' : ''}`}>
-            <NavItem to='/' title='Beranda' />
+            <NavItem to='/' title='Beranda' onClick={handleClick} />
             <li className='md:mr-8 relative ' onClick={toggleDropdown}>
               <div className="text-white font-semibold cursor-pointer hover:text-teal-500">Program</div>
               {isOpen && (
                 <div className={`absolute bg-teal-500 shadow-lg w-36 ${click ? 'mr-[50%]' : 'mt-10'} `}>
-                    <ListSubHeader to='/ssr' title='Kesehatan' disable={false}/>
+                    <ListSubHeader to='/ssr' title='Kesehatan' disable={false} onClick={handleClick} />
                     <ListSubHeader to='#' title='Pendidikan' disable={true}/>
                     <ListSubHeader to='#' title='Sosial' disable={true}/>
                   </div>
                 )}
               </li>
-            <NavItem to='/news' title='Berita' />
-            <NavItem to='/pengumuman' title='Pengumuman' />
-            <NavItem to='/about' title='Tentang Kami' />
-            <NavItem to='/team' title='Tim' />
-            <NavItem to='/document' title='Dokumen' />
-            <NavItem to='/contact' title='Kontak' />
+            <NavItem to='/news' title='Berita' onClick={handleClick}  />
+            <NavItem to='/pengumuman' title='Pengumuman' onClick={handleClick}  />
+            <NavItem to='/about' title='Tentang Kami' onClick={handleClick}  />
+            <NavItem to='/team' title='Tim' onClick={handleClick} />
+            <NavItem to='/document' title='Dokumen' onClick={handleClick}  />
+            <NavItem to='/contact' title='Kontak' onClick={handleClick}  />
             </ul>
           </div>
           <div className="h-full bg-teal-600 start hidden md:flex md:items-center" style={{ clipPath: 'polygon(10% 0, 100% 0%, 100% 100%, 0% 100%)' }}>

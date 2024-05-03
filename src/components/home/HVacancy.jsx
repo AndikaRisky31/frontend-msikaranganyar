@@ -28,7 +28,7 @@ const HVacancy = () => {
   }, []);
 
   if (isLoading) return <LoadingState/>;
-  if (isError) return <div>Error fetching vacancy data</div>;
+  if (isError) return <div></div>;
 
   return (
     <>{ vacancies.length > 0 && (

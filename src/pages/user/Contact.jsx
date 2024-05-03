@@ -8,7 +8,7 @@ import '../../css/contact.css';
 import SubmitButton from "../../components/button/SubmitButton";
 
 const Contact = () => {
-  const map = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3954.8945765648227!2d110.948781!3d-7.586452899999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a191f9b8aef73%3A0x612413c8710b5afa!2sSSR%20Mentari%20Sehat%20Indonesia%20Karanganyar!5e0!3m2!1sen!2sid!4v1710312478212!5m2!1sen!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" '
+  const map = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3954.8945765648227!2d110.948781!3d-7.586452899999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a191f9b8aef73%3A0x612413c8710b5afa!2sSSR%20Mentari%20Sehat%20Indonesia%20Karanganyar!5e0!3m2!1sen!2sid!4v1710312478212!5m2!1sen!2sid" width="600" height="450" style="border:1;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" '
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Formik form validation schema using Yup
@@ -60,7 +60,7 @@ const Contact = () => {
       <Back title='Contact us' />
       <section className='contacts padding'>
         <div className='container shadow flexSB'>
-          <div className='left row'>
+          <div className='left row border-teal-500 border-2'>
             <iframe src={map} title="Google Maps"></iframe>
           </div>
           <div className='right row'>
@@ -103,9 +103,12 @@ const Contact = () => {
 
             <h3>Follow us here</h3>
             <span>
-              <a href="https://www.instagram.com/_msi_karanganyar?igsh=MXN1MHM0enR6eTJydg==" target="_blank" rel="noopener noreferrer" className="hover:text-teal-700">INSTAGRAM </a>
-              <a href="https://www.youtube.com/@msikab.karanganyar6795?si=9Qt2hFKiZiVqcgJD" target="_blank" rel="noopener noreferrer" className="hover:text-teal-700">YOUTUBE </a>
-              <a href="https://www.tiktok.com/@msi.karanganyar?_t=8kf8aJTji1B&_r=1" target="_blank" rel="noopener noreferrer" className="hover:text-teal-700">TIKTOK </a>
+              <i className='fab fa-instagram text-white bg-teal-500 rounded-full p-2 hover:bg-teal-600'></i>
+              <a href="https://www.instagram.com/_msi_karanganyar?igsh=MXN1MHM0enR6eTJydg==" target="_blank" rel="noopener noreferrer" className="hover:text-teal-700"> INSTAGRAM </a>
+              <i className='fab fa-youtube text-white bg-teal-500 rounded-full p-2 hover:bg-teal-600'></i>
+              <a href="https://www.youtube.com/@msikab.karanganyar6795?si=9Qt2hFKiZiVqcgJD" target="_blank" rel="noopener noreferrer" className="hover:text-teal-700"> YOUTUBE </a>
+              <i className='fab fa-tiktok text-white bg-teal-500 rounded-full p-2 hover:bg-teal-600'></i>
+              <a href="https://www.tiktok.com/@msi.karanganyar?_t=8kf8aJTji1B&_r=1" target="_blank" rel="noopener noreferrer" className="hover:text-teal-700"> TIKTOK </a>
             </span>
           </div>
         </div>

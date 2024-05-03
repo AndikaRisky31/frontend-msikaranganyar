@@ -44,7 +44,7 @@ const Footer = () => {
         <div className="p-4">
           <h1 className="text-xl font-bold">Mentari Sehat Indonesia</h1>
           <span className="text-teal-500">KAB. KARANGANYAR</span>
-          <p className="text-gray-700 mt-2 text-justify">Bersama kami, Anda menjadi bagian dari perjuangan melawan penyakit mematikan ini untuk mewujudkan masyarakat yang lebih sehat dan sejahtera.</p>
+          <p className="text-gray-700 mt-2 text-justify">Bersama kami, Anda menjadi bagian dari perjuangan percepatan eliminasi TBC untuk mewujudkan masyarakat yang lebih sehat dan sejahtera.</p>
           <div className="flex mt-4 gap-1">
             <a href="https://www.instagram.com/_msi_karanganyar?igsh=MXN1MHM0enR6eTJydg==" target="_blank" rel="noopener noreferrer" className="mr-2">
               <i className='fab fa-instagram text-white bg-teal-500 rounded-full p-2 hover:bg-teal-600'></i>
@@ -89,7 +89,7 @@ const Footer = () => {
             </li>
             <li className="flex items-center text-gray-600 mb-6">
               <i className='fa fa-paper-plane mr-2'></i>
-              <span className="contact-info">ssrmsi.kabkaranganyar@gmail.com</span>
+              <span className="contact-info">msi.kabkaranganyar@gmail.com</span>
             </li>
           </ul>
         </div>

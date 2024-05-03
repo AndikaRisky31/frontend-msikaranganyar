@@ -66,7 +66,6 @@ const Announcementdb = () => {
         console.log(`announcement dengan ID ${deleteId} berhasil dihapus`);
         // Memuat ulang data setelah berhasil menghapus announcement
         const AnnouncementData = await getAnnouncementByPage(page);
-        console.log(AnnouncementData);
         setDataAnnouncement(AnnouncementData.data);
         settotalPages(AnnouncementData.totalPages)
       } else {

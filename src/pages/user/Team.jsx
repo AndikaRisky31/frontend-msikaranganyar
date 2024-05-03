@@ -64,7 +64,6 @@ const Team = () => {
 
           {/* Tingkat 4 */}
           <div className="text-center py-5">
-            <h2 className="text-lg font-semibold mb-4">KADER</h2>
             <div className="grid justify-items-center grid-cols-2  md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-1">
               {dataTeam.filter(val => val.tingkat === 4).map((val) => (
                 <TeamCard key={val.id_management} val={val} />

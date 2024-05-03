@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 
-const ListSubHeader = ({ title, to, disable }) => {
+const ListSubHeader = ({ title, to, disable,onClick }) => {
   return (
     <>
-      <div className={`group hover:bg-teal-400  text-justify ${disable ? 'cursor-not-allowed' : ''}`}>
+      <div className={`group hover:bg-teal-400  text-justify ${disable ? 'cursor-not-allowed' : ''}`} onClick={onClick}>
         <Link className={`text-white font-semibold block p-4 ${disable ? 'cursor-not-allowed' : ''}`} to={to}>{title}</Link>
       </div>
     </>

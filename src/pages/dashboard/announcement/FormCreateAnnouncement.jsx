@@ -90,6 +90,7 @@ const FormCreateAnnouncement = () => {
           id="title"
           name="title" // Tambahkan name
           value={values.title}
+          maxLength={50}
           onChange={handleChange}
           placeholder="Masukan Judul"
           required={true}

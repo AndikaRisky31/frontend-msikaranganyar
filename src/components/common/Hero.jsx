@@ -7,13 +7,13 @@ const Hero = ({title,narasi}) => {
       backgroundImage: "url('/images/bgnofull.webp')"}}>
         <div className='px-10 w-full md:w-4/6 lg:pt-10'>
             <div className="pt-[40%] sm:pt-0">
-              <h3 className=" font-semibold tracking-wide uppercase text-white md:text-xl lg:text-2xl xl:text-3xl">WELCOME TO</h3>
-              <h1 className="  text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-semibold mt-5 mb-2 capitalize">{title}</h1>
-              <h3 className="font-semibold tracking-wide uppercase pt-2 text-white text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl">
+              <h3 className="text-base font-semibold tracking-wide uppercase text-white md:text-xl lg:text-2xl xl:text-3xl">WELCOME TO</h3>
+              <h1 className="text-3xl md:text-3xl lg:text-4xl xl:text-5xl font-semibold mt-5 mb-2 capitalize">{title}</h1>
+              <h3 className="text-xl font-semibold tracking-wide uppercase pt-2 text-white  sm:text-lg md:text-xl lg:text-2xl xl:text-3xl">
                 Kab. Karanganyar
               </h3>
             </div>
-            <p className="w-[4/5] text-justify mt-4 text-base sm:text-lg md:text-xl lg:text-lg xl:text-xl">{narasi}</p>
+            <p className="w-[4/5] text-justify mt-4 text-base hidden sm:block sm:text-lg md:text-xl lg:text-lg xl:text-xl">{narasi}</p>
         </div>
       </section>
       <div className='min-[10px]:mt-[70%] md:mt-[45%] lg:mt-[40%]'></div>

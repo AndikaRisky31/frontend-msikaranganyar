@@ -2,16 +2,18 @@ import React from "react";
 import Back from "../../components/common/back/Back";
 import AboutCard from "../../components/card/AboutCard";
 import { homeAbout } from "../../dummydata";
-import Heading from "../../components/common/heading/Heading";
 import DataPasien from "../../components/card/DataPasienCard";
 
 const About = () => {
   console.log(homeAbout);
   return (
     <>
-    <section className="mt-5 pt-[75%] sm:pt-[10%] items-center">
+    <section className="items-center">
       <Back title='About Us' />
-      <Heading subtitle="Pelopor Perubahan Menuju Indonesia Bebas TBC Tahun 2030 di Karanganyar" title="VISI DAN MISI" link="/about" />
+      <div className="text-center pb-10">
+        <h1 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-semibold my-5 text-white sm:text-black">VISI DAN MISI</h1>
+        <h3 className="font-semibold tracking-wide uppercase  text-white sm:text-teal-500">Pelopor Perubahan Menuju Indonesia Bebas TBC Tahun 2030 di Karanganyar</h3>
+      </div>
       <AboutCard data={homeAbout}/>
       <DataPasien/>
       </section>

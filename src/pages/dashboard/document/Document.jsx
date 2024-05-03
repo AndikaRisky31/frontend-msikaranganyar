@@ -13,7 +13,6 @@ import { MyContext } from "../component/DashboardLayout";
 import EmptyState from "../../../components/modal/EmptyState";
 import SubmitButton from "../../../components/button/SubmitButton";
 import SpinnerOverlay from "../../../components/modal/SpinnerOverlay";
-import { useHistory } from "react-router-dom";
 
 const Document = () => {
   const [listDokumen, setlistDokumen] = useState([]);
@@ -27,7 +26,6 @@ const Document = () => {
   const [page, setPage] = useState(1);
   const [showSpinner, setShowSpinner] = useState(false);
   const searchKeyword = useContext(MyContext);
-  const history = useHistory();
 
   const fetchDokumen = async () => {
     setShowSpinner(true)
@@ -135,7 +133,7 @@ const Document = () => {
       isFormDataEmpty: yup.boolean(), // Tentukan tipe data untuk isFormDataEmpty
       title: yup.string()
         .required("Judul diperlukan")
-        .max(80, "Judul tidak boleh lebih dari 50 karakter"),
+        .max(100, "Judul tidak boleh lebih dari 100 karakter"),
       documentType: yup.string().required("Jenis dokumen diperlukan"),
       year: yup.string().required("Tahun diperlukan"),
       file: yup
@@ -343,6 +341,7 @@ const FormInput = ({ formik, handleFileChange, submitting }) => {
                     id="title"
                     name="title"
                     type="text"
+                    maxLength={100}
                     value={formik.values.title}
                     onChange={formik.handleChange}
                     placeholder="Masukkan Judul"

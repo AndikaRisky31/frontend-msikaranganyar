@@ -4,13 +4,13 @@ import * as yup from "yup";
 import { useHistory } from "react-router-dom";
 import { axiosInstanceAuth } from "../../../API/axios";
 import InputField from "../../../components/item/inputField";
-import SubmitButton from "../../../components/button/SubmitButton"; // Sesuaikan path sesuai dengan struktur proyek Anda
+import SubmitButton from "../../../components/button/SubmitButton"; 
 
 const TambahAdmin = () => {
   const history = useHistory();
   const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState(null); 
 
-  // Formik form validation schema using Yup
   const validationSchema = yup.object().shape({
     name: yup.string().required("Name is required"),
     email: yup.string().email("Invalid email").required("Email is required"),
@@ -21,7 +21,6 @@ const TambahAdmin = () => {
       .required("Confirm Password is required"),
   });
 
-  // Formik form handling
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -39,10 +38,11 @@ const TambahAdmin = () => {
 
       try {
         await axiosInstanceAuth.post("/admin/create", formData);
+        setError(null); 
         history.push("/dashboard/admin");
       } catch (error) {
         if (error.response) {
-          setErrors({ confirmPassword: error.response.data.message });
+          setError(error.response.data.message); 
         } else if (error.request) {
           console.error("No response received:", error.request);
         } else {
@@ -58,9 +58,12 @@ const TambahAdmin = () => {
     <div className="max-w-md mx-auto p-4 bg-white shadow-md rounded-md">
       <h1 className="text-lg font-semibold mb-4">Tambah Admin</h1>
       <form onSubmit={formik.handleSubmit}>
+        {error && (
+          <div className="text-red-600 mb-2">{error}</div>
+        )}
         <InputField
           id="name"
-          name="name" // Tambahkan name
+          name="name"
           label="Name"
           type="text"
           placeholder="Enter name"
@@ -74,7 +77,7 @@ const TambahAdmin = () => {
         />
         <InputField
           id="email"
-          name="email" // Tambahkan name
+          name="email"
           label="Email"
           type="email"
           placeholder="Enter email"
@@ -90,7 +93,7 @@ const TambahAdmin = () => {
         />
         <InputField
           id="password"
-          name="password" // Tambahkan name
+          name="password"
           label="Password"
           type="password"
           placeholder="Enter password"
@@ -106,7 +109,7 @@ const TambahAdmin = () => {
         />
         <InputField
           id="confirmPassword"
-          name="confirmPassword" // Tambahkan name
+          name="confirmPassword"
           label="Confirm Password"
           type="password"
           placeholder="Confirm password"
@@ -120,6 +123,9 @@ const TambahAdmin = () => {
           }
           required={true}
         />
+        {formik.errors.confirmPassword && (
+          <div className="text-red-600">{formik.errors.confirmPassword}</div>
+        )}
         <SubmitButton submitting={submitting} />
       </form>
     </div>

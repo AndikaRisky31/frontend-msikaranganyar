@@ -33,6 +33,7 @@ import TeamList from "./pages/dashboard/tim/TeamList";
 import FormTeam from "./pages/dashboard/tim/FormTeam";
 import Publish from "./pages/user/Publish";
 import Document from "./pages/dashboard/document/Document";
+import NewsMenu from "./pages/user/NewsMenu";
 
 function App() {
   return (
@@ -67,7 +68,7 @@ function App() {
           </Route>
           <Route exact path='/news'>
             <Header showHead={false} />
-            <NewsPage />
+            <NewsMenu />
             <Footer />
           </Route>
           <Route exact path='/news/:id_news'>

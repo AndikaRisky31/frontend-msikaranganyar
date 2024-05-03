@@ -25,7 +25,7 @@ const DataPasien = () => {
   }, []);
 
   if (isLoading) return <LoadingState/>;
-  if (isError) return <div>Error fetching data pasien</div>;
+  if (isError) return <></>;
 
   return (
     <section className='bg-cover bg-right bg-no-repeat h-30vh text-white' style={{ backgroundImage: "url('/images/awrapper.webp')"}}>

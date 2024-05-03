@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import NewsCard from "../card/NewsCard";
 import Heading from "../common/heading/Heading";
+import LoadingState from "../modal/LoadingState";
 
 const HNews = () => {
   const [blogs, setBlogs] = useState([]);
@@ -24,8 +25,8 @@ const HNews = () => {
     fetchBlogs();
   }, []);
 
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error fetching blogs</div>;
+  if (isLoading) return <LoadingState/>;
+  if (isError) return <div></div>;
 
   return (
     <>
