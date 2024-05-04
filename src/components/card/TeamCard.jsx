@@ -1,15 +1,15 @@
 import React from "react";
 
-const TeamCard = (val) => {
-  const data = val.val
+const TeamCard = ({val,randomColor = "transparent"}) => {
+  const data = val
   return (
     <>
-      <div className="shadow-md overflow-hidden h-[425px] aspect-[9/16]">
-        <div className="h-3/4">
+      <div className="shadow-md overflow-hidden h-[425px] aspect-[9/16]" >
+        <div className="h-3/4" style={{ backgroundColor: randomColor }}>
           <img 
             src={process.env.REACT_APP_IMAGE_URL + data.imageURL} 
             alt="" 
-            className="w-full object-cover object-top h-full" 
+            className="w-full object-cover h-full" 
           />
         </div>
         <div className="text-center h-1/4 py-2">

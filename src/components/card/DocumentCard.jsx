@@ -2,7 +2,7 @@ import React from "react";
 
 const DocumentCard = ({ Document, toPdf }) => {
   return (
-    <div className="document-card h-full flex flex-col md:flex-row bg-white border border-gray-200 rounded-lg shadow md:max-w-xl dark:border-gray-700 dark:bg-gray-800">
+    <div className="w-72 h-full flex flex-col md:flex-row bg-white border border-gray-200 rounded-lg shadow dark:border-gray-700 dark:bg-gray-800">
       <div className="w-full md:w-1/3">
         <div className="aspect-w-10 aspect-h-7">
           <img className="object-cover w-full h-full" src={process.env.REACT_APP_IMAGE_URL + Document.imageURL} alt="" />

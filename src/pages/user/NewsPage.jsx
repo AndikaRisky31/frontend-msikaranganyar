@@ -63,6 +63,7 @@ const NewsPage = () => {
     if (!lastNews && newsData) {
       setLastNews(newsData);
     }
+
     setLoading(false)
   };  
 
@@ -136,6 +137,11 @@ const NewsPage = () => {
                 </div>
                 <div className="pb-10">
                   <ListParagraf content={newsContent.content} />
+                  {
+                    newsContent.source && (
+                      <a href={newsContent.source} target="_blank" className="font-medium text-lg text-blue-600 dark:text-blue-500 hover:underline" style={{ fontFamily: 'PT Serif, serif' }}>Sumber : {newsContent.source}</a>
+                    )
+                  }
                 </div>
               </div>
             </div>

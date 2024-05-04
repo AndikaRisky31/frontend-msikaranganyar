@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { axiosInstance, axiosInstanceAuth } from "../../../API/axios";
 import PopupModal from "../../../components/modal/popup-modal";
@@ -6,6 +6,8 @@ import TableHeader from "../../../components/item/TableHeader";
 import LoadingState from "../../../components/modal/LoadingState";
 import EmptyState from "../../../components/modal/EmptyState";
 import SpinnerOverlay from "../../../components/modal/SpinnerOverlay";
+import SubmitButton from "../../../components/button/SubmitButton";
+import { MyContext } from "../component/DashboardLayout";
 
 const TeamList = () => {
   const [listTeam, setListTeam] = useState([]);
@@ -14,8 +16,10 @@ const TeamList = () => {
   const [showSpinner, setShowSpinner] = useState(false);
   const history = useHistory();
   const [loading, setLoading] = useState(true);
+  const searchKeyword = useContext(MyContext);
 
   const fetchListTeam = async () => {
+    setLoading(true);
     try {
       const response = await axiosInstance.get("/management/all");
       setListTeam(response.data.data);
@@ -25,14 +29,31 @@ const TeamList = () => {
       setLoading(false);
     }
   };
+  const searchTeam = async() => {
+    setLoading(true);
+    try {
+      const response = await axiosInstance.get(`/management/search`, {
+        params: { searchKeyword } // Mengirim kata kunci sebagai query parameter
+      })
+      setListTeam(response.data.data)
+      setLoading(false)
+    } catch (error) {
+      console.error("gagal mencari daftar team",error)
+      setLoading(false)
+    }
+  }
 
   const toCreate = () => {
     history.push("/dashboard/tim/create");
   };
 
   useEffect(() => {
-    fetchListTeam();
-  }, []);
+    if(searchKeyword){
+      searchTeam()
+    }else{
+      fetchListTeam();
+    }
+  }, [searchKeyword]);
 
   const handleDeleteClick = (teamId) => {
     setSelectedTeamId(teamId);
@@ -71,7 +92,6 @@ const TeamList = () => {
                 <TableHeader title="Name" />
                 <TableHeader title="Jabatan" />
                 <TableHeader title="Tingkat" />
-                <TableHeader title="WhatsApp" />
                 <TableHeader title="Aksi" />
               </tr>
             </thead>
@@ -109,9 +129,8 @@ const TableContent = ({ team, handleDeleteClick, fetchListTeam }) => {
   const [editMode, setEditMode] = useState(false);
   const [editedName, setEditedName] = useState(team.name);
   const [editedJobTitle, setEditedJobTitle] = useState(team.job_title);
-  const [editedPenempatan, setEditedPenempatan] = useState(team.penempatan);
   const [editedTingkat, setEditedTingkat] = useState(team.tingkat);
-  const [editedWhatsApp, setEditedWhatsApp] = useState(team.WhatsApp);
+  const [submitting, setsubmitting] = useState(false);
   const [imagePreview, setImagePreview] = useState(
     process.env.REACT_APP_IMAGE_URL + team.imageURL
   );
@@ -142,12 +161,11 @@ const TableContent = ({ team, handleDeleteClick, fetchListTeam }) => {
   };
 
   const handleSave = async () => {
+    setsubmitting(true)
     const formData = new FormData();
     formData.append("name", editedName);
     formData.append("job_title", editedJobTitle);
-    formData.append("penempatan", editedPenempatan);
     formData.append("tingkat", editedTingkat);
-    formData.append("WhatsApp", editedWhatsApp);
     if (selectedFile) {
       formData.append("image", selectedFile);
     }
@@ -157,6 +175,8 @@ const TableContent = ({ team, handleDeleteClick, fetchListTeam }) => {
       fetchListTeam();
     } catch (error) {
       console.error("gagal mengupdate tim", error.response.message);
+    }finally{
+      setsubmitting(false)
     }
   };
 
@@ -195,7 +215,7 @@ const TableContent = ({ team, handleDeleteClick, fetchListTeam }) => {
                       type="file"
                       name="file_input"
                       onChange={handleFileChange}
-                      className="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
+                      className="p-2 absolute inset-0 opacity-0 w-full h-full cursor-pointer"
                     />
                   </div>
                 </div>
@@ -206,7 +226,7 @@ const TableContent = ({ team, handleDeleteClick, fetchListTeam }) => {
                 name="name"
                 value={editedName}
                 onChange={(e) => setEditedName(e.target.value)}
-                className="form-input block w-full border-gray-300 rounded-md shadow-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="p-2 form-input block w-full border-gray-300 rounded-md shadow-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
             </>
           )}
@@ -214,27 +234,17 @@ const TableContent = ({ team, handleDeleteClick, fetchListTeam }) => {
       </td>
       <td className="px-3 py-4 whitespace-nowrap">
         {editMode ? (
-          <div className="flex-row">
+          <div className="shrink-0 relative">
             <input
               type="text"
               value={editedJobTitle}
               onChange={(e) => setEditedJobTitle(e.target.value)}
               placeholder="Masukan Jabatan"
-              className="form-input block w-full border-gray-300 rounded-md shadow-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            />
-            <input
-              type="text"
-              value={editedPenempatan}
-              onChange={(e) => setEditedPenempatan(e.target.value)}
-              placeholder="Masukan Penempatan"
-              className="form-input block w-full border-gray-300 rounded-md shadow-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm mt-1"
+              className="p-2 form-input block w-full border-gray-300 rounded-md shadow-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             />
           </div>
         ) : (
-          <>
-            <div className="text-sm text-gray-900">{team.job_title}</div>
-            <div className="text-sm text-gray-500">{team.penempatan}</div>
-          </>
+          <div className="text-sm text-gray-900">{team.job_title}</div>
         )}
       </td>
       <td className="px-3 py-4 whitespace-nowrap text-center">
@@ -242,7 +252,7 @@ const TableContent = ({ team, handleDeleteClick, fetchListTeam }) => {
           <select
             value={editedTingkat}
             onChange={(e) => setEditedTingkat(e.target.value)}
-            className="form-select block w-full border-gray-300 rounded-md shadow-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className="p-2 form-select block w-full border-gray-300 rounded-md shadow-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           >
             <option value="1">1</option>
             <option value="2">2</option>
@@ -255,35 +265,17 @@ const TableContent = ({ team, handleDeleteClick, fetchListTeam }) => {
           </span>
         )}
       </td>
-      <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
+      <td className="px-6 py-4 whitespace-nowrap  text-sm font-medium justify-items-center">
         {editMode ? (
-          <input
-            type="text"
-            value={editedWhatsApp}
-            onChange={(e) => setEditedWhatsApp(e.target.value)}
-            placeholder="Masukan WhatsApp"
-            className="form-input block w-full border-gray-300 rounded-md shadow-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-          />
-        ) : (
-          <div className="text-sm text-gray-500">{team.WhatsApp}</div>
-        )}
-      </td>
-      <td className="px-6 py-4 whitespace-nowrap  text-sm font-medium">
-        {editMode ? (
-          <>
-            <button
-              onClick={handleSave}
-              className="px-4 py-2 font-medium text-white bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue active:bg-blue-600 transition duration-150 ease-in-out"
-            >
-              Save
-            </button>
+          <div className="flex">
+            <SubmitButton onClick={handleSave} submitting={submitting}/>
             <button
               onClick={handleEdit}
               className="ml-2 px-4 py-2 font-medium text-white bg-red-600 rounded-md hover:bg-red-500 focus:outline-none focus:shadow-outline-red active:bg-red-600 transition duration-150 ease-in-out"
             >
               Cancel
             </button>
-          </>
+          </div>
         ) : (
           <>
             <button

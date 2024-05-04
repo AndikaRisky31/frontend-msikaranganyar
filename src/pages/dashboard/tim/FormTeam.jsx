@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { axiosInstanceAuth } from "../../../API/axios";
 import InputField from "../../../components/item/inputField";
@@ -8,14 +8,13 @@ import SubmitButton from "../../../components/button/SubmitButton";
 
 const FormTeam = () => {
   const history = useHistory();
-  const [submitting, setSubmitting] = useState();
+  const [submitting, setSubmitting] = useState(false);
 
   const validationSchema = yup.object().shape({
     name: yup.string().required('Nama diperlukan'),
     job_title: yup.string().required('Jabatan diperlukan'),
-    penempatan: yup.string().required('Penempatan diperlukan'),
     tingkat: yup.number().required('Level diperlukan'),
-    whatsapp: yup.string().required('Nomor WhatsApp diperlukan'),
+    images:yup.mixed().required('Silahkan Upload Gambar')
   });
 
   const formik = useFormik({
@@ -23,9 +22,7 @@ const FormTeam = () => {
       images: null,
       name: "",
       job_title: "",
-      penempatan: "",
       tingkat: 1,
-      whatsapp: ""
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
@@ -34,16 +31,14 @@ const FormTeam = () => {
         const formDataToSend = new FormData();
         formDataToSend.append('name', values.name);
         formDataToSend.append('job_title', values.job_title);
-        formDataToSend.append('penempatan', values.penempatan);
         formDataToSend.append('tingkat', values.tingkat);
-        formDataToSend.append('whatsapp', values.whatsapp);
         formDataToSend.append('images', values.images);
 
         await axiosInstanceAuth.post('/management/create', formDataToSend);
         history.push('/dashboard/tim');
       } catch (error) {
         console.error("gagal menambahkan tim ke server", error.response.message);
-      }finally{
+      } finally {
         setSubmitting(false)
       }
     },
@@ -67,22 +62,12 @@ const FormTeam = () => {
           id="position"
           label="Jabatan"
           type="text"
-          name="position"
+          name="job_title"
           placeholder="Masukkan Jabatan"
-          value={formik.values.position}
+          value={formik.values.job_title}
           onChange={formik.handleChange}
           required
-          error={formik.touched.position && formik.errors.position}
-        />
-        <InputField
-          id="placement"
-          label="Penempatan"
-          type="text"
-          placeholder="Masukkan Penempatan"
-          value={formik.values.placement}
-          onChange={formik.handleChange}
-          required
-          error={formik.touched.placement && formik.errors.placement}
+          error={formik.touched.job_title && formik.errors.job_title}
         />
         <div className="mb-3">
           <label htmlFor="level" className="block mb-1 text-sm font-medium text-gray-900 dark:text-white">
@@ -90,8 +75,8 @@ const FormTeam = () => {
           </label>
           <select
             id="level"
-            name="level"
-            value={formik.values.level}
+            name="tingkat"
+            value={formik.values.tingkat}
             onChange={formik.handleChange}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             required
@@ -101,20 +86,10 @@ const FormTeam = () => {
             <option value="3">3</option>
             <option value="4">4</option>
           </select>
-          {formik.touched.level && formik.errors.level ? (
-            <div className="text-red-500">{formik.errors.level}</div>
+          {formik.touched.tingkat && formik.errors.tingkat ? (
+            <div className="text-red-500">{formik.errors.tingkat}</div>
           ) : null}
         </div>
-        <InputField
-          id="whatsapp"
-          label="WhatsApp"
-          type="text"
-          placeholder="Masukkan Nomor WhatsApp"
-          value={formik.values.whatsapp}
-          onChange={formik.handleChange}
-          required
-          error={formik.touched.whatsapp && formik.errors.whatsapp}
-        />
         <div className="flex items-center space-x-6 mt-4">
           <div className="shrink-0">
             <img id="preview_img" className="h-16 w-16 object-cover rounded-full" src={formik.values.images ? URL.createObjectURL(formik.values.images) : "https://lh3.googleusercontent.com/a-/AFdZucpC_6WFBIfaAbPHBwGM9z8SxyM1oV4wB4Ngwp_UyQ=s96-c"} alt="" />
@@ -130,6 +105,9 @@ const FormTeam = () => {
             />
           </label>
         </div>
+          {formik.touched.images && formik.errors.images ? (
+            <div className="text-red-500">{formik.errors.images}</div>
+          ) : null}
         <SubmitButton submitting={submitting} />
       </form>
     </div>

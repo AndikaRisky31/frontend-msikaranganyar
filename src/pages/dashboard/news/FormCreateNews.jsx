@@ -22,6 +22,7 @@ const FormCreateNews = () => {
       .test("fileFormat", "Mohon upload gambar jpg/png/jpeg", (value) => {
         return value && ["image/jpeg", "image/png", "image/jpg"].includes(value.type);
       }),
+    source: Yup.string()
   });
 
   const formik = useFormik({
@@ -29,6 +30,7 @@ const FormCreateNews = () => {
       title: "",
       content: "",
       image: null,
+      source: "", // Tambahkan source ke initialValues
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
@@ -38,6 +40,7 @@ const FormCreateNews = () => {
         formData.append("title", values.title);
         formData.append("content", values.content);
         formData.append("image", values.image);
+        formData.append("source", values.source); // Tambahkan source ke formData
 
         if (id_news) {
           await updateNews(id_news, formData);
@@ -48,7 +51,7 @@ const FormCreateNews = () => {
         history.push("/dashboard/news");
       } catch (error) {
         console.error("Error:", error);
-      }finally{
+      } finally {
         setSubmitting(false)
       }
     },
@@ -63,6 +66,7 @@ const FormCreateNews = () => {
           title: data.title,
           content: data.content,
           image: null,
+          source: data.source, // Set nilai source dari data berita
         });
       } catch (error) {
         console.error("gagal set berita ", error);
@@ -132,6 +136,22 @@ const FormCreateNews = () => {
           <div className="text-red-500 text-sm">{formik.errors.image}</div>
         ) : null}
         <h2 className="text-red-500 text-sm font-semibold">Untuk hasil yang bagus gunakan foto landscape 16:9</h2>
+      </div>
+      <div className="mb-4">
+        <label htmlFor="source" className="block mb-1 text-sm font-medium text-gray-900">
+          Sumber
+        </label>
+        <InputField
+          id="source"
+          name="source"
+          value={formik.values.source}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          placeholder="Masukan Sumber"
+        />
+        {formik.touched.source && formik.errors.source ? (
+          <div className="text-red-500 text-sm">{formik.errors.source}</div>
+        ) : null}
       </div>
       <SubmitButton submitting={submitting} />
     </form>

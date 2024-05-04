@@ -33,14 +33,15 @@ const CardNews = ({
         floated={false}
         shadow={false}
         color="transparent"
-        className="m-0 rounded-none"
+        className="m-0 rounded-none h-2/6"
       >
         <img
           src={process.env.REACT_APP_IMAGE_URL + imageURL}
           alt="ui/ux review check"
+          className="w-full h-full object-cover"
         />
       </CardHeader>
-      <CardBody>
+      <CardBody className="p-3 h-3/6">
         <Typography
           variant="h5"
           className="cursor-pointer"
@@ -53,7 +54,7 @@ const CardNews = ({
           {sliceContent(content, 20)}
         </Typography>
       </CardBody>
-      <CardFooter className="flex items-center justify-end mt-auto">
+      <CardFooter className="flex items-center justify-end h-1/6">
         <Button color="red" className="ml-2" onClick={() => handleDeleteNews(id_news)}>
           <FaTrash size={8} />
         </Button>

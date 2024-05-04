@@ -57,14 +57,14 @@ const Contact = () => {
 
   return (
     <>
-      <Back title='Contact us' />
+      <Back title='Kontak Kami' />
       <section className='contacts padding'>
         <div className='container shadow flexSB'>
           <div className='left row border-teal-500 border-2'>
             <iframe src={map} title="Google Maps"></iframe>
           </div>
           <div className='right row'>
-            <h1 className="font-semibold">Contact us</h1>
+            <h1 className="font-semibold">Kontak Kami</h1>
             <div className='items'>
               <div className='box'>
                 <h4 className="font-medium">EMAIL</h4>
