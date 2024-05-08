@@ -3,7 +3,7 @@ import React from "react";
 const Head = () => {
   return (
     <>
-      <section className='bg-transparent py-8'>
+      <section className='z-50 relative bg-transparent py-8'>
         <div className='px-10 flex items-center'>
           <div className='justify-start'>
             <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-3xl text-white font-bold leading-7">MENTARI SEHAT INDONESIA</h1>

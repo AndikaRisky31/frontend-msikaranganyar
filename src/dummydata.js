@@ -71,3 +71,15 @@ export const testimonal = [
     cover: "./images/testo/t3.jpeg",
   },
 ]
+
+export const ListBg = [
+  {
+    nama : "/images/bgnofull.webp"
+  },
+  {
+    nama : "/images/bg2.webp"
+  },
+  {
+    nama : "/images/ab.webp"
+  }
+]
