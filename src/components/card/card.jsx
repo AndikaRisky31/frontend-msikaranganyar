@@ -1,12 +1,5 @@
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  Button,
-  CardFooter,
-  Typography,
-} from "@material-tailwind/react";
-
+import React, { useState } from "react";
+import { Card, CardHeader, CardBody, Button, CardFooter, Typography } from "@material-tailwind/react";
 import { FaTrash, FaRegEdit } from "react-icons/fa";
 import { sliceContent } from '../../utils/helper';
 import { useHistory } from "react-router-dom";
@@ -20,12 +13,16 @@ const CardNews = ({
 }) => {
   const history = useHistory();
 
-  const toNews = (id_news) => {
+  const toNews = () => {
     history.push(`/news/${id_news}`);
   };
-  const toEditNews = (id_news)=>{
-    history.push(`/dashboard/news/addUpdate/${id_news}`)
-  }
+
+  const toEditNews = () => {
+    history.push({
+      pathname: `/dashboard/news/addUpdate`,
+      state: { id_news }
+    });
+  };
 
   return (
     <Card className="max-w-[24rem] overflow-hidden" key={id_news}>
@@ -46,7 +43,7 @@ const CardNews = ({
           variant="h5"
           className="cursor-pointer"
           color="blue-gray"
-          onClick={() => toNews(id_news)}
+          onClick={toNews}
         >
           {title}
         </Typography>
@@ -58,7 +55,7 @@ const CardNews = ({
         <Button color="red" className="ml-2" onClick={() => handleDeleteNews(id_news)}>
           <FaTrash size={8} />
         </Button>
-        <Button color="green" className="ml-2" onClick={() => toEditNews(id_news)}>
+        <Button color="green" className="ml-2" onClick={toEditNews}>
           <FaRegEdit size={8} />
         </Button>
       </CardFooter>

@@ -45,12 +45,13 @@ const Header = ({ showHead }) => {
   const handleClick = ()=>{
     setClick(false);
     scrollToTop();
+    setIsOpen(false)
   }
 
   return (
     <>
       {showHead === true ? <Head /> : null}
-      <header className={`z-50 sticky top-0`}>
+      <header className={`z-40 sticky top-0`}>
         <nav className={`flex justify-between items-center pl-5 min-[10px]:h-auto md:h-24 relative ${isSticky ? 'bg-teal-300' : showHead ? 'bg-opacity-20 bg-white mx-10' : 'bg-teal-400'}`}>
           <img src="/images/logo.png" alt="" className="w-1/4 md:hidden" onClick={redirectToDashboard}/>
           <button className='md:hidden bg-teal-700 ml-auto h-full p-5' onClick={() => setClick(!click)}>

@@ -114,7 +114,6 @@ const DashboardRoutes = () => {
       <Switch>
         <Route exact path="/dashboard/news" component={News} />
         <Route exact path="/dashboard/news/addUpdate" component={FormCreateNews}/>
-        <Route exact path="/dashboard/news/addUpdate/:id_news" component={FormCreateNews}/>
 
         <Route exact path="/dashboard/pengumuman" component={Announcementdb} />
         <Route exact path="/dashboard/pengumuman/addUpdate" component={FormCreateAnnouncement}/>

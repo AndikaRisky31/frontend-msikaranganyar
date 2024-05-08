@@ -3,14 +3,15 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import InputField from '../../../components/item/inputField'
 import { createNews, getNewsById, updateNews } from "../../../API/NewsAPI";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import SubmitButton from "../../../components/button/SubmitButton";
 
 const FormCreateNews = () => {
   const [berita, setBerita] = useState({});
-  const { id_news } = useParams();
-  const history = useHistory();
   const [submitting, setSubmitting] = useState(false);
+  const history = useHistory();
+  const location = useLocation()
+  const id_news = location.state.id_news;
 
   const validationSchema = Yup.object().shape({
     title: Yup.string()

@@ -1,7 +1,10 @@
 import withMT from "@material-tailwind/react/utils/withMT";
 
 export default withMT({
-  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  content: [
+    "./src/**/*.{js,jsx,ts,tsx}",
+    'node_modules/flowbite-react/lib/esm/**/*.js',
+    'node_modules/preline/dist/*.js'],
   theme: {
     extend: {
       fontFamily: {
@@ -13,5 +16,7 @@ export default withMT({
       }
     },
   },
-  plugins: [],
+  plugins: [
+    require('flowbite/plugin'),
+    require('preline/plugin')]
 });

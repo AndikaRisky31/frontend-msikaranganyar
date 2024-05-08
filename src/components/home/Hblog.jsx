@@ -35,7 +35,7 @@ const HNews = () => {
           <div className="m-auto max-w-[90%] mt-10">
             <Heading subtitle="Berita" title="Yang baru dari MSI Karanganyar" link="/news" />
             <div className="mx-auto">
-              <div className="flex overflow-x-auto snap-mandatory snap-x justify-start">
+              <div className="flex overflow-x-auto scroll-auto snap-mandatory snap-x justify-start">
                 {blogs.map((blog) => (
                   <div key={blog.id_news} className="snap-start mx-2">
                     <NewsCard blog={blog} />

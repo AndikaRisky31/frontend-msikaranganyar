@@ -27,12 +27,12 @@ const LandingPage = () => {
       ]
     return (
     <>
-        <div className="pt-[75%] md:pt-[10%]">
-            <Hero title="Yayasan Mentari Sehat Indonesia" narasi="Tumbuh Dan Berkembang Bersama Komunitas,Demi Mewujudkan Indonesia Emas 2045"/>
-            <div className="text-center pb-10">
-              <h3 className="font-semibold tracking-wide uppercase text-white lg:text-teal-500 justify-center mx-3">Kontribusi melalui program-program penanggulangan penyakit, perubahan sosial, dan peningkatan akses pendidikan.</h3>
+        <div className="static">
+          <Hero title="Yayasan Mentari Sehat Indonesia" narasi="Tumbuh Dan Berkembang Bersama Komunitas,Demi Mewujudkan Indonesia Emas 2045"/>
+          <div className="text-center pt-5">
+            <h3 className="font-semibold tracking-wide uppercase text-teal-500 justify-center mx-3">Kontribusi melalui program-program penanggulangan penyakit, perubahan sosial, dan peningkatan akses pendidikan.</h3>
               <Link to='#'>
-                <h1 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-semibold my-5 capitalize cursor-pointer transition duration-300 ease-in-out text-white lg:text-black">VISI DAN MISI</h1>
+                <h1 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-semibold my-5 capitalize cursor-pointer transition duration-300 ease-in-out text-black">VISI DAN MISI</h1>
               </Link>
             </div>
             <AboutCard data={Data}></AboutCard>
