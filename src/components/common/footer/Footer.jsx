@@ -30,7 +30,7 @@ const Footer = () => {
       history.push(`/pengumuman/${singleData.id_announcement}`);
     } else if (type === 'news') {
       // Navigasi ke halaman berita
-      history.push(`/news/${singleData.id_news}`);
+      history.push(`/news/${singleData.URL}`);
     } else if (type === 'vacancy') {
       // Navigasi ke halaman lowongan
       history.push(`/lowongan/${singleData.id_vacancy}`);

@@ -39,10 +39,10 @@ const createNews = async (newsData) => {
   }
 };
 
-const getNewsById = async (id_news)=>{
+const getNewsByUrl = async ({url})=>{
   try {
     const response = await axiosInstance.get(
-      `news/${id_news}`
+      `/news/${url}`
     )
     return response.data.data;
   } catch (error) {
@@ -71,4 +71,4 @@ export const getSearchNews = async (keyword) => {
   }
 };
 
-export { getNewsByPage, deleteNews,createNews,getNewsById,updateNews };
+export { getNewsByPage, deleteNews,createNews,getNewsByUrl,updateNews };

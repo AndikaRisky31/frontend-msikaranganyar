@@ -2,23 +2,22 @@ import React, { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import InputField from '../../../components/item/inputField'
-import { createNews, getNewsById, updateNews } from "../../../API/NewsAPI";
-import { useHistory, useLocation } from "react-router-dom";
+import { createNews, getNewsByUrl, updateNews } from "../../../API/NewsAPI";
+import { useHistory, useParams } from "react-router-dom";
 import SubmitButton from "../../../components/button/SubmitButton";
 
 const FormCreateNews = () => {
   const [berita, setBerita] = useState({});
   const [submitting, setSubmitting] = useState(false);
   const history = useHistory();
-  const location = useLocation()
-  const id_news = location.state.id_news;
+  const url = useParams();
 
   const validationSchema = Yup.object().shape({
     title: Yup.string()
       .required("Judul diperlukan")
       .max(100, "Judul tidak boleh lebih dari 100 karakter"),
     content: Yup.string().required("Konten diperlukan"),
-    image: id_news ? Yup.mixed().notRequired() : Yup.mixed()
+    image: url ? Yup.mixed().notRequired() : Yup.mixed()
       .required("Gambar diperlukan")
       .test("fileFormat", "Mohon upload gambar jpg/png/jpeg", (value) => {
         return value && ["image/jpeg", "image/png", "image/jpg"].includes(value.type);
@@ -43,8 +42,8 @@ const FormCreateNews = () => {
         formData.append("image", values.image);
         formData.append("source", values.source); // Tambahkan source ke formData
 
-        if (id_news) {
-          await updateNews(id_news, formData);
+        if (url) {
+          await updateNews(berita.id_news, formData);
         } else {
           await createNews(formData);
         }
@@ -61,7 +60,7 @@ const FormCreateNews = () => {
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        const data = await getNewsById(id_news);
+        const data = await getNewsByUrl(url);
         setBerita(data);
         formik.setValues({
           title: data.title,
@@ -74,10 +73,10 @@ const FormCreateNews = () => {
       }
     };
 
-    if (id_news) {
+    if (url) {
       fetchNews();
     }
-  }, [id_news]);
+  }, [url]);
 
   return (
     <form onSubmit={formik.handleSubmit} className="max-w-lg mx-auto">
@@ -119,7 +118,7 @@ const FormCreateNews = () => {
         <label htmlFor="image" className="block mb-1 text-sm font-medium text-gray-900">
           Gambar
         </label>
-        {berita.imageURL ? (
+        {berita && berita.imageURL ? (
           <div>
             <img className="w-1/2" src={`${process.env.REACT_APP_IMAGE_URL}${berita.imageURL}`} alt="" />
             <h2 className="text-gray-700 text-sm my-2">Biarkan jika tidak ingin mengubah gambar!!!</h2>

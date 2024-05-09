@@ -9,7 +9,7 @@ export const saveToken = (token, role) => {
   localStorage.setItem("role", role);
 
   // Menghitung waktu kadaluarsa 5 menit dari sekarang untuk simulasi
-  const expirationTime = new Date().getTime() + 5 * 60 * 1000; // 5 menit dalam milidetik
+  const expirationTime = new Date().getTime() + 60 * 60 * 1000; // 5 menit dalam milidetik
   localStorage.setItem("token_expiration", expirationTime);
 }
 

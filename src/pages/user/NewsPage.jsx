@@ -8,7 +8,7 @@ import { axiosInstance } from '../../API/axios';
 import LoadingState from '../../components/modal/LoadingState';
 
 const NewsPage = () => {
-  const { id_news } = useParams();
+  const { url } = useParams();
   const history = useHistory();
   const [newsContent, setNewsContent] = useState(null);
   const [lastNews, setLastNews] = useState(null);
@@ -16,13 +16,13 @@ const NewsPage = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(true);
 
-  const navigateToNews = (id) =>{
-    history.push(`/news/${id}`)
+  const navigateToNews = (url) =>{
+    history.push(`/news/${url}`)
   }
 
-  const getNewsById = async (id) => {
+  const getNewsByUrl = async (url) => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/news/${id}`);
+      const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/news/${url}`);
       return response.data.data;
     } catch (error) {
       console.error('Error fetching news by id:', error);
@@ -44,8 +44,8 @@ const NewsPage = () => {
     setLoading(true)
     
     // Load news content by ID if available
-    if (id_news) {
-      const content = await getNewsById(id_news);
+    if (url) {
+      const content = await getNewsByUrl(url);
       newsData = await getNewsByPage(currentPage);
       setNewsContent(content);
     } else if (lastNews && lastNews.length > 0) {
@@ -83,7 +83,7 @@ const NewsPage = () => {
 
   useEffect(() => {
     loadContent();
-  }, [id_news, currentPage]);
+  }, [url, currentPage]);
 
   return (
     <>
@@ -113,7 +113,7 @@ const NewsPage = () => {
                       </div>
                       <div className="flex flex-col p-2">
                         <div>
-                          <h2 className="text-base lg:text-lg font-semibold cursor-pointer" onClick={() => {navigateToNews(item.id_news);scrollToTop()}}>{sliceContent(item.title, 11)}</h2>
+                          <h2 className="text-base lg:text-lg font-semibold cursor-pointer" onClick={() => {navigateToNews(item.URL);scrollToTop()}}>{sliceContent(item.title, 11)}</h2>
                         </div>
                         <div className="my-1">
                           <p className="text-xs lg:text-sm text-gray-500">{formatDate(item.created_at)} <i className="fas fa-circle fa-xs"></i> By, {item.admin_name} </p>

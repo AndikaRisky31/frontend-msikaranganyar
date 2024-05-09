@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { Card, CardHeader, CardBody, Button, CardFooter, Typography } from "@material-tailwind/react";
-import { FaTrash, FaRegEdit } from "react-icons/fa";
+import { FaTrash, FaRegEdit,FaEye,FaEyeSlash } from "react-icons/fa";
 import { sliceContent } from '../../utils/helper';
 import { useHistory } from "react-router-dom";
 
 const CardNews = ({
   id_news,
+  hidden,
+  URL,
   title,
   content,
   imageURL,
@@ -14,14 +16,11 @@ const CardNews = ({
   const history = useHistory();
 
   const toNews = () => {
-    history.push(`/news/${id_news}`);
+    history.push(`/news/${URL}`);
   };
 
   const toEditNews = () => {
-    history.push({
-      pathname: `/dashboard/news/addUpdate`,
-      state: { id_news }
-    });
+    history.push(`/dashboard/news/addUpdate/${URL}`);
   };
 
   return (
@@ -51,12 +50,15 @@ const CardNews = ({
           {sliceContent(content, 20)}
         </Typography>
       </CardBody>
-      <CardFooter className="flex items-center justify-end h-1/6">
-        <Button color="red" className="ml-2" onClick={() => handleDeleteNews(id_news)}>
-          <FaTrash size={8} />
+      <CardFooter className="flex items-center justify- h-1/6">
+        <Button color="blue" className="m-1">
+          {hidden ? <FaEyeSlash size={11}/> : <FaEye size={11}/> }
         </Button>
-        <Button color="green" className="ml-2" onClick={toEditNews}>
-          <FaRegEdit size={8} />
+        <Button color="red" className="m-1" onClick={() => handleDeleteNews(id_news)}>
+          <FaTrash size={11} />
+        </Button>
+        <Button color="green" className="m-1" onClick={toEditNews}>
+          <FaRegEdit size={11} />
         </Button>
       </CardFooter>
     </Card>

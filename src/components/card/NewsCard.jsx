@@ -7,11 +7,11 @@ const NewsCard = ({ blog }) => {
   const history = useHistory();
   
   const onClick = () => {
-    history.push(`/news/${blog.id_news}`)
+    history.push(`/news/${blog.URL}`)
   } 
 
   return (
-    <div className='group shadow-lg m-2 w-[350px] h-[600px] hover:bg-teal-500' onClick={onClick}>
+    <div className='group shadow-lg m-2 w-[350px] h-[600px] hover:bg-teal-500 cursor-pointer' onClick={onClick}>
       <div className="h-1/2">
         {blog.imageURL ? (
           <img src={baseimageurl + blog.imageURL} alt='' className=" rounded-t-md w-full h-full object-cover group-hover:brightness-75" />

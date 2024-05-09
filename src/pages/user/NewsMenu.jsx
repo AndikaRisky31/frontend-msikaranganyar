@@ -29,8 +29,8 @@ const NewsMenu = () => {
     }
   };
 
-  const navigateToNews = (id) => {
-    history.push(`/news/${id}`);
+  const navigateToNews = (url) => {
+    history.push(`/news/${url}`);
   };
 
   useEffect(() => {
@@ -78,7 +78,7 @@ const NewsMenu = () => {
                 <h2
                   className="text-base sm:text-lg md:text-xl lg:text-2xl font-semibold cursor-pointer order-2"
                   onClick={() => {
-                    navigateToNews(item.id_news);
+                    navigateToNews(item.URL);
                     scrollToTop();
                   }}
                 >
@@ -102,7 +102,7 @@ const NewsMenu = () => {
                         <p className="py-2 md:py-3"> {sliceContent(item.content, 15)}</p>
                     )}
                     <p onClick={() => {
-                        navigateToNews(item.id_news);
+                        navigateToNews(item.URL);
                         scrollToTop();
                     }} 
                         className="font-bold text-base text-teal-600 md:text-xl font-serif cursor-pointer hover:tracking-widest duration-500">Selengkapnya <i className="fas fa-arrow-right fa-xs"></i>

@@ -71,7 +71,7 @@ function App() {
             <NewsMenu />
             <Footer />
           </Route>
-          <Route exact path='/news/:id_news'>
+          <Route exact path='/news/:url'>
             <Header showHead={false} />
             <NewsPage />
             <Footer />
@@ -113,7 +113,7 @@ const DashboardRoutes = () => {
     <DashboardLayout>
       <Switch>
         <Route exact path="/dashboard/news" component={News} />
-        <Route exact path="/dashboard/news/addUpdate" component={FormCreateNews}/>
+        <Route exact path="/dashboard/news/addUpdate/:url" component={FormCreateNews}/>
 
         <Route exact path="/dashboard/pengumuman" component={Announcementdb} />
         <Route exact path="/dashboard/pengumuman/addUpdate" component={FormCreateAnnouncement}/>
