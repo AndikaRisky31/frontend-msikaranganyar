@@ -39,7 +39,7 @@ const createNews = async (newsData) => {
   }
 };
 
-const getNewsByUrl = async ({url})=>{
+const getNewsByUrl = async (url)=>{
   try {
     const response = await axiosInstance.get(
       `/news/${url}`

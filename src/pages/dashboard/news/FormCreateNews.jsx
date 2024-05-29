@@ -10,7 +10,7 @@ const FormCreateNews = () => {
   const [berita, setBerita] = useState({});
   const [submitting, setSubmitting] = useState(false);
   const history = useHistory();
-  const url = useParams();
+  const {url} = useParams();
 
   const validationSchema = Yup.object().shape({
     title: Yup.string()
@@ -19,8 +19,8 @@ const FormCreateNews = () => {
     content: Yup.string().required("Konten diperlukan"),
     image: url ? Yup.mixed().notRequired() : Yup.mixed()
       .required("Gambar diperlukan")
-      .test("fileFormat", "Mohon upload gambar jpg/png/jpeg", (value) => {
-        return value && ["image/jpeg", "image/png", "image/jpg"].includes(value.type);
+      .test("fileFormat", "Mohon upload gambar jpg/png/jpeg/webp", (value) => {
+        return value && ["image/jpeg", "image/png", "image/jpg",, "image/webp"].includes(value.type);
       }),
     source: Yup.string()
   });
@@ -41,7 +41,6 @@ const FormCreateNews = () => {
         formData.append("content", values.content);
         formData.append("image", values.image);
         formData.append("source", values.source); // Tambahkan source ke formData
-
         if (url) {
           await updateNews(berita.id_news, formData);
         } else {
@@ -56,23 +55,22 @@ const FormCreateNews = () => {
       }
     },
   });
+  const fetchNews = async () => {
+    try {
+      const data = await getNewsByUrl(url);
+      setBerita(data);
+      formik.setValues({
+        title: data.title,
+        content: data.content,
+        image: null,
+        source: data.source, // Set nilai source dari data berita
+      });
+    } catch (error) {
+      console.error("gagal set berita ", error);
+    }
+  };
 
   useEffect(() => {
-    const fetchNews = async () => {
-      try {
-        const data = await getNewsByUrl(url);
-        setBerita(data);
-        formik.setValues({
-          title: data.title,
-          content: data.content,
-          image: null,
-          source: data.source, // Set nilai source dari data berita
-        });
-      } catch (error) {
-        console.error("gagal set berita ", error);
-      }
-    };
-
     if (url) {
       fetchNews();
     }
@@ -152,6 +150,7 @@ const FormCreateNews = () => {
         {formik.touched.source && formik.errors.source ? (
           <div className="text-red-500 text-sm">{formik.errors.source}</div>
         ) : null}
+        <h2 className="text-red-500 text-sm font-semibold">Kosongkan jika berita dibuat sendiri(tidak mengambil dari website lain)</h2>
       </div>
       <SubmitButton submitting={submitting} />
     </form>

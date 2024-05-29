@@ -36,7 +36,7 @@ const DataPasien = () => {
           </div>
           <div className='text text-center'>
             <h1 className='text-4xl font-bold'>{formatIntegerWithCommas(dataPasien.total_suspect)}</h1>
-            <h3 className='text-lg font-semibold'>DIAGNOSED</h3>
+            <h3 className='text-lg font-semibold'>TERDUGA</h3>
           </div>
         </div>
         <div className='flex flex-col items-center justify-center p-3'>
@@ -45,7 +45,7 @@ const DataPasien = () => {
           </div>
           <div className='text text-center'>
             <h1 className='text-4xl font-bold'>{formatIntegerWithCommas(dataPasien.total_detect)}</h1>
-            <h3 className='text-lg font-semibold'>DETECTED</h3>
+            <h3 className='text-lg font-semibold'>KASUS POSITIF</h3>
           </div>
         </div>
         <div className='flex flex-col items-center justify-center p-3'>
@@ -54,7 +54,7 @@ const DataPasien = () => {
           </div>
           <div className='text text-center'>
             <h1 className='text-4xl font-bold'>{formatIntegerWithCommas(dataPasien.total_treatment)}</h1>
-            <h3 className='text-lg font-semibold'>UNDER TREATMENT</h3>
+            <h3 className='text-lg font-semibold'>PENGOBATAN</h3>
           </div>
         </div>
         <div className='flex flex-col items-center justify-center p-3'>
@@ -63,7 +63,7 @@ const DataPasien = () => {
           </div>
           <div className='text text-center'>
             <h1 className='text-4xl font-bold'>{formatIntegerWithCommas(dataPasien.total_recovery)}</h1>
-            <h3 className='text-lg font-semibold'>RECOVERED</h3>
+            <h3 className='text-lg font-semibold'>SEMBUH</h3>
           </div>
         </div>
       </div>

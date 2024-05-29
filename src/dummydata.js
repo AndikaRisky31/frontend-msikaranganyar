@@ -74,12 +74,15 @@ export const testimonal = [
 
 export const ListBg = [
   {
-    nama : "/images/bgnofull.webp"
+    nama : "/images/background/bg1.webp"
   },
   {
-    nama : "/images/bg2.webp"
+    nama : "/images/background/bg2.jpg"
   },
   {
-    nama : "/images/ab.webp"
+    nama : "/images/background/bg3.jpg"
+  },
+  {
+    nama : "/images/background/bg4.webp"
   }
 ]

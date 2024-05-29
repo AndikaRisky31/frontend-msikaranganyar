@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { Card, CardHeader, CardBody, Button, CardFooter, Typography } from "@material-tailwind/react";
-import { FaTrash, FaRegEdit,FaEye,FaEyeSlash } from "react-icons/fa";
+import { FaTrash, FaRegEdit } from "react-icons/fa";
 import { sliceContent } from '../../utils/helper';
 import { useHistory } from "react-router-dom";
 
 const CardNews = ({
   id_news,
-  hidden,
   URL,
   title,
   content,
@@ -50,10 +49,7 @@ const CardNews = ({
           {sliceContent(content, 20)}
         </Typography>
       </CardBody>
-      <CardFooter className="flex items-center justify- h-1/6">
-        <Button color="blue" className="m-1">
-          {hidden ? <FaEyeSlash size={11}/> : <FaEye size={11}/> }
-        </Button>
+      <CardFooter className="flex items-center justify-end h-1/6">
         <Button color="red" className="m-1" onClick={() => handleDeleteNews(id_news)}>
           <FaTrash size={11} />
         </Button>

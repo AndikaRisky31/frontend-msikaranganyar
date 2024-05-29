@@ -113,6 +113,7 @@ const DashboardRoutes = () => {
     <DashboardLayout>
       <Switch>
         <Route exact path="/dashboard/news" component={News} />
+        <Route exact path="/dashboard/news/addUpdate" component={FormCreateNews}/>
         <Route exact path="/dashboard/news/addUpdate/:url" component={FormCreateNews}/>
 
         <Route exact path="/dashboard/pengumuman" component={Announcementdb} />

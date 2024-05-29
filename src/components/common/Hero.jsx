@@ -6,7 +6,7 @@ const Hero = ({ title, narasi }) => {
   return (
     <>
       <section className="overflow-hidden h-[70vh]">
-      <Carousel slideInterval={2000} className="absolute top-0 z[-1]">
+      <Carousel slideInterval={3000} className="absolute top-0 z[-1]">
         {ListBg.map((item, index) => (
           <div key={index} className="flex h-full items-center justify-center bg-gray-400 dark:bg-gray-700 dark:text-white">
             <img src={item.nama} alt={`Image ${index}`} className="w-full h-full object-cover brightness-70" />

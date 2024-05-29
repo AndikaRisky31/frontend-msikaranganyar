@@ -9,7 +9,7 @@ const Pasien = () => {
     const [dataPasien, setDataPasien] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [selectedYear, setSelectedYear] = useState(0);
+    const [selectedYear, setSelectedYear] = useState(null);
     const [showOtherYearInput, setShowOtherYearInput] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [deleteId, setDeleteId] = useState(null);
@@ -20,8 +20,8 @@ const Pasien = () => {
         try {
             const PasienData = await getPasien();
             setDataPasien(PasienData);
-            if (dataPasien && dataPasien.totalPerYear.length > 0) {
-                setSelectedYear(dataPasien.totalPerYear[dataPasien.totalPerYear.length - 1].year);
+            if (PasienData.totalPerYear.length > 0) {
+                setSelectedYear(PasienData.totalPerYear[PasienData.totalPerYear.length - 1].year);
             }
         } catch (error) {
             console.error("gagal fetch pasien", error);
@@ -35,48 +35,34 @@ const Pasien = () => {
         fetchPasien();
     }, []);
 
-
     const handleSubmit = async (event) => {
         event.preventDefault();
         setSubmitting(true);
     
-        // Inisialisasi FormData
         const formData = new FormData();
-    
-        // Memasukkan nilai dari setiap input ke dalam FormData
         formData.append("suspect", event.target.elements.suspect.value);
         formData.append("detect", event.target.elements.detect.value);
         formData.append("treatment", event.target.elements.treatment.value);
         formData.append("recovery", event.target.elements.recovery.value);
+
+        let Tahun = selectedYear;
         
-        let selectedYearValue;
-        if (event.target.elements.yearInput.value) {
-            selectedYearValue = event.target.elements.yearInput.value;
-        } else {
-            // Jika tidak, gunakan nilai tahun yang dipilih
-            selectedYearValue = selectedYear;
+        if (selectedYear === "Tambah") {
+            Tahun = event.target.elements.yearInput.value
         }
         
-        // Memasukkan nilai tahun ke dalam FormData
-        formData.append("year", selectedYearValue);
+        formData.append("year", Tahun);
         try {
-            // Mengirimkan data ke server
             await updatePasien(formData);
-            
-            // Memuat ulang data pasien setelah pembaruan berhasil
             fetchPasien();
-            
-            // Mengosongkan formulir
             event.target.reset();
         } catch (error) {
             console.error("gagal mengirimkan update pasien");
         } finally {
-            // Menghentikan status submitting
-            setShowOtherYearInput(false)
+            setShowOtherYearInput(false);
             setSubmitting(false);
         }
     }
-    
 
     const handleYearChange = (value) => {
         setSelectedYear(value);
@@ -91,21 +77,21 @@ const Pasien = () => {
 
     const handleDeleteYear = async () => {
         setShowDeleteModal(false);
-        setShowSpinner(true)
+        setShowSpinner(true);
         try {
             await deleteYear(deleteId);
             fetchPasien();
         } catch (error) {
             console.error("gagal menghapus tahun");
-        }finally{
-            setShowSpinner(false)
+        } finally {
+            setShowSpinner(false);
         }
     }
 
     return (
         <div className="overflow-x-auto">
             {isLoading ? (
-                <LoadingState/>
+                <LoadingState />
             ) : error ? (
                 <p>Error: {error}</p>
             ) : (
@@ -125,6 +111,7 @@ const Pasien = () => {
                         showOtherYearInput={showOtherYearInput} 
                         handleInputChange={handleInputChange} 
                         submitting={submitting}
+                        setSelectedYear={setSelectedYear}
                     />
                     <PopupModal
                         title="Apakah Anda yakin menghapus tahun ini?"
@@ -183,7 +170,7 @@ const DataTable = ({ dataPasien, handleDelete }) => {
     );
 };
 
-const Form = ({ handleSubmit, selectedYear, handleYearChange, showOtherYearInput, handleInputChange,dataPasien,submitting }) => {
+const Form = ({ handleSubmit, selectedYear, handleYearChange, showOtherYearInput, handleInputChange, dataPasien, submitting,setSelectedYear }) => {
     return (
         <form onSubmit={handleSubmit}>
             <table className="w-full">
@@ -196,6 +183,7 @@ const Form = ({ handleSubmit, selectedYear, handleYearChange, showOtherYearInput
                                 handleYearChange={handleYearChange} 
                                 showOtherYearInput={showOtherYearInput} 
                                 handleInputChange={handleInputChange}
+                                setSelectedYear={setSelectedYear}
                             />
                         </td>
                         <td className="px-4 py-2 w-auto">
@@ -227,20 +215,25 @@ const InputField = ({ id, name, placeholder, handleInputChange }) => {
             placeholder={placeholder} 
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md p-2" 
             onChange={handleInputChange}
+            required={true}
         />
     );
 };
 
-const YearSelector = ({ dataPasien, selectedYear, handleYearChange, showOtherYearInput,handleInputChange }) => {
-    // Fungsi untuk menangani perubahan nilai selectedYear dari select atau input teks
+const YearSelector = ({ dataPasien, selectedYear, handleYearChange, showOtherYearInput, handleInputChange,setSelectedYear }) => {
+    useEffect(() => {
+        if (dataPasien && dataPasien.totalPerYear.length > 0 && !selectedYear) {
+            setSelectedYear(dataPasien.totalPerYear[dataPasien.totalPerYear.length - 1].year);
+        }
+    }, [dataPasien, selectedYear]);
 
     return (
         <div className="flex flex-col items-center justify-center">
             {dataPasien && dataPasien.totalPerYear.length > 0 && (
                 <select 
                     id="year" 
-                    value={selectedYear} 
-                    onChange={(e) => handleYearChange(e.target.value)} // Menggunakan fungsi handleYearChange untuk mengatur nilai selectedYear
+                    value={selectedYear || ''} 
+                    onChange={(e) => handleYearChange(e.target.value)} 
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md p-2"
                 >
                     {dataPasien.totalPerYear.map((yearData, index) => (
@@ -256,7 +249,7 @@ const YearSelector = ({ dataPasien, selectedYear, handleYearChange, showOtherYea
                     name="year" 
                     placeholder="Input Year" 
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md p-2" 
-                    onChange={handleInputChange} // Menggunakan fungsi handleYearInputChange untuk menangani perubahan nilai input teks
+                    onChange={handleInputChange} 
                 />
             )}
         </div>
