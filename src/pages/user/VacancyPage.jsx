@@ -75,11 +75,11 @@ const VacancyPage = () => {
                 <h2 className="text-xl font-bold my-3">Requirements :</h2>
                 <p className="text-lg whitespace-pre-line text-gray-500" dangerouslySetInnerHTML={{ __html: content.qualification }}></p>
               </div>
-              <div className="mt-10 sm:mt-0">
+              <div className="mt-10 sm:mt-0 sm:border-l-2 sm:pl-2">
                 <h2 className="text-xl font-bold text-center m-3">Persyaratan</h2>
                 <p className="text-lg whitespace-pre-line text-gray-500">{content.recruitment}</p>
               </div>
-              <div className="flex justify-center items-center">
+              <div className="flex justify-center items-center sm:border-l-2 sm:pl-2">
               <button 
                 onClick={() => toGform(content.apply_url)} 
                 disabled={content.apply_url === null} 

@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import InputField from '../../../components/item/inputField';
 import { createVacancy, getVacancyById, updateVacancy } from "../../../API/VacancyAPI";
 import { useHistory, useParams } from "react-router-dom";
-import {removeEmptyLines } from "../../../utils/helper";
+import {formatDateForInputDate, removeEmptyLines } from "../../../utils/helper";
 import SubmitButton from "../../../components/button/SubmitButton";
 
 const FormCreateVacancy = () => {
@@ -68,6 +68,27 @@ const FormCreateVacancy = () => {
     validationSchema: validationSchema,
     onSubmit: onSubmit,
   });
+  const fetchVacancy = async ()=>{
+    try {
+      const response = await getVacancyById(id_vacancy)
+      formik.setValues({
+        title: response.title,
+        qualification: response.qualification,
+        recruitment: response.recruitment,
+        place: response.place,
+        closing_date: formatDateForInputDate(response.closing_date),
+        kuota: response.kuota,
+        apply_url: response.apply_url,
+      });
+    } catch (error) {
+      console.error('Gagal mengambil data lowongan pekerjaan:', error);
+    }
+  }
+  useEffect(() => {
+    if(id_vacancy){
+      fetchVacancy()
+    }
+  }, []);
 
   return (
     <form onSubmit={formik.handleSubmit} className="max-w-lg mx-auto grid grid-cols-2 gap-4">

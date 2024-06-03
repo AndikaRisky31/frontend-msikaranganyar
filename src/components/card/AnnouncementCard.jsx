@@ -2,6 +2,7 @@ import React from 'react';
 import { CardFooter,Button } from '@material-tailwind/react';
 import { FaTrash, FaRegEdit } from "react-icons/fa";
 import { useHistory } from 'react-router-dom';
+import { sliceContent } from '../../utils/helper';
 
 
 const AnnouncementCard = ({ announcement,handleDeleteAnnouncement,showButton = false })=> {
@@ -20,7 +21,7 @@ const AnnouncementCard = ({ announcement,handleDeleteAnnouncement,showButton = f
             <div className="flex flex-col ">
                 <div  onClick={() => toAnnouncement()}>
                     <h1 className="font-semibold text-lg ">{announcement.title}</h1>
-                    <h2 className="text-gray-500 text-sm xl:w-1/2">{announcement.content}</h2>
+                    <h2 className="text-gray-500 text-sm xl:w-1/2">{sliceContent(announcement.content,15)}</h2>
                 </div>
             <CardFooter className={`flex items-center justify-end mt-auto ${showButton ? '': 'hidden'}`}>
                 <Button color="red" className="ml-2" onClick={() => handleDeleteAnnouncement(announcement.id_announcement)}>

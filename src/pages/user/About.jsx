@@ -5,7 +5,6 @@ import { homeAbout } from "../../dummydata";
 import DataPasien from "../../components/card/DataPasienCard";
 
 const About = () => {
-  console.log(homeAbout);
   return (
     <>
     <section className="items-center">

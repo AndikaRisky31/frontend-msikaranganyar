@@ -39,7 +39,7 @@ const AnnouncementPage = () => {
               <img src={`${process.env.REACT_APP_IMAGE_URL}${content.imageURL}`} alt="gambar" className="aspect-video w-full h-auto object-cover object-center"/>
               </div>
               <div className="w-full my-5">
-                        <p className="">{getTime(content.updated_at,true,true)} {formatDate(content.updated_at,true,true)}</p>
+                        <p className="text-sm text-gray-500">{getTime(content.updated_at,true,true)} {formatDate(content.updated_at,true,true)}</p>
               </div>
               <div className="row-span-2">
                 <p className="text-lg whitespace-pre-line text-gray-500">{content.content}</p>

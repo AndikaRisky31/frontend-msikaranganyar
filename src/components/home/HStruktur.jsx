@@ -31,8 +31,8 @@ const HStruktur = ()=>{
             </div>
             <div className="text-center py-5">
                 <div className="flex justify-start lg:justify-center overflow-x-auto snap-mandatory snap-x gap-5">
-                    {Data.slice(1, 3).map((val) => (
-                        <div key={val.id_management} className="snap-start mx-2">
+                    {Data.slice(1, 3).map((val,index) => (
+                        <div key={index} className="snap-start mx-2">
                         <TeamCard val={val} />
                         </div>
                     ))}
