@@ -4,11 +4,14 @@ import App from "./App";
 
 // @material-tailwind/react
 import { ThemeProvider } from "@material-tailwind/react";
+import { HelmetProvider } from "react-helmet-async";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
-    <ThemeProvider>
-      <App />
-    </ThemeProvider>
+  <HelmetProvider>
+      <ThemeProvider>
+          <App />
+      </ThemeProvider>
+  </HelmetProvider>
 );

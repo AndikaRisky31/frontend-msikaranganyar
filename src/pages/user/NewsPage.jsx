@@ -6,6 +6,7 @@ import ListParagraf from '../../components/item/ItemParagraf';
 import EmptyState from '../../components/modal/EmptyState';
 import { axiosInstance } from '../../API/axios';
 import LoadingState from '../../components/modal/LoadingState';
+import SEO from '../../components/item/SEO';
 
 const NewsPage = () => {
   const { url } = useParams();
@@ -85,8 +86,21 @@ const NewsPage = () => {
     loadContent();
   }, [url, currentPage]);
 
+  const title = newsContent ? newsContent.title : 'Berita - Nama Website Anda';
+  const description = newsContent ? newsContent.content.substring(0, 150) : 'Deskripsi singkat tentang halaman berita';
+  const keywords = newsContent ? newsContent.title.split(' ').join(', ') : 'berita, news, nama website';
+  const image = newsContent && newsContent.imageURL ? process.env.REACT_APP_IMAGE_URL + newsContent.imageURL : '/images/imagenotfound.jpg';
+  const link = window.location.href;
+
   return (
     <>
+      <SEO
+        title={title}
+        description={description}
+        keywords={keywords}
+        image={image}
+        url={link}
+      />
       {loading ? (
         <LoadingState /> // Komponen loading
       ) : (

@@ -146,6 +146,7 @@ const FormCreateNews = () => {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           placeholder="Masukan Sumber"
+          maxLength={200}
         />
         {formik.touched.source && formik.errors.source ? (
           <div className="text-red-500 text-sm">{formik.errors.source}</div>
