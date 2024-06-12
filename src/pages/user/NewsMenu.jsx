@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { getNewsByPage } from "../../API/NewsAPI";
 import ButtonPagination from "../../components/item/ButtonPagination";
-import { formatDate, scrollToTop, sliceContent } from "../../utils/helper";
+import { formatDate, isBrowser, scrollToTop, sliceContent } from "../../utils/helper";
 import LoadingState from "../../components/modal/LoadingState";
 import EmptyState from "../../components/modal/EmptyState";
-import ListParagraf from "../../components/item/ItemParagraf";
 import Heading from "../../components/common/heading/Heading";
 
 const NewsMenu = () => {
@@ -13,8 +12,8 @@ const NewsMenu = () => {
   const [totalPages, setTotalPages] = useState(0);
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false); // State untuk mengontrol tampilan loading
-  const history = useHistory();
-  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const navigate = useNavigate();
+  const [screenWidth, setScreenWidth] = useState(isBrowser() ? window.innerWidth : null);
 
   const fetchNews = async (limit = 5) => {
     setIsLoading(true); // Menandai bahwa data sedang dimuat
@@ -30,7 +29,7 @@ const NewsMenu = () => {
   };
 
   const navigateToNews = (url) => {
-    history.push(`/news/${url}`);
+    navigate(`/news/${url}`);
   };
 
   useEffect(() => {
@@ -38,15 +37,17 @@ const NewsMenu = () => {
   }, [page]);
 
   useEffect(() => {
-    const handleResize = () => {
-      setScreenWidth(window.innerWidth);
-    };
+    if (isBrowser()) {
+      const handleResize = () => {
+        setScreenWidth(window.innerWidth);
+      };
 
-    window.addEventListener("resize", handleResize);
+      window.addEventListener("resize", handleResize);
 
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
+      return () => {
+        window.removeEventListener("resize", handleResize);
+      };
+    }
   }, []);
 
   return (
@@ -92,11 +93,11 @@ const NewsMenu = () => {
                 </p>
               </div>
                 <div className="hidden sm:block" style={{ fontFamily: 'PT Serif, serif' }}>
-                {screenWidth >= 1280 ? (
+                {screenWidth && screenWidth >= 1280 ? (
                         <p className="py-2 md:py-3"> {sliceContent(item.content, 60)}</p>
-                    ) : screenWidth > 1024 ? (
+                    ) : screenWidth && screenWidth > 1024 ? (
                         <p className="py-2 md:py-3"> {sliceContent(item.content, 35)}</p>
-                    ) : screenWidth > 841 ? (
+                    ) : screenWidth && screenWidth > 841 ? (
                         <p className="py-2 md:py-3"> {sliceContent(item.content, 25)}</p>
                     ):(
                         <p className="py-2 md:py-3"> {sliceContent(item.content, 15)}</p>

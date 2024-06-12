@@ -1,10 +1,10 @@
 import React, { useState, useEffect,useContext } from "react";
-import { Button, Typography } from "@material-tailwind/react";
+import { Button } from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import AnnouncementCard from "../../../components/card/AnnouncementCard";
 import { deleteAnnouncement, getAnnouncementByPage,getSearchAnnouncement } from "../../../API/AnnouncementAPI";
 import PopupModal from "../../../components/modal/popup-modal";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { MyContext } from "../component/DashboardLayout";
 import EmptyState from "../../../components/modal/EmptyState";
 import LoadingState from "../../../components/modal/LoadingState";
@@ -18,7 +18,7 @@ const Announcementdb = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false); // Menyimpan status tampilan modal konfirmasi
   const [totalPages, settotalPages] = useState([]);
   const [showSpinner, setShowSpinner] = useState(false);
-  const history = useHistory()
+  const navigate = useNavigate()
   const keyword = useContext(MyContext)
   
   const fetchByPage = async () => {
@@ -54,7 +54,7 @@ const Announcementdb = () => {
   }, [page,keyword]);
 
   const toCreate =()=>{
-    history.push('/dashboard/pengumuman/addUpdate')
+    navigate('/dashboard/pengumuman/addUpdate')
   }
 
   const handleDeleteAnnouncement = async () => {

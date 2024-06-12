@@ -1,17 +1,17 @@
 import React from "react";
 import { CardFooter,Button } from '@material-tailwind/react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { FaTrash, FaRegEdit } from "react-icons/fa";
 import ListPlace from "../item/ListPlace";
 import { formatDate, getTime } from "../../utils/helper";
 
 const VacancyCard = ({ VacancyData,showButton = false ,handleDeleteVacancy}) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const toDetailVacancy = () => {
-    history.push(`/lowongan/${VacancyData.id_vacancy}`)
+    navigate(`/lowongan/${VacancyData.id_vacancy}`)
   };  
   const toEditVacancy = (id_announcement)=>{
-    history.push(`/dashboard/lowongan/addUpdate/${id_announcement}`)
+    navigate(`/dashboard/lowongan/addUpdate/${id_announcement}`)
   }
   return (
     <>

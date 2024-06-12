@@ -6,6 +6,7 @@ import { getDocumentByPage } from '../../API/DocumentAPI';
 import HeadingOnly from '../../components/common/heading/HeadingOnly';
 import EmptyState from '../../components/modal/EmptyState';
 import LoadingState from '../../components/modal/LoadingState'; // Import komponen LoadingState
+import { isBrowser } from '../../utils/helper';
 
 const Publish = () => {
     const [listTbPedia, setListTbPedia] = useState([]);
@@ -68,7 +69,9 @@ const Publish = () => {
     }, []);
 
     const toPdf = (data) => {
-        window.open(`${process.env.REACT_APP_IMAGE_URL}${data.nama_file}`, '_blank');
+        if(isBrowser()){
+            window.open(`${process.env.REACT_APP_IMAGE_URL}${data.nama_file}`, '_blank');
+        }
     };
 
     return (

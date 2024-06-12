@@ -1,3 +1,4 @@
+import React from "react";
 const EmptyState = ({ dataName, create }) => {
     return (
         <div className="mx-auto px-10 py-4 bg-white">

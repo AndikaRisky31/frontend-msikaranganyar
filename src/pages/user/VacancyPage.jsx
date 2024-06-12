@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { formatDate } from "../../utils/helper";
+import { formatDate, isBrowser } from "../../utils/helper";
 import ListPlace from "../../components/item/ListPlace";
 import Heading from "../../components/common/heading/Heading";
 import LoadingState from "../../components/modal/LoadingState"; // Import komponen LoadingState
@@ -13,7 +13,9 @@ const VacancyPage = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const toGform = (link) => {
-    window.open(link, '_blank');
+    if(isBrowser()){
+      window.open(link, '_blank');
+    }
   };
 
   const addLineNumbers = (text) => {
@@ -41,11 +43,14 @@ const VacancyPage = () => {
   }, [id_vacancy]);
 
   // Define SEO parameters
-  const title = content ? content.title : 'Loading...';
-  const description = content ? `Apply now for ${content.title} at ${content.place.join(', ')}. Closing date: ${formatDate(content.closing_date, true)}.` : 'Loading...';
+  const title = content ? ('Lowongan '+content.title) : 'Loading...';
+  const description = content ? `Apply now for ${content.title} at ${Array.isArray(content.place) ? content.place.join(', ') : content.place}. Closing date: ${formatDate(content.closing_date, true)}.` : 'Loading...';
   const keywords = content ? `lowongan kerja, ${content.title}, pekerjaan, apply` : 'lowongan kerja, pekerjaan, apply';
   const image = `${process.env.REACT_APP_BASE_URL}/images/default-image.jpg`; // Replace with a relevant image if available
-  const url = window.location.href;
+  let url = "msikaranganyar.com";
+  if(isBrowser()){
+    url = window.location.href;
+  } 
 
   return (
     <>

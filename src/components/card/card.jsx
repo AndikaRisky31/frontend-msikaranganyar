@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Card, CardHeader, CardBody, Button, CardFooter, Typography } from "@material-tailwind/react";
 import { FaTrash, FaRegEdit } from "react-icons/fa";
 import { sliceContent } from '../../utils/helper';
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const CardNews = ({
   id_news,
@@ -12,14 +12,14 @@ const CardNews = ({
   imageURL,
   handleDeleteNews,
 }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const toNews = () => {
-    history.push(`/news/${URL}`);
+    navigate(`/news/${URL}`);
   };
 
   const toEditNews = () => {
-    history.push(`/dashboard/news/addUpdate/${URL}`);
+    navigate(`/dashboard/news/addUpdate/${URL}`);
   };
 
   return (

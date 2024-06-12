@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import PopupModal from "../../../components/modal/popup-modal";
 import { MdSearch, MdKeyboardDoubleArrowRight, MdKeyboardDoubleArrowLeft } from "react-icons/md";
 import { deleteToken } from "../../../utils/auth";
+import { isBrowser } from "../../../utils/helper";
 
 const NavbarDashboard = ({ isOpen, toggleSidebar, onSearchChange }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const clickLogout = () => {
@@ -14,7 +15,7 @@ const NavbarDashboard = ({ isOpen, toggleSidebar, onSearchChange }) => {
 
   const handleConfirmDelete = () => {
     deleteToken()
-    history.push("/login");
+    navigate("/login");
     setIsModalOpen(false);
   };
 
@@ -23,7 +24,7 @@ const NavbarDashboard = ({ isOpen, toggleSidebar, onSearchChange }) => {
   };
 
   const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
+    if (isBrowser() && e.key === 'Enter') {
       const keyword = e.target.value;
       onSearchChange(keyword);
     }

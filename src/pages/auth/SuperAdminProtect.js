@@ -1,27 +1,23 @@
-import React from "react";
-import { Route, Redirect } from "react-router-dom";
-import { getToken, isSuperAdmin } from "../../utils/auth";
+import React from 'react';
+import { Navigate } from 'react-router-dom';
+import { getToken, isSuperAdmin } from '../../utils/auth';
+import DashboardLayout from '../dashboard/component/DashboardLayout';
 
-const SuperAdminProtect = ({ component: Component, ...rest }) => {
-    const isAdmin = getToken();
-    const superAdmin = isSuperAdmin();
-  
-    return (
-      <Route
-        {...rest}
-        render={(props) =>
-            superAdmin ? (
-              <Component {...props} />
-            ) : (
-                isAdmin ? (
-                    <Redirect to="/dashboard/news" />
-                ):(
-                    <Redirect to="/login" />
-                )
-            )
-        }
-      />
+const SuperAdminProtect = ({ children }) => {
+  const isAdmin = getToken();
+  const superAdmin = isSuperAdmin();
+
+  if (superAdmin) {
+    return(
+      <DashboardLayout>
+        {children}
+      </DashboardLayout>
     );
+  } else if (isAdmin) {
+    return <Navigate to="/dashboard/news" />;
+  } else {
+    return <Navigate to="/login" />;
+  }
 };
 
 export default SuperAdminProtect;

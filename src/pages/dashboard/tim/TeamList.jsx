@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { axiosInstance, axiosInstanceAuth } from "../../../API/axios";
 import PopupModal from "../../../components/modal/popup-modal";
 import TableHeader from "../../../components/item/TableHeader";
@@ -8,13 +8,14 @@ import EmptyState from "../../../components/modal/EmptyState";
 import SpinnerOverlay from "../../../components/modal/SpinnerOverlay";
 import SubmitButton from "../../../components/button/SubmitButton";
 import { MyContext } from "../component/DashboardLayout";
+import { isBrowser } from "../../../utils/helper";
 
 const TeamList = () => {
   const [listTeam, setListTeam] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedTeamId, setSelectedTeamId] = useState(null);
   const [showSpinner, setShowSpinner] = useState(false);
-  const history = useHistory();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const searchKeyword = useContext(MyContext);
 
@@ -44,7 +45,7 @@ const TeamList = () => {
   }
 
   const toCreate = () => {
-    history.push("/dashboard/tim/create");
+    navigate("/dashboard/tim/create");
   };
 
   useEffect(() => {
@@ -179,6 +180,11 @@ const TableContent = ({ team, handleDeleteClick, fetchListTeam }) => {
       setsubmitting(false)
     }
   };
+  const handleClick = () => {
+    if (isBrowser()) {
+      document.getElementById("file_input").click();
+    }
+  };
 
   return (
     <tr>
@@ -206,9 +212,7 @@ const TableContent = ({ team, handleDeleteClick, fetchListTeam }) => {
                       className="h-16 w-16 object-cover rounded-full cursor-pointer"
                       src={imagePreview}
                       alt="Current"
-                      onClick={() =>
-                        document.getElementById("file_input").click()
-                      }
+                      onClick={handleClick}
                     />
                     <input
                       id="file_input"

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { formatDate, getTime } from "../../utils/helper"
+import { formatDate, getTime, isBrowser } from "../../utils/helper"
 import Heading from "../../components/common/heading/Heading";
 import LoadingState from "../../components/modal/LoadingState"; // Import komponen LoadingState
 import SEO from "../../components/item/SEO";
@@ -33,7 +33,10 @@ const AnnouncementPage = () => {
   const description = content ? `Read the latest announcement: ${content.title}.` : 'Loading...';
   const keywords = content ? `announcement, ${content.title}, berita, pengumuman` : 'announcement, berita, pengumuman';
   const image = content ? `${process.env.REACT_APP_IMAGE_URL}${content.imageURL}` : `${process.env.REACT_APP_BASE_URL}/images/default-image.jpg`;
-  const url = window.location.href;
+  let url ="msikaranganyar.com";
+  if(isBrowser()){
+    url = window.location.href;
+  }
 
   return (
     <>

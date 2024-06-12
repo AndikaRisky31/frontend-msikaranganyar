@@ -13,6 +13,7 @@ import { MyContext } from "../component/DashboardLayout";
 import EmptyState from "../../../components/modal/EmptyState";
 import SubmitButton from "../../../components/button/SubmitButton";
 import SpinnerOverlay from "../../../components/modal/SpinnerOverlay";
+import { isBrowser } from "../../../utils/helper";
 
 const Document = () => {
   const [listDokumen, setlistDokumen] = useState([]);
@@ -189,7 +190,9 @@ const Document = () => {
       }
   };
   const toDocument = (link)=>{
-    window.location.href = process.env.REACT_APP_IMAGE_URL+link
+    if(isBrowser){
+        window.location.href = process.env.REACT_APP_IMAGE_URL+link
+    }
   }
 
   return (

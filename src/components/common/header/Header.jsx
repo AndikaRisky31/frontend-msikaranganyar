@@ -2,18 +2,18 @@ import ListSubHeader from "./ListSubHeader";
 import React, { useState, useEffect, useRef } from "react";
 import Head from "./Head";
 import NavItem from "./NavItem";
-import { useHistory } from "react-router-dom";
-import { scrollToTop } from "../../../utils/helper";
+import { useNavigate } from "react-router-dom";
+import { isBrowser , scrollToTop } from "../../../utils/helper";
 
 const Header = ({ showHead }) => {
   const [click, setClick] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
   const dropdownRef = useRef(null);
-  const history = useHistory()
+  const navigate = useNavigate()
 
   const redirectToDashboard = () => {
-    history.push('/login');
+    navigate('/login');
   };
 
   useEffect(() => {
@@ -22,21 +22,26 @@ const Header = ({ showHead }) => {
         setIsOpen(false);
       }
     };
+    if(isBrowser()){
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
+      };
+    }
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
   }, []);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsSticky(window.pageYOffset > 0);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+    if(isBrowser()){
+
+      const handleScroll = () => {
+        setIsSticky(window.pageYOffset > 0);
+      };
+      window.addEventListener('scroll', handleScroll);
+      return () => {
+        window.removeEventListener('scroll', handleScroll);
+      };
+    }
   }, []);
 
   const toggleDropdown = () => {

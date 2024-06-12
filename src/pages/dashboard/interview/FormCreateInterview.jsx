@@ -3,13 +3,13 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import InputField from "../../../components/item/inputField";
 import { createInterview, getInterviewById, updateInterview } from "../../../API/InterviewAPI";
-import { useHistory, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { formatDateForInputDateTime, removeEmptyLines } from "../../../utils/helper";
 import SubmitButton from "../../../components/button/SubmitButton";
 
 const FormCreateInterview = () => {
   const { id_schedule_interview } = useParams();
-  const history = useHistory();
+  const navigate = useNavigate();
   const [submitting, setSubmitting] = useState(false);
 
   const initialValues = {
@@ -44,7 +44,7 @@ const FormCreateInterview = () => {
         await createInterview(formData);
       }
 
-      history.push("/dashboard/wawancara");
+      navigate("/dashboard/wawancara");
     } catch (error) {
       console.error("Error:", error);
     }finally {

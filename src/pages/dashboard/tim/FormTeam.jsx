@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { axiosInstanceAuth } from "../../../API/axios";
 import InputField from "../../../components/item/inputField";
 import { useFormik } from "formik";
@@ -7,7 +7,7 @@ import * as yup from "yup";
 import SubmitButton from "../../../components/button/SubmitButton";
 
 const FormTeam = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [submitting, setSubmitting] = useState(false);
 
   const validationSchema = yup.object().shape({
@@ -35,7 +35,7 @@ const FormTeam = () => {
         formDataToSend.append('images', values.images);
 
         await axiosInstanceAuth.post('/management/create', formDataToSend);
-        history.push('/dashboard/tim');
+        navigate('/dashboard/tim');
       } catch (error) {
         console.error("gagal menambahkan tim ke server", error.response.message);
       } finally {

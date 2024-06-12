@@ -1,7 +1,7 @@
 import React, { useState, useEffect} from 'react';
 import axios from 'axios';
-import { sliceContent, formatDate, scrollToTop } from '../../utils/helper';
-import { useParams, useHistory } from 'react-router-dom';
+import { sliceContent, formatDate, scrollToTop, isBrowser } from '../../utils/helper';
+import { useParams, useNavigate } from 'react-router-dom';
 import ListParagraf from '../../components/item/ItemParagraf';
 import EmptyState from '../../components/modal/EmptyState';
 import { axiosInstance } from '../../API/axios';
@@ -10,7 +10,7 @@ import SEO from '../../components/item/SEO';
 
 const NewsPage = () => {
   const { url } = useParams();
-  const history = useHistory();
+  const navigate = useNavigate();
   const [newsContent, setNewsContent] = useState(null);
   const [lastNews, setLastNews] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -18,7 +18,7 @@ const NewsPage = () => {
   const [loading, setLoading] = useState(true);
 
   const navigateToNews = (url) =>{
-    history.push(`/news/${url}`)
+    navigate(`/news/${url}`)
   }
 
   const getNewsByUrl = async (url) => {
@@ -90,7 +90,10 @@ const NewsPage = () => {
   const description = newsContent ? newsContent.content.substring(0, 150) : 'Deskripsi singkat tentang halaman berita';
   const keywords = newsContent ? newsContent.title.split(' ').join(', ') : 'berita, news, nama website';
   const image = newsContent && newsContent.imageURL ? process.env.REACT_APP_IMAGE_URL + newsContent.imageURL : '/images/imagenotfound.jpg';
-  const link = window.location.href;
+  let link = "msikaranganyar.com";
+  if(isBrowser()){
+    link = window.location.href;
+  }
 
   return (
     <>
@@ -153,7 +156,7 @@ const NewsPage = () => {
                   <ListParagraf content={newsContent.content} />
                   {
                     newsContent.source && (
-                      <a href={newsContent.source} target="_blank" className="font-medium text-lg text-blue-600 dark:text-blue-500 hover:underline" style={{ fontFamily: 'PT Serif, serif' }}>Sumber : {newsContent.source}</a>
+                      <a href={newsContent.source} target="_blank" rel="noreferrer" className="font-medium text-lg text-blue-600 dark:text-blue-500 hover:underline" style={{ fontFamily: 'PT Serif, serif' }}>Sumber : {newsContent.source}</a>
                     )
                   }
                 </div>

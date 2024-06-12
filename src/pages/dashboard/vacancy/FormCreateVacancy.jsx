@@ -3,13 +3,13 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import InputField from '../../../components/item/inputField';
 import { createVacancy, getVacancyById, updateVacancy } from "../../../API/VacancyAPI";
-import { useHistory, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {formatDateForInputDate, removeEmptyLines } from "../../../utils/helper";
 import SubmitButton from "../../../components/button/SubmitButton";
 
 const FormCreateVacancy = () => {
   const { id_vacancy } = useParams();
-  const history = useHistory();
+  const navigate = useNavigate();
   const [submitting, setSubmitting] = useState(false);
 
   // Skema validasi menggunakan yup
@@ -45,7 +45,7 @@ const FormCreateVacancy = () => {
         await createVacancy(formData);
       }
   
-      history.push("/dashboard/lowongan");
+      navigate("/dashboard/lowongan");
     } catch (error) {
       console.error("Error:", error);
       // Handle error if needed

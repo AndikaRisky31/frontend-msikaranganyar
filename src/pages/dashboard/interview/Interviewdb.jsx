@@ -3,7 +3,7 @@ import { Button, Typography } from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { getInterviewByPage, deleteInterview,getSearchInterview } from "../../../API/InterviewAPI.js";
 import PopupModal from "../../../components/modal/popup-modal";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import InterviewCard from "../../../components/card/InterviewCard";
 import { MyContext } from "../component/DashboardLayout.jsx";
 import EmptyState from "../../../components/modal/EmptyState.jsx";
@@ -18,7 +18,7 @@ const Interviewdb = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false); // Menyimpan status tampilan modal konfirmasi
   const [totalPages, settotalPages] = useState([]);
   const [showSpinner, setShowSpinner] = useState(false);
-  const history = useHistory()
+  const navigate = useNavigate()
   const keyword = useContext(MyContext)
   
   const fetchByPage = async () => {
@@ -54,7 +54,7 @@ const Interviewdb = () => {
   }, [page,keyword]);
 
   const toCreate =()=>{
-    history.push('/dashboard/wawancara/addUpdate')
+    navigate('/dashboard/wawancara/addUpdate')
   }
 
   const handleDeleteInterview = async () => {

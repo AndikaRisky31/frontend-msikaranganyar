@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {formatDate,jenisPost,sliceContent,scrollToTop} from '../../../utils/helper';
 import ListContact from '../../item/ListContact.jsx';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [recentPosts, setRecentPosts] = useState([]);
 
   useEffect(() => {
@@ -27,15 +28,15 @@ const Footer = () => {
 
     if (type === 'announcement') {
       // Navigasi ke halaman pengumuman
-      history.push(`/pengumuman/${singleData.id_announcement}`);
+      navigate(`/pengumuman/${singleData.id_announcement}`);
     } else if (type === 'news') {
       // Navigasi ke halaman berita
-      history.push(`/news/${singleData.URL}`);
+      navigate(`/news/${singleData.URL}`);
     } else if (type === 'vacancy') {
       // Navigasi ke halaman lowongan
-      history.push(`/lowongan/${singleData.id_vacancy}`);
+      navigate(`/lowongan/${singleData.id_vacancy}`);
     }else if(type === 'scheduleInterview'){
-      history.push(`/wawancara/${singleData.id_schedule_interview}`);
+      navigate(`/wawancara/${singleData.id_schedule_interview}`);
     }
   };
   return (
@@ -46,15 +47,15 @@ const Footer = () => {
           <span className="text-teal-500">KAB. KARANGANYAR</span>
           <p className="text-gray-700 mt-2 text-justify">Bersama kami, Anda menjadi bagian dari perjuangan percepatan eliminasi TBC untuk mewujudkan masyarakat yang lebih sehat dan sejahtera.</p>
           <div className="flex mt-4 gap-1">
-            <a href="https://www.instagram.com/_msi_karanganyar?igsh=MXN1MHM0enR6eTJydg==" target="_blank" rel="noopener noreferrer" className="mr-2">
+            <Link to="https://www.instagram.com/_msi_karanganyar?igsh=MXN1MHM0enR6eTJydg==" target="_blank" rel="noopener noreferrer" className="mr-2">
               <i className='fab fa-instagram text-white bg-teal-500 rounded-full p-2 hover:bg-teal-600'></i>
-            </a>
-            <a href="https://www.tiktok.com/@msi.karanganyar?_t=8kf8aJTji1B&_r=1" target="_blank" rel="noopener noreferrer" className="mr-2">
+            </Link>
+            <Link to="https://www.tiktok.com/@msi.karanganyar?_t=8kf8aJTji1B&_r=1" target="_blank" rel="noopener noreferrer" className="mr-2">
               <i className='fab fa-tiktok text-white bg-teal-500 rounded-full p-2 hover:bg-teal-600'></i>
-            </a>
-            <a href="https://www.youtube.com/@msikab.karanganyar6795?si=9Qt2hFKiZiVqcgJD" target="_blank" rel="noopener noreferrer">
+            </Link>
+            <Link to="https://www.youtube.com/@msikab.karanganyar6795?si=9Qt2hFKiZiVqcgJD" target="_blank" rel="noopener noreferrer">
               <i className='fab fa-youtube text-white bg-teal-500 rounded-full p-2 hover:bg-teal-600'></i>
-            </a>
+            </Link>
           </div>
         </div>
         {recentPosts.length > 0 && (

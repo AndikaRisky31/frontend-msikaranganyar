@@ -3,13 +3,13 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import InputField from '../../../components/item/inputField'
 import { createNews, getNewsByUrl, updateNews } from "../../../API/NewsAPI";
-import { useHistory, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import SubmitButton from "../../../components/button/SubmitButton";
 
 const FormCreateNews = () => {
   const [berita, setBerita] = useState({});
   const [submitting, setSubmitting] = useState(false);
-  const history = useHistory();
+  const navigate = useNavigate();
   const {url} = useParams();
 
   const validationSchema = Yup.object().shape({
@@ -20,7 +20,7 @@ const FormCreateNews = () => {
     image: url ? Yup.mixed().notRequired() : Yup.mixed()
       .required("Gambar diperlukan")
       .test("fileFormat", "Mohon upload gambar jpg/png/jpeg/webp", (value) => {
-        return value && ["image/jpeg", "image/png", "image/jpg",, "image/webp"].includes(value.type);
+        return value && ["image/jpeg", "image/png", "image/jpg", "image/webp"].includes(value.type);
       }),
     source: Yup.string()
   });
@@ -47,7 +47,7 @@ const FormCreateNews = () => {
           await createNews(formData);
         }
 
-        history.push("/dashboard/news");
+        navigate("/dashboard/news");
       } catch (error) {
         console.error("Error:", error);
       } finally {

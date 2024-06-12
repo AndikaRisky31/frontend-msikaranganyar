@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Heading from "../../components/common/heading/Heading";
 import InterviewCard from "../../components/card/InterviewCard";
 import AnnouncementCard from "../../components/card/AnnouncementCard";
@@ -12,13 +12,13 @@ import LoadingState from "../../components/modal/LoadingState";
 const Announcement = () => {
   const [pengumuman, setPengumuman] = useState([]);
   const [scheduleInterview, setScheduleInterview] = useState([]);
-  const history = useHistory()
+  const navigate = useNavigate()
   const [vacancies, setVacancies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   
   const toAnnouncement = (id_announcement) =>{
-    history.push(`/pengumuman/${id_announcement}`)
+    navigate(`/pengumuman/${id_announcement}`)
   }
 
   const getPengumuman = async () => {

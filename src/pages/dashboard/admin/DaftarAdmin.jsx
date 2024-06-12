@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { axiosInstanceAuth } from '../../../API/axios';
 import LoadingState from '../../../components/modal/LoadingState';
 import PopupModal from '../../../components/modal/popup-modal';
@@ -15,7 +15,7 @@ const DaftarAdmin = () => {
     const [selectedAdminId, setSelectedAdminId] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [showSpinner, setShowSpinner] = useState(false);
-    const history = useHistory()
+    const navigate = useNavigate()
 
     useEffect(() => {
         fetchAllAdmin();
@@ -68,7 +68,7 @@ const DaftarAdmin = () => {
         setShowDeleteModal(true);
     };
     const handleTambahAdmin = ()=>{
-        history.push('/dashboard/createadmin')
+        navigate('/dashboard/createadmin')
     }
 
     const handleConfirmDelete = async () => {

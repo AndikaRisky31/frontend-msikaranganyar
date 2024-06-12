@@ -2,17 +2,17 @@
 import React from 'react';
 import { CardFooter,Button } from '@material-tailwind/react';
 import { FaTrash, FaRegEdit } from "react-icons/fa";
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 const InterviewCard = ({ interview,handleDeleteInterview,showButton=false }) => {
-  const history = useHistory()
+  const navigate = useNavigate()
 
   const toEditInterview = (id_schedule_interview) => {
-    history.push(`/dashboard/wawancara/addUpdate/${id_schedule_interview}`)
+    navigate(`/dashboard/wawancara/addUpdate/${id_schedule_interview}`)
   }
   const toInterviewPage = () =>{
-    history.push(`/wawancara/${interview.id_schedule_interview}`)
+    navigate(`/wawancara/${interview.id_schedule_interview}`)
   }
 
   return (

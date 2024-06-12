@@ -1,18 +1,18 @@
 import React from 'react';
 import { CardFooter,Button } from '@material-tailwind/react';
 import { FaTrash, FaRegEdit } from "react-icons/fa";
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { sliceContent } from '../../utils/helper';
 
 
 const AnnouncementCard = ({ announcement,handleDeleteAnnouncement,showButton = false })=> {
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const toAnnouncement = () => {
-      history.push(`/pengumuman/${announcement.id_announcement}`);
+      navigate(`/pengumuman/${announcement.id_announcement}`);
     };
     const toEditAnnouncement = (id_announcement)=>{
-      history.push(`/dashboard/pengumuman/addUpdate/${id_announcement}`)
+      navigate(`/dashboard/pengumuman/addUpdate/${id_announcement}`)
     }
     return (
         <>

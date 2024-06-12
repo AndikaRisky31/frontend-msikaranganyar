@@ -3,14 +3,14 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import InputField from '../../../components/item/inputField'
 import { createAnnouncement, getAnnouncementById, updateAnnouncement } from "../../../API/AnnouncementAPI";
-import { useHistory, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import SubmitButton from "../../../components/button/SubmitButton";
 
 const FormCreateAnnouncement = () => {
   const [pengumuman, setpengumuman] = useState([]);
   const { id_announcement } = useParams();
   const [submitting, setSubmitting] = useState(false);
-  const history = useHistory()
+  const navigate = useNavigate()
 
   const initialValues = {
     title: "",
@@ -47,7 +47,7 @@ const FormCreateAnnouncement = () => {
         await createAnnouncement(formData);
       }
 
-      history.push("/dashboard/pengumuman")
+      navigate("/dashboard/pengumuman")
     } catch (error) {
       console.error("Error:", error);
     }finally{

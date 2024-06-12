@@ -1,38 +1,39 @@
-import React from "react";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import { login } from "../../API/AuthAPI";
-import { Redirect, useHistory } from "react-router-dom";
-import { getToken,saveToken } from "../../utils/auth";
+import React from 'react';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+import { login as loginAPI } from '../../API/AuthAPI';
+import { Navigate, useNavigate } from 'react-router-dom';
+import useAuth from '../../utils/useAuth'; // Import hook useAuth
 import {
   Card,
   Typography,
   Input,
   Button,
   Spinner,
-} from "@material-tailwind/react";
+} from '@material-tailwind/react';
 
 const LoginPage = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
+  const { token, login } = useAuth(); // Destructure token and login from useAuth
 
   // Skema validasi menggunakan yup
   const validationSchema = yup.object().shape({
-    email: yup.string().email("Invalid email").required("Email is required"),
-    password: yup.string().required("Password is required"),
+    email: yup.string().email('Invalid email').required('Email is required'),
+    password: yup.string().required('Password is required'),
   });
 
   // Menggunakan useFormik untuk manajemen formulir dan validasi
   const formik = useFormik({
     initialValues: {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
     },
     validationSchema: validationSchema,
     onSubmit: async (values, { setSubmitting, setErrors }) => {
       try {
-        const { token, role } = await login(values.email, values.password);
-        saveToken(token,role)
-        history.push("/dashboard/news");
+        const { token, role } = await loginAPI(values.email, values.password);
+        login(token, role); // Use login from useAuth
+        navigate('/dashboard/news');
       } catch (error) {
         setErrors({ password: error.message });
       } finally {
@@ -41,13 +42,13 @@ const LoginPage = () => {
     },
   });
 
-  // Jika pengguna sudah terautentikasi, redirect ke dashboard
-  if (getToken()) {
-    return <Redirect to="/dashboard/news" />;
+  // Jika pengguna sudah terautentikasi, Navigate ke dashboard
+  if (token) {
+    return <Navigate to="/dashboard/news" />;
   }
 
   const handleBack = () => {
-    history.push("/");
+    navigate('/');
   };
 
   return (
@@ -67,35 +68,35 @@ const LoginPage = () => {
               </Typography>
             </div>
             <div className="flex flex-col gap-4 px-6">
-            <Input
-              label="Email"
-              size="lg"
-              id="email" // Tambahkan id
-              name="email" // Tambahkan name
-              value={formik.values.email}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={
-                formik.touched.email && formik.errors.email
-                  ? formik.errors.email
-                  : null
-              }
-            />
-            <Input
-              label="Password"
-              size="lg"
-              type="password"
-              id="password" // Tambahkan id
-              name="password" // Tambahkan name
-              value={formik.values.password}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={
-                formik.touched.password && formik.errors.password
-                  ? formik.errors.password
-                  : null
-              }
-            />
+              <Input
+                label="Email"
+                size="lg"
+                id="email"
+                name="email"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={
+                  formik.touched.email && formik.errors.email
+                    ? formik.errors.email
+                    : null
+                }
+              />
+              <Input
+                label="Password"
+                size="lg"
+                type="password"
+                id="password"
+                name="password"
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={
+                  formik.touched.password && formik.errors.password
+                    ? formik.errors.password
+                    : null
+                }
+              />
               {formik.errors.password && (
                 <Typography variant="small" color="red">
                   {formik.errors.password}

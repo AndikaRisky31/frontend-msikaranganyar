@@ -119,10 +119,12 @@ export const jenisPost = (text)=>{
 }
 
 export const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth' // Smooth scrolling
-    });
+    if(isBrowser()){
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // Smooth scrolling
+        });
+    }
   };
 
 export const randomColor = () => {
@@ -134,4 +136,8 @@ for (let i = 0; i < 6; i++) {
 return color;
 };
   
+// utils/helper.js
+export function isBrowser() {
+    return typeof window !== "undefined" && typeof document !== "undefined";
+  }
   

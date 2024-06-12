@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { axiosInstanceAuth } from "../../../API/axios";
 import InputField from "../../../components/item/inputField";
 import SubmitButton from "../../../components/button/SubmitButton"; 
 
 const TambahAdmin = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null); 
 
@@ -39,7 +39,7 @@ const TambahAdmin = () => {
       try {
         await axiosInstanceAuth.post("/admin/create", formData);
         setError(null); 
-        history.push("/dashboard/admin");
+        navigate("/dashboard/admin");
       } catch (error) {
         if (error.response) {
           setError(error.response.data.message); 

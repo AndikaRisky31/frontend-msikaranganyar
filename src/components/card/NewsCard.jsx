@@ -1,13 +1,13 @@
 import React from "react";
 import { formatDate, sliceContent } from "../../utils/helper";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const NewsCard = ({ blog }) => {
   const baseimageurl = process.env.REACT_APP_IMAGE_URL;
-  const history = useHistory();
+  const navigate = useNavigate();
   
   const onClick = () => {
-    history.push(`/news/${blog.URL}`)
+    navigate(`/news/${blog.URL}`)
   } 
 
   return (

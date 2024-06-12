@@ -1,22 +1,20 @@
 import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { getToken } from '../../utils/auth';
+import DashboardLayout from '../dashboard/component/DashboardLayout';
 
-const ProtectedRoute = ({ component: Component, ...rest }) => {
-  const isLoggedIn = getToken(); // Check apakah pengguna sudah login atau belum
+const ProtectedRoute = ({ children }) => {
+  const isAuthenticated = getToken(); // Replace this with your authentication logic
 
-  return (
-    <Route
-      {...rest}
-      render={props =>
-        isLoggedIn ? (
-          <Component {...props} />
-        ) : (
-          <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
-        )
-      }
-    />
-  );
+  if (!isAuthenticated) {
+    return <Navigate to="/login" />;
+  }
+
+  return(
+    <DashboardLayout>
+      {children}
+    </DashboardLayout>
+  ) 
 };
 
 export default ProtectedRoute;

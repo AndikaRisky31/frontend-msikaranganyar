@@ -4,7 +4,7 @@ import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import VacancyCard from "../../../components/card/VacancyCard";
 import { deleteVacancy, getVacancyByPage, getSearchVacancy } from "../../../API/VacancyAPI";
 import PopupModal from "../../../components/modal/popup-modal";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { MyContext } from "../component/DashboardLayout";
 import EmptyState from "../../../components/modal/EmptyState";
 import LoadingState from "../../../components/modal/LoadingState";
@@ -18,7 +18,7 @@ const Vacancydb = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false); // Menyimpan status tampilan modal konfirmasi
   const [totalPages, setTotalPages] = useState([]);
   const [showSpinner, setShowSpinner] = useState(false);
-  const history = useHistory()
+  const navigate = useNavigate()
   const keyword = useContext(MyContext)
   
   const fetchByPage = async () => {
@@ -53,7 +53,7 @@ const Vacancydb = () => {
   }, [page, keyword]);
 
   const toCreate = () => {
-    history.push('/dashboard/lowongan/addUpdate')
+    navigate('/dashboard/lowongan/addUpdate')
   }
 
   const handleDeleteVacancy = async () => {

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { isSuperAdmin } from "../../../utils/auth";
+import { isBrowser } from "../../../utils/helper";
 
 const menuItems = [
   {
@@ -52,23 +53,26 @@ const menuItems = [
 ];
 
 const MenuLink = ({ title, path, icon }) => {
-  const pathname = window.location.pathname;
-
+  let pathname;
+  if(isBrowser()){
+    pathname = window.location.pathname;
+  }
+    
   return (
-    <a
-      href={path}
+    <Link
+      to={path}
       className={`flex items-center gap-1 mt-1 pl-3 p-1 hover:bg-teal-500 hover:text-white focus:bg-teal-700 ${
         pathname === path ? "bg-teal-700 text-white" : ""
       }`}
     >
       {icon}
       {title}
-    </a>
+    </Link>
   );
 };
 
 const Navigation = ({ isOpen }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [listSidebar, setListSidebar] = useState([]);
 
   useEffect(() => {
@@ -81,7 +85,7 @@ const Navigation = ({ isOpen }) => {
   }, []);
 
   const redirectToHome = () => {
-    history.push('/');
+    navigate('/');
   };
 
   return (

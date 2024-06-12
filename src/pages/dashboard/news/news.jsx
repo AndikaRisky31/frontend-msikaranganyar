@@ -4,7 +4,7 @@ import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import CardNews from "../../../components/card/card";
 import { getNewsByPage, deleteNews,getSearchNews } from "../../../API/NewsAPI";
 import PopupModal from "../../../components/modal/popup-modal";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { MyContext } from "../component/DashboardLayout";
 import EmptyState from "../../../components/modal/EmptyState";
 import LoadingState from "../../../components/modal/LoadingState";
@@ -18,7 +18,7 @@ const News = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false); // Menyimpan status tampilan modal konfirmasi
   const [totalPages, settotalPages] = useState(0);
   const [showSpinner, setShowSpinner] = useState(false);
-  const history = useHistory();
+  const navigate = useNavigate();
   const searchKeyword = useContext(MyContext);
 
   const fetchNews = async () => {
@@ -54,7 +54,7 @@ const News = () => {
   }, [page,searchKeyword]);
 
   const toCreate =()=>{
-    history.push('/dashboard/news/addUpdate')
+    navigate('/dashboard/news/addUpdate')
   }
 
   const handleDeleteNews = async () => {

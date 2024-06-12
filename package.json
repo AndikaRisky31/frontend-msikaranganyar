@@ -23,10 +23,13 @@
     "axios": "^1.6.8",
     "buffer": "^6.0.3",
     "console-browserify": "^1.2.0",
+    "cookie-parser": "^1.4.6",
     "dotenv": "^16.4.5",
+    "express": "^4.19.2",
     "flowbite-react": "^0.9.0",
     "formik": "^2.4.5",
     "framer-motion": "^11.0.24",
+    "js-cookie": "^3.0.5",
     "material-icons": "^1.10.11",
     "node-polyfill-webpack-plugin": "^3.0.0",
     "process": "^0.11.10",
@@ -36,7 +39,7 @@
     "react-helmet-async": "^2.0.5",
     "react-icons": "^5.0.1",
     "react-query": "^3.39.3",
-    "react-router-dom": "^5.3.1",
+    "react-router-dom": "^6.23.1",
     "react-slick": "^0.29.0",
     "slick-carousel": "^1.8.1",
     "styled-components": "^5.3.5",
@@ -48,7 +51,9 @@
     "start": "react-scripts --openssl-legacy-provider start",
     "build": "cross-env GENERATE_SOURCEMAP=false react-scripts build && javascript-obfuscator build --output build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "ssr": "node server/index.js",
+    "full": "npm run build && node server/index.js"
   },
   "eslintConfig": {
     "extends": [
@@ -69,9 +74,14 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.24.7",
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@babel/preset-env": "^7.24.7",
+    "@babel/preset-react": "^7.24.7",
+    "@babel/register": "^7.24.6",
     "@types/react-router-dom": "^5.3.3",
     "cross-env": "^7.0.3",
+    "ignore-styles": "^5.0.1",
     "javascript-obfuscator": "^4.1.0",
     "react-scripts": "^5.0.1",
     "tailwindcss": "^3.4.1"
