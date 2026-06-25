@@ -5,6 +5,7 @@ import { Routes, Route } from "react-router-dom";
 import Footer from "./components/common/footer/Footer";
 import ProtectedRoute from "./pages/auth/ProtectedRoute";
 import SuperAdminProtect from "./pages/auth/SuperAdminProtect";
+import DashboardLayout from "./pages/dashboard/component/DashboardLayout";
 
 const LoginPage = lazy(() => import("./pages/auth/login"));
 const LandingPage = lazy(() => import("./pages/user/LandingPage"));
@@ -59,25 +60,46 @@ function App() {
         <Route path="/wawancara/:id_schedule" element={<MainLayout showHead={false} component={<InterviewPage />} />} />
         <Route path="/pengumuman/:id_announcement" element={<MainLayout showHead={false} component={<AnnouncementPage />} />} />
         
-        <Route path="/dashboard/news" element={<ProtectedRoute><News /></ProtectedRoute>} />
-        <Route path="/dashboard/news/addUpdate" element={<ProtectedRoute><FormCreateNews /></ProtectedRoute>} />
-        <Route path="/dashboard/news/addUpdate/:url" element={<ProtectedRoute><FormCreateNews /></ProtectedRoute>} />
-        <Route path="/dashboard/pengumuman" element={<ProtectedRoute><Announcementdb /></ProtectedRoute>} />
-        <Route path="/dashboard/pengumuman/addUpdate" element={<ProtectedRoute><FormCreateAnnouncement /></ProtectedRoute>} />
-        <Route path="/dashboard/pengumuman/addUpdate/:id_announcement" element={<ProtectedRoute><FormCreateAnnouncement /></ProtectedRoute>} />
-        <Route path="/dashboard/lowongan" element={<ProtectedRoute><Vacancydb /></ProtectedRoute>} />
-        <Route path="/dashboard/lowongan/addUpdate" element={<ProtectedRoute><FormCreateVacancy /></ProtectedRoute>} />
-        <Route path="/dashboard/lowongan/addUpdate/:id_vacancy" element={<ProtectedRoute><FormCreateVacancy /></ProtectedRoute>} />
-        <Route path="/dashboard/wawancara" element={<ProtectedRoute><Interviewdb /></ProtectedRoute>} />
-        <Route path="/dashboard/wawancara/addUpdate" element={<ProtectedRoute><FormCreateInterview /></ProtectedRoute>} />
-        <Route path="/dashboard/wawancara/addUpdate/:id_schedule_interview" element={<ProtectedRoute><FormCreateInterview /></ProtectedRoute>} />
-        <Route path="/dashboard/tim" element={<ProtectedRoute><TeamList /></ProtectedRoute>} />
-        <Route path="/dashboard/tim/create" element={<ProtectedRoute><FormTeam /></ProtectedRoute>} />
-        <Route path="/dashboard/pasien" element={<ProtectedRoute><Pasien /></ProtectedRoute>} />
-        <Route path="/dashboard/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-        <Route path="/dashboard/dokumen" element={<ProtectedRoute><Document /></ProtectedRoute>} />
-        <Route path="/dashboard/admin" element={<SuperAdminProtect><DaftarAdmin /></SuperAdminProtect>} />
-        <Route path="/dashboard/createadmin" element={<SuperAdminProtect><TambahAdmin /></SuperAdminProtect>} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/dashboard" element={<DashboardLayout />}>
+            <Route path="news" element={<News />} />
+            <Route path="news/addUpdate" element={<FormCreateNews />} />
+            <Route path="news/addUpdate/:url" element={<FormCreateNews />} />
+            <Route path="pengumuman" element={<Announcementdb />} />
+            <Route
+              path="pengumuman/addUpdate"
+              element={<FormCreateAnnouncement />}
+            />
+            <Route
+              path="pengumuman/addUpdate/:id_announcement"
+              element={<FormCreateAnnouncement />}
+            />
+            <Route path="lowongan" element={<Vacancydb />} />
+            <Route path="lowongan/addUpdate" element={<FormCreateVacancy />} />
+            <Route
+              path="lowongan/addUpdate/:id_vacancy"
+              element={<FormCreateVacancy />}
+            />
+            <Route path="wawancara" element={<Interviewdb />} />
+            <Route
+              path="wawancara/addUpdate"
+              element={<FormCreateInterview />}
+            />
+            <Route
+              path="wawancara/addUpdate/:id_schedule_interview"
+              element={<FormCreateInterview />}
+            />
+            <Route path="tim" element={<TeamList />} />
+            <Route path="tim/create" element={<FormTeam />} />
+            <Route path="pasien" element={<Pasien />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="dokumen" element={<Document />} />
+            <Route element={<SuperAdminProtect />}>
+              <Route path="admin" element={<DaftarAdmin />} />
+              <Route path="createadmin" element={<TambahAdmin />} />
+            </Route>
+          </Route>
+        </Route>
       </Routes>
     </Suspense>
   );

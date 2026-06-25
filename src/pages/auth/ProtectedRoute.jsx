@@ -1,20 +1,15 @@
-import React from 'react';
-import { Navigate } from 'react-router-dom';
-import { getToken } from '../../utils/auth';
-import DashboardLayout from '../dashboard/component/DashboardLayout';
+import React from "react";
+import { Navigate, Outlet } from "react-router-dom";
+import { getToken } from "../../utils/auth";
 
 const ProtectedRoute = ({ children }) => {
-  const isAuthenticated = getToken(); // Replace this with your authentication logic
+  const isAuthenticated = getToken();
 
   if (!isAuthenticated) {
     return <Navigate to="/login" />;
   }
 
-  return(
-    <DashboardLayout>
-      {children}
-    </DashboardLayout>
-  ) 
+  return children || <Outlet />;
 };
 
 export default ProtectedRoute;

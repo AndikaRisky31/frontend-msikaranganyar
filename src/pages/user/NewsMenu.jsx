@@ -69,18 +69,18 @@ const NewsMenu = () => {
       {listNews.length > 0 ? (
         listNews.map((item) => (
           <div key={item.id_news} className="flex mb-2 md:mb-3 snap-start">
-            <div className="aspect-square w-1/4 flex justify-center items-center">
+            <div className="aspect-square w-1/4 overflow-hidden flex justify-center items-center">
               {item.imageURL ? (
                 <img
                   src={process.env.REACT_APP_IMAGE_URL + item.imageURL}
                   alt="Large News"
-                  className="h-full object-cover"
+                  className="w-full h-full object-cover"
                 />
               ) : (
                 <img
                   src="/images/imagenotfound.jpg"
                   alt="Large News"
-                  className="h-full object-cover"
+                  className="w-full h-full object-cover"
                 />
               )}
             </div>

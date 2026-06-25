@@ -40,9 +40,12 @@ const NavbarDashboard = ({ isOpen, toggleSidebar, onSearchChange }) => {
         trueChoice="Logout"
         falseChoice="Batal"
       />
-      <div className="rounded-lg flex bg-soft align-items-center justify-between py-3 sm:py-5 pr-3 sm:pr-5">
+      <div className="flex items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
         <div className="flex items-center gap-2">
-          <button onClick={toggleSidebar} className="focus:outline-none py-3 px-1 text-xl sm:text-2xl bg-teal-100">
+          <button
+            onClick={toggleSidebar}
+            className="rounded-xl border border-slate-200 bg-slate-50 p-3 text-xl text-slate-700 transition hover:bg-teal-50 lg:hidden"
+          >
             {isOpen ? (
               <MdKeyboardDoubleArrowLeft />
             ) : (
@@ -51,18 +54,24 @@ const NavbarDashboard = ({ isOpen, toggleSidebar, onSearchChange }) => {
           </button>
         </div>
         <div className="flex items-center gap-2">
-          <div className="flex items-center gap-1 p-2 bg-teal-100 rounded-lg">
-            <MdSearch className="text-gray-800" />
+          <div className="flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2">
+            <MdSearch className="text-slate-500" />
             <input
               id="search"
               name="search"
               type="text"
               placeholder="Search..."
-              className="bg-transparent border-none text-teal-600 focus:outline-none text-xs sm:text-base"
+              className="w-28 bg-transparent text-sm text-slate-700 outline-none placeholder:text-slate-400 sm:w-52"
               onKeyPress={handleKeyPress}
             />
           </div>
-          <button onClick={clickLogout} type="button" className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-xs sm:text-sm px-3 sm:px-5 py-2 sm:py-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Logout</button>
+          <button
+            onClick={clickLogout}
+            type="button"
+            className="rounded-xl bg-red-700 px-3 py-2 text-xs font-medium text-white transition hover:bg-red-800 sm:px-5 sm:text-sm"
+          >
+            Logout
+          </button>
         </div>
       </div>
     </>
