@@ -2,17 +2,17 @@ import express from "express";
 import React from "react";
 import ReactDOMServer from "react-dom/server";
 import { StaticRouter } from "react-router-dom/server";
-import App from "../src/App";
+import App from "../src/App.jsx";
 import path from "path";
 import fs from "fs";
 
 const app = express();
 
 // Middleware for serving static files
-app.use(express.static(path.resolve(__dirname, "../build")));
+app.use(express.static(path.resolve(__dirname, "../dist")));
 
 // Read index.html synchronously at server start
-const indexFilePath = path.resolve(__dirname, "../build", "index.html");
+const indexFilePath = path.resolve(__dirname, "../dist", "index.html");
 let indexFileData;
 try {
   indexFileData = fs.readFileSync(indexFilePath, "utf8");

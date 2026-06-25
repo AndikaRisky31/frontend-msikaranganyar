@@ -1,12 +1,18 @@
-import React, { useState, useEffect} from 'react';
-import axios from 'axios';
-import { sliceContent, formatDate, scrollToTop, isBrowser } from '../../utils/helper';
-import { useParams, useNavigate } from 'react-router-dom';
-import ListParagraf from '../../components/item/ItemParagraf';
-import EmptyState from '../../components/modal/EmptyState';
-import { axiosInstance } from '../../API/axios';
-import LoadingState from '../../components/modal/LoadingState';
-import SEO from '../../components/item/SEO';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import {
+  previewContent,
+  sliceContent,
+  formatDate,
+  scrollToTop,
+  isBrowser,
+} from "../../utils/helper";
+import { useParams, useNavigate } from "react-router-dom";
+import RichTextContent from "../../components/item/RichTextContent";
+import EmptyState from "../../components/modal/EmptyState";
+import { axiosInstance } from "../../API/axios";
+import LoadingState from "../../components/modal/LoadingState";
+import SEO from "../../components/item/SEO";
 
 const NewsPage = () => {
   const { url } = useParams();
@@ -17,33 +23,37 @@ const NewsPage = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(true);
 
-  const navigateToNews = (url) =>{
-    navigate(`/news/${url}`)
-  }
+  const navigateToNews = (url) => {
+    navigate(`/news/${url}`);
+  };
 
   const getNewsByUrl = async (url) => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/news/${url}`);
+      const response = await axios.get(
+        `${process.env.REACT_APP_BASE_URL}/news/${url}`,
+      );
       return response.data.data;
     } catch (error) {
-      console.error('Error fetching news by id:', error);
+      console.error("Error fetching news by id:", error);
     }
   };
 
-  const getNewsByPage = async (page,limit=5) => {
+  const getNewsByPage = async (page, limit = 5) => {
     try {
-      const response = await axiosInstance.get(`/news/?page=${page}&limit=${limit}`);
+      const response = await axiosInstance.get(
+        `/news/?page=${page}&limit=${limit}`,
+      );
       setTotalPages(response.data.totalPages);
       return response.data.data;
     } catch (error) {
-      console.error('Error fetching last news:', error);
+      console.error("Error fetching last news:", error);
     }
   };
 
   const loadContent = async () => {
     let newsData = null;
-    setLoading(true)
-    
+    setLoading(true);
+
     // Load news content by ID if available
     if (url) {
       const content = await getNewsByUrl(url);
@@ -59,14 +69,14 @@ const NewsPage = () => {
         setNewsContent(newsData[0]);
       }
     }
-  
+
     // Set lastNews with the newly fetched news data, regardless of condition
     if (!lastNews && newsData) {
       setLastNews(newsData);
     }
 
-    setLoading(false)
-  };  
+    setLoading(false);
+  };
 
   const nextPage = async () => {
     const nextPageNumber = Math.min(currentPage + 1, totalPages);
@@ -86,12 +96,19 @@ const NewsPage = () => {
     loadContent();
   }, [url, currentPage]);
 
-  const title = newsContent ? newsContent.title : 'Berita - Nama Website Anda';
-  const description = newsContent ? newsContent.content.substring(0, 150) : 'Deskripsi singkat tentang halaman berita';
-  const keywords = newsContent ? newsContent.title.split(' ').join(', ') : 'berita, news, nama website';
-  const image = newsContent && newsContent.imageURL ? process.env.REACT_APP_IMAGE_URL + newsContent.imageURL : '/images/imagenotfound.jpg';
+  const title = newsContent ? newsContent.title : "Berita - Nama Website Anda";
+  const description = newsContent
+    ? previewContent(newsContent.content, 25)
+    : "Deskripsi singkat tentang halaman berita";
+  const keywords = newsContent
+    ? newsContent.title.split(" ").join(", ")
+    : "berita, news, nama website";
+  const image =
+    newsContent && newsContent.imageURL
+      ? process.env.REACT_APP_IMAGE_URL + newsContent.imageURL
+      : "/images/imagenotfound.jpg";
   let link = "msikaranganyar.com";
-  if(isBrowser()){
+  if (isBrowser()) {
     link = window.location.href;
   }
 
@@ -112,28 +129,58 @@ const NewsPage = () => {
             <div className="grid grid-cols-2 md:grid-cols-3 gap-1 pt-2">
               <div className="px-10 md:px-16 lg:px-32 col-span-2 h-full order-1">
                 {newsContent.imageURL ? (
-                  <img src={process.env.REACT_APP_IMAGE_URL + newsContent.imageURL} alt="Large News" className="w-full object-cover aspect-video" />
+                  <img
+                    src={process.env.REACT_APP_IMAGE_URL + newsContent.imageURL}
+                    alt="Large News"
+                    className="w-full object-cover aspect-video"
+                  />
                 ) : (
-                  <img src="/images/imagenotfound.jpg" alt="Large News" className="w-full object-cover aspect-video" />
+                  <img
+                    src="/images/imagenotfound.jpg"
+                    alt="Large News"
+                    className="w-full object-cover aspect-video"
+                  />
                 )}
               </div>
               <div className="col-span-2 md:col-span-1 md:row-span-2 order-3 md:order-2 overflow-y-auto">
                 {lastNews ? (
-                  lastNews.map(item => (
+                  lastNews.map((item) => (
                     <div key={item.id_news} className="flex mb-2 snap-start">
                       <div className="aspect-square max-w-[25%]">
                         {item.imageURL ? (
-                          <img src={process.env.REACT_APP_IMAGE_URL + item.imageURL} alt="Large News" className="w-full object-cover aspect-square" />
+                          <img
+                            src={
+                              process.env.REACT_APP_IMAGE_URL + item.imageURL
+                            }
+                            alt="Large News"
+                            className="w-full object-cover aspect-square"
+                          />
                         ) : (
-                          <img src="/images/imagenotfound.jpg" alt="Large News" className="w-full object-cover aspect-video" />
+                          <img
+                            src="/images/imagenotfound.jpg"
+                            alt="Large News"
+                            className="w-full object-cover aspect-video"
+                          />
                         )}
                       </div>
                       <div className="flex flex-col p-2">
                         <div>
-                          <h2 className="text-base lg:text-lg font-semibold cursor-pointer" onClick={() => {navigateToNews(item.URL);scrollToTop()}}>{sliceContent(item.title, 11)}</h2>
+                          <h2
+                            className="text-base lg:text-lg font-semibold cursor-pointer"
+                            onClick={() => {
+                              navigateToNews(item.URL);
+                              scrollToTop();
+                            }}
+                          >
+                            {sliceContent(item.title, 11)}
+                          </h2>
                         </div>
                         <div className="my-1">
-                          <p className="text-xs lg:text-sm text-gray-500">{formatDate(item.created_at)} <i className="fas fa-circle fa-xs"></i> By, {item.admin_name} </p>
+                          <p className="text-xs lg:text-sm text-gray-500">
+                            {formatDate(item.created_at)}{" "}
+                            <i className="fas fa-circle fa-xs"></i> By,{" "}
+                            {item.admin_name}{" "}
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -142,23 +189,49 @@ const NewsPage = () => {
                   <p>No news found.</p>
                 )}
                 <div className="flex justify-center mt-6">
-                  <button onClick={prevPage} disabled={currentPage === 1} className="px-4 py-2 mr-2 bg-gray-200 border border-gray-300 rounded-md cursor-pointer hover:bg-gray-300">Previous</button>
-                  <span className="text-lg font-bold">{currentPage} / {totalPages}</span>
-                  <button onClick={nextPage} disabled={currentPage === totalPages} className="px-4 py-2 ml-2 bg-gray-200 border border-gray-300 rounded-md cursor-pointer hover:bg-gray-300">Next</button>
+                  <button
+                    onClick={prevPage}
+                    disabled={currentPage === 1}
+                    className="px-4 py-2 mr-2 bg-gray-200 border border-gray-300 rounded-md cursor-pointer hover:bg-gray-300"
+                  >
+                    Previous
+                  </button>
+                  <span className="text-lg font-bold">
+                    {currentPage} / {totalPages}
+                  </span>
+                  <button
+                    onClick={nextPage}
+                    disabled={currentPage === totalPages}
+                    className="px-4 py-2 ml-2 bg-gray-200 border border-gray-300 rounded-md cursor-pointer hover:bg-gray-300"
+                  >
+                    Next
+                  </button>
                 </div>
               </div>
               <div className="px-10 md:px-16 lg:px-32 col-span-2 row-span-2 text-gray-500 order-2 md:order-3">
-                <div className="py-5 text-justify">
-                  <p className="text-sm text-gray-500">{formatDate(newsContent.created_at, true)} <i className="fas fa-circle fa-xs"></i> By, {newsContent.admin_name} </p>
-                  <h2 className="text-xl font-semibold pt-1">{newsContent.title}</h2>
+                <div className="pt-5 text-justify">
+                  <p className="text-sm text-gray-500">
+                    {formatDate(newsContent.created_at, true)}{" "}
+                    <i className="fas fa-circle fa-xs"></i> By,{" "}
+                    {newsContent.admin_name}{" "}
+                  </p>
+                  <h1 className="text-2xl md:text-4xl font-semibold pt-1">
+                    {newsContent.title}
+                  </h1>
                 </div>
                 <div className="pb-10">
-                  <ListParagraf content={newsContent.content} />
-                  {
-                    newsContent.source && (
-                      <a href={newsContent.source} target="_blank" rel="noreferrer" className="font-medium text-lg text-blue-600 dark:text-blue-500 hover:underline" style={{ fontFamily: 'PT Serif, serif' }}>Sumber : {newsContent.source}</a>
-                    )
-                  }
+                  <RichTextContent content={newsContent.content} />
+                  {newsContent.source && (
+                    <a
+                      href={newsContent.source}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="font-medium text-lg text-blue-600 dark:text-blue-500 hover:underline"
+                      style={{ fontFamily: "PT Serif, serif" }}
+                    >
+                      Sumber : {newsContent.source}
+                    </a>
+                  )}
                 </div>
               </div>
             </div>
@@ -169,7 +242,6 @@ const NewsPage = () => {
       )}
     </>
   );
-  
 };
 
 export default NewsPage;

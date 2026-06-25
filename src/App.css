@@ -1,8 +1,8 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap");
 
 :root {
   --bg: #151c2c;
@@ -49,6 +49,109 @@ a {
 li {
   list-style-type: none;
 }
+
+.rich-text-content ol,
+.rich-text-content ul,
+.ck-content ol,
+.ck-content ul {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+  list-style-position: outside;
+}
+
+.rich-text-content ol,
+.ck-content ol {
+  list-style-type: decimal;
+}
+
+.rich-text-content ul,
+.ck-content ul {
+  list-style-type: disc;
+}
+
+.rich-text-content li,
+.ck-content li {
+  display: list-item;
+}
+
+.rich-text-content table,
+.ck-content table {
+  width: auto;
+  max-width: 100%;
+  margin: 1rem auto;
+  border-collapse: collapse;
+  display: table;
+}
+
+.rich-text-content .table,
+.ck-content .table {
+  width: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.rich-text-content h1,
+.ck-content h1 {
+  font-size: 2.25rem !important;
+  line-height: 1.15 !important;
+  font-weight: 800 !important;
+  margin: 1.25rem 0 0.75rem;
+}
+
+.rich-text-content h2,
+.ck-content h2 {
+  font-size: 1.75rem !important;
+  line-height: 1.2 !important;
+  font-weight: 800 !important;
+  margin: 1.1rem 0 0.65rem;
+}
+
+.rich-text-content h3,
+.ck-content h3 {
+  font-size: 1.35rem !important;
+  line-height: 1.25 !important;
+  font-weight: 700 !important;
+  margin: 1rem 0 0.6rem;
+}
+
+.rich-text-content p,
+.ck-content p {
+  margin: 0.75rem 0;
+}
+
+.rich-text-content .ck-heading_paragraph,
+.ck-content .ck-heading_paragraph {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
+.rich-text-content strong,
+.rich-text-content b,
+.ck-content strong,
+.ck-content b {
+  font-weight: 700;
+}
+
+.rich-text-content .ck-align-left,
+.ck-content .ck-align-left {
+  text-align: left;
+}
+
+.rich-text-content .ck-align-center,
+.ck-content .ck-align-center {
+  text-align: center;
+}
+
+.rich-text-content .ck-align-right,
+.ck-content .ck-align-right {
+  text-align: right;
+}
+
+.rich-text-content .ck-align-justify,
+.ck-content .ck-align-justify {
+  text-align: justify;
+}
+
 .row {
   width: 50%;
 }
@@ -157,8 +260,8 @@ p {
 }
 
 @font-face {
-    font-family: 'Avenir';
-    src: url('../public/fonts/avenir_roman_12.woff') format('woff2');
-    font-weight: normal;
-    font-style: normal;
+  font-family: "Avenir";
+  src: url("../fonts/avenir_roman_12.woff") format("woff2");
+  font-weight: normal;
+  font-style: normal;
 }

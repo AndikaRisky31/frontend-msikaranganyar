@@ -1,41 +1,49 @@
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import "./App.css";
 import Header from "./components/common/header/Header";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import About from "./pages/user/About";
-import Team from "./pages/user/Team";
-import Contact from "./pages/user/Contact";
+import { Routes, Route } from "react-router-dom";
 import Footer from "./components/common/footer/Footer";
-import Home from "./pages/user/Home";
-import LandingPage from "./pages/user/LandingPage";
-import NewsPage from "./pages/user/NewsPage";
-import VacancyPage from "./pages/user/VacancyPage";
-import News from './pages/dashboard/news/News';
-import FormCreateNews from './pages/dashboard/news/FormCreateNews';
-import LoginPage from "./pages/auth/login";
-import Announcement from "./pages/user/Announcement";
-import AnnouncementPage from "./pages/user/AnnouncementPage";
-import InterviewPage from "./pages/user/InterviewPage";
-import Announcementdb from "./pages/dashboard/announcement/Announcementbd";
-import FormCreateAnnouncement from "./pages/dashboard/announcement/FormCreateAnnouncement";
-import Vacancydb from "./pages/dashboard/vacancy/Vacancydb";
-import FormCreateVacancy from "./pages/dashboard/vacancy/FormCreateVacancy";
 import ProtectedRoute from "./pages/auth/ProtectedRoute";
-import FormCreateInterview from "./pages/dashboard/interview/FormCreateInterview";
-import Interviewdb from "./pages/dashboard/interview/Interviewdb";
-import Pasien from "./pages/dashboard/pasien/Pasien";
-import Profile from "./pages/dashboard/admin/Profile";
-import DaftarAdmin from "./pages/dashboard/admin/DaftarAdmin";
 import SuperAdminProtect from "./pages/auth/SuperAdminProtect";
-import TambahAdmin from "./pages/dashboard/admin/TambahAdmin";
-import TeamList from "./pages/dashboard/tim/TeamList";
-import FormTeam from "./pages/dashboard/tim/FormTeam";
-import Publish from "./pages/user/Publish";
-import Document from "./pages/dashboard/document/Document";
-import NewsMenu from "./pages/user/NewsMenu";
+
+const LoginPage = lazy(() => import("./pages/auth/login"));
+const LandingPage = lazy(() => import("./pages/user/LandingPage"));
+const Home = lazy(() => import("./pages/user/Home"));
+const Announcement = lazy(() => import("./pages/user/Announcement"));
+const Team = lazy(() => import("./pages/user/Team"));
+const About = lazy(() => import("./pages/user/About"));
+const NewsMenu = lazy(() => import("./pages/user/NewsMenu"));
+const NewsPage = lazy(() => import("./pages/user/NewsPage"));
+const Publish = lazy(() => import("./pages/user/Publish"));
+const Contact = lazy(() => import("./pages/user/Contact"));
+const VacancyPage = lazy(() => import("./pages/user/VacancyPage"));
+const InterviewPage = lazy(() => import("./pages/user/InterviewPage"));
+const AnnouncementPage = lazy(() => import("./pages/user/AnnouncementPage"));
+const News = lazy(() => import("./pages/dashboard/news/news"));
+const FormCreateNews = lazy(() => import("./pages/dashboard/news/FormCreateNews"));
+const Announcementdb = lazy(() => import("./pages/dashboard/announcement/Announcementbd"));
+const FormCreateAnnouncement = lazy(() => import("./pages/dashboard/announcement/FormCreateAnnouncement"));
+const Vacancydb = lazy(() => import("./pages/dashboard/vacancy/Vacancydb"));
+const FormCreateVacancy = lazy(() => import("./pages/dashboard/vacancy/FormCreateVacancy"));
+const FormCreateInterview = lazy(() => import("./pages/dashboard/interview/FormCreateInterview"));
+const Interviewdb = lazy(() => import("./pages/dashboard/interview/Interviewdb"));
+const Pasien = lazy(() => import("./pages/dashboard/pasien/Pasien"));
+const Profile = lazy(() => import("./pages/dashboard/admin/profile"));
+const DaftarAdmin = lazy(() => import("./pages/dashboard/admin/DaftarAdmin"));
+const TambahAdmin = lazy(() => import("./pages/dashboard/admin/TambahAdmin"));
+const TeamList = lazy(() => import("./pages/dashboard/tim/TeamList"));
+const FormTeam = lazy(() => import("./pages/dashboard/tim/FormTeam"));
+const Document = lazy(() => import("./pages/dashboard/document/Document"));
+
+const routeFallback = (
+  <div className="min-h-screen flex items-center justify-center text-slate-600">
+    Loading...
+  </div>
+);
 
 function App() {
   return (
+    <Suspense fallback={routeFallback}>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/" element={<MainLayout showHead={true} component={<LandingPage />} />} />
@@ -71,6 +79,7 @@ function App() {
         <Route path="/dashboard/admin" element={<SuperAdminProtect><DaftarAdmin /></SuperAdminProtect>} />
         <Route path="/dashboard/createadmin" element={<SuperAdminProtect><TambahAdmin /></SuperAdminProtect>} />
       </Routes>
+    </Suspense>
   );
 }
 

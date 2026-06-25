@@ -1,28 +1,41 @@
 import React, { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import InputField from '../../../components/item/inputField'
+import InputField from "../../../components/item/inputField";
 import { createNews, getNewsByUrl, updateNews } from "../../../API/NewsAPI";
 import { useNavigate, useParams } from "react-router-dom";
 import SubmitButton from "../../../components/button/SubmitButton";
+import RichTextEditor from "../../../components/item/RichTextEditor";
+import { normalizeRichTextHtmlForSubmit } from "../../../utils/helper";
 
 const FormCreateNews = () => {
   const [berita, setBerita] = useState({});
   const [submitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
-  const {url} = useParams();
+  const { url } = useParams();
 
   const validationSchema = Yup.object().shape({
     title: Yup.string()
       .required("Judul diperlukan")
       .max(100, "Judul tidak boleh lebih dari 100 karakter"),
     content: Yup.string().required("Konten diperlukan"),
-    image: url ? Yup.mixed().notRequired() : Yup.mixed()
-      .required("Gambar diperlukan")
-      .test("fileFormat", "Mohon upload gambar jpg/png/jpeg/webp", (value) => {
-        return value && ["image/jpeg", "image/png", "image/jpg", "image/webp"].includes(value.type);
-      }),
-    source: Yup.string()
+    image: url
+      ? Yup.mixed().notRequired()
+      : Yup.mixed()
+          .required("Gambar diperlukan")
+          .test(
+            "fileFormat",
+            "Mohon upload gambar jpg/png/jpeg/webp",
+            (value) => {
+              return (
+                value &&
+                ["image/jpeg", "image/png", "image/jpg", "image/webp"].includes(
+                  value.type,
+                )
+              );
+            },
+          ),
+    source: Yup.string(),
   });
 
   const formik = useFormik({
@@ -30,17 +43,35 @@ const FormCreateNews = () => {
       title: "",
       content: "",
       image: null,
+      hidden: false,
       source: "", // Tambahkan source ke initialValues
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      setSubmitting(true)
+      setSubmitting(true);
+
       try {
+        const rawContent = values.content;
+        const normalizedContent = normalizeRichTextHtmlForSubmit(
+          values.content,
+        );
+
+        console.log("RAW CONTENT:", rawContent);
+        console.log("NORMALIZED CONTENT:", normalizedContent);
+
         const formData = new FormData();
+
         formData.append("title", values.title);
-        formData.append("content", values.content);
-        formData.append("image", values.image);
-        formData.append("source", values.source); // Tambahkan source ke formData
+        formData.append("content", normalizedContent);
+        formData.append("hidden", values.hidden ? "true" : "false");
+        formData.append("source", values.source);
+
+        if (values.image) {
+          formData.append("image", values.image);
+        }
+
+        console.log("FORMDATA CONTENT:", formData.get("content"));
+
         if (url) {
           await updateNews(berita.id_news, formData);
         } else {
@@ -51,7 +82,7 @@ const FormCreateNews = () => {
       } catch (error) {
         console.error("Error:", error);
       } finally {
-        setSubmitting(false)
+        setSubmitting(false);
       }
     },
   });
@@ -61,8 +92,9 @@ const FormCreateNews = () => {
       setBerita(data);
       formik.setValues({
         title: data.title,
-        content: data.content,
+        content: data.content || "",
         image: null,
+        hidden: data.hidden ?? false,
         source: data.source, // Set nilai source dari data berita
       });
     } catch (error) {
@@ -77,9 +109,12 @@ const FormCreateNews = () => {
   }, [url]);
 
   return (
-    <form onSubmit={formik.handleSubmit} className="max-w-lg mx-auto">
+    <form onSubmit={formik.handleSubmit} className="mx-auto">
       <div className="mb-4">
-        <label htmlFor="title" className="block mb-1 text-sm font-medium text-gray-900">
+        <label
+          htmlFor="title"
+          className="block mb-1 text-sm font-medium text-gray-900"
+        >
           Judul
         </label>
         <InputField
@@ -96,30 +131,40 @@ const FormCreateNews = () => {
         ) : null}
       </div>
       <div className="mb-4">
-        <label htmlFor="content" className="block mb-1 text-sm font-medium text-gray-900">
+        <label
+          htmlFor="content"
+          className="block mb-1 text-sm font-medium text-gray-900"
+        >
           Konten
         </label>
-        <textarea
+        <RichTextEditor
           id="content"
           name="content"
           value={formik.values.content}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          rows={10}
-          className="border text-xs border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring focus:border-blue-400 text-justify"
-        ></textarea>
+        />
         {formik.touched.content && formik.errors.content ? (
           <div className="text-red-500 text-sm">{formik.errors.content}</div>
         ) : null}
       </div>
       <div className="mb-4">
-        <label htmlFor="image" className="block mb-1 text-sm font-medium text-gray-900">
-          Gambar
+        <label
+          htmlFor="image"
+          className="block mb-1 text-sm font-medium text-gray-900"
+        >
+          Cover
         </label>
         {berita && berita.imageURL ? (
           <div>
-            <img className="w-1/2" src={`${process.env.REACT_APP_IMAGE_URL}${berita.imageURL}`} alt="" />
-            <h2 className="text-gray-700 text-sm my-2">Biarkan jika tidak ingin mengubah gambar!!!</h2>
+            <img
+              className="w-1/2"
+              src={`${process.env.REACT_APP_IMAGE_URL}${berita.imageURL}`}
+              alt=""
+            />
+            <h2 className="text-gray-700 text-sm my-2">
+              Biarkan jika tidak ingin mengubah gambar!!!
+            </h2>
           </div>
         ) : null}
         <InputField
@@ -133,10 +178,15 @@ const FormCreateNews = () => {
         {formik.touched.image && formik.errors.image ? (
           <div className="text-red-500 text-sm">{formik.errors.image}</div>
         ) : null}
-        <h2 className="text-red-500 text-sm font-semibold">Untuk hasil yang bagus gunakan foto landscape 16:9</h2>
+        <h2 className="text-red-500 text-sm font-semibold">
+          Untuk hasil yang bagus gunakan foto landscape 16:9
+        </h2>
       </div>
       <div className="mb-4">
-        <label htmlFor="source" className="block mb-1 text-sm font-medium text-gray-900">
+        <label
+          htmlFor="source"
+          className="block mb-1 text-sm font-medium text-gray-900"
+        >
           Sumber
         </label>
         <InputField
@@ -151,7 +201,10 @@ const FormCreateNews = () => {
         {formik.touched.source && formik.errors.source ? (
           <div className="text-red-500 text-sm">{formik.errors.source}</div>
         ) : null}
-        <h2 className="text-red-500 text-sm font-semibold">Kosongkan jika berita dibuat sendiri(tidak mengambil dari website lain)</h2>
+        <h2 className="text-red-500 text-sm font-semibold">
+          Kosongkan jika berita dibuat sendiri(tidak mengambil dari website
+          lain)
+        </h2>
       </div>
       <SubmitButton submitting={submitting} />
     </form>

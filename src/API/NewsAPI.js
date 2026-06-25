@@ -26,7 +26,6 @@ const deleteNews = async (id) => {
 
 const createNews = async (newsData) => {
   try {
-    newsData.hidden = false;
     const response = await axiosInstanceAuth.post(
       `/news/create`,
       newsData
@@ -51,7 +50,7 @@ const getNewsByUrl = async (url)=>{
 }
 const updateNews = async (id_news, newsData) => {
   try {
-    const response = await axiosInstanceAuth.patch(`news/${id_news}`, newsData);
+    const response = await axiosInstanceAuth.patch(`/news/${id_news}`, newsData);
     return response.data;
   } catch (error) {
     console.error("gagal mengupdate berita", error);

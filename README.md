@@ -1,14 +1,22 @@
-fix eror webpack <5 polyfill....
+# Mentari Sehat Indonesia Karanganyar
 
-tambahkan di node_modules\react-scripts\config\webpack.config.js
+Project frontend ini sudah dipindah ke Vite.
 
-    const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
+## Scripts
 
-di plugins
+- `npm run start` or `npm run dev`: jalankan Vite dev server
+- `npm run build`: build produksi ke `dist/` lalu obfuscate bundle JS
+- `npm run ssr`: jalankan server Express untuk serve hasil build
+- `npm run full`: build lalu start server Express
 
-    new NodePolyfillPlugin()
+## Environment
 
-jika no module install 
+File `.env` lama masih didukung. `vite.config.js` membaca kedua format berikut:
 
-    npm install node-polyfill-webpack-plugin
+- `REACT_APP_BASE_URL`
+- `REACT_APP_IMAGE_URL`
+- `REACT_APP_SERVICE_ID`
+- `REACT_APP_TEMPLATE_ID`
+- `REACT_APP_PUBLIC_KEY`
 
+Kalau ingin, kamu juga bisa pindah bertahap ke prefix `VITE_` untuk variabel baru.
