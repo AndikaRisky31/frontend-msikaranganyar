@@ -5,7 +5,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@ckeditor/ckeditor5-react": "^6.3.0",
+    "@ckeditor/ckeditor5-react": "^11.2.0",
     "@emailjs/browser": "^4.3.3",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
@@ -17,13 +17,14 @@
     "@mui/styled-engine-sc": "^5.7.0",
     "@radix-ui/react-icons": "^1.3.0",
     "axios": "^1.6.8",
+    "ckeditor5": "^48.2.0",
     "express": "^4.19.2",
     "flowbite-react": "^0.9.0",
     "formik": "^2.4.5",
     "framer-motion": "^11.0.24",
     "js-cookie": "^3.0.5",
-    "react": "^18.1.0",
-    "react-dom": "^18.1.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
     "react-helmet-async": "^2.0.5",
     "react-icons": "^5.0.1",
     "react-router-dom": "^6.23.1",
@@ -45,11 +46,15 @@
     "@babel/preset-env": "^7.24.7",
     "@babel/preset-react": "^7.24.7",
     "@babel/register": "^7.24.6",
-    "@vitejs/plugin-react": "^4.7.0",
+    "@vitejs/plugin-react": "^6.0.3",
     "autoprefixer": "^10.5.2",
     "ignore-styles": "^5.0.1",
     "javascript-obfuscator": "^4.1.0",
     "tailwindcss": "^3.4.1",
-    "vite": "^5.4.21"
+    "vite": "^8.1.0"
+  },
+  "overrides": {
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
   }
 }

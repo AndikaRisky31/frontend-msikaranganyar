@@ -1,5 +1,6 @@
 import React, { Suspense, lazy } from "react";
 import "./App.css";
+import "ckeditor5/ckeditor5.css";
 import Header from "./components/common/header/Header";
 import { Routes, Route } from "react-router-dom";
 import Footer from "./components/common/footer/Footer";
@@ -21,13 +22,25 @@ const VacancyPage = lazy(() => import("./pages/user/VacancyPage"));
 const InterviewPage = lazy(() => import("./pages/user/InterviewPage"));
 const AnnouncementPage = lazy(() => import("./pages/user/AnnouncementPage"));
 const News = lazy(() => import("./pages/dashboard/news/news"));
-const FormCreateNews = lazy(() => import("./pages/dashboard/news/FormCreateNews"));
-const Announcementdb = lazy(() => import("./pages/dashboard/announcement/Announcementbd"));
-const FormCreateAnnouncement = lazy(() => import("./pages/dashboard/announcement/FormCreateAnnouncement"));
+const FormCreateNews = lazy(
+  () => import("./pages/dashboard/news/FormCreateNews"),
+);
+const Announcementdb = lazy(
+  () => import("./pages/dashboard/announcement/Announcementbd"),
+);
+const FormCreateAnnouncement = lazy(
+  () => import("./pages/dashboard/announcement/FormCreateAnnouncement"),
+);
 const Vacancydb = lazy(() => import("./pages/dashboard/vacancy/Vacancydb"));
-const FormCreateVacancy = lazy(() => import("./pages/dashboard/vacancy/FormCreateVacancy"));
-const FormCreateInterview = lazy(() => import("./pages/dashboard/interview/FormCreateInterview"));
-const Interviewdb = lazy(() => import("./pages/dashboard/interview/Interviewdb"));
+const FormCreateVacancy = lazy(
+  () => import("./pages/dashboard/vacancy/FormCreateVacancy"),
+);
+const FormCreateInterview = lazy(
+  () => import("./pages/dashboard/interview/FormCreateInterview"),
+);
+const Interviewdb = lazy(
+  () => import("./pages/dashboard/interview/Interviewdb"),
+);
 const Pasien = lazy(() => import("./pages/dashboard/pasien/Pasien"));
 const Profile = lazy(() => import("./pages/dashboard/admin/profile"));
 const DaftarAdmin = lazy(() => import("./pages/dashboard/admin/DaftarAdmin"));
@@ -47,19 +60,59 @@ function App() {
     <Suspense fallback={routeFallback}>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/" element={<MainLayout showHead={true} component={<LandingPage />} />} />
-        <Route path="/SSR" element={<MainLayout showHead={true} component={<Home />} />} />
-        <Route path="/pengumuman" element={<MainLayout showHead={false} component={<Announcement />} />} />
-        <Route path="/team" element={<MainLayout showHead={true} component={<Team />} />} />
-        <Route path="/about" element={<MainLayout showHead={true} component={<About />} />} />
-        <Route path="/news" element={<MainLayout showHead={false} component={<NewsMenu />} />} />
-        <Route path="/news/:url" element={<MainLayout showHead={false} component={<NewsPage />} />} />
-        <Route path="/document" element={<MainLayout showHead={false} component={<Publish />} />} />
-        <Route path="/contact" element={<MainLayout showHead={true} component={<Contact />} />} />
-        <Route path="/lowongan/:id_vacancy" element={<MainLayout showHead={false} component={<VacancyPage />} />} />
-        <Route path="/wawancara/:id_schedule" element={<MainLayout showHead={false} component={<InterviewPage />} />} />
-        <Route path="/pengumuman/:id_announcement" element={<MainLayout showHead={false} component={<AnnouncementPage />} />} />
-        
+        <Route
+          path="/"
+          element={<MainLayout showHead={true} component={<LandingPage />} />}
+        />
+        <Route
+          path="/SSR"
+          element={<MainLayout showHead={true} component={<Home />} />}
+        />
+        <Route
+          path="/pengumuman"
+          element={<MainLayout showHead={false} component={<Announcement />} />}
+        />
+        <Route
+          path="/team"
+          element={<MainLayout showHead={true} component={<Team />} />}
+        />
+        <Route
+          path="/about"
+          element={<MainLayout showHead={true} component={<About />} />}
+        />
+        <Route
+          path="/news"
+          element={<MainLayout showHead={false} component={<NewsMenu />} />}
+        />
+        <Route
+          path="/news/:url"
+          element={<MainLayout showHead={false} component={<NewsPage />} />}
+        />
+        <Route
+          path="/document"
+          element={<MainLayout showHead={false} component={<Publish />} />}
+        />
+        <Route
+          path="/contact"
+          element={<MainLayout showHead={true} component={<Contact />} />}
+        />
+        <Route
+          path="/lowongan/:id_vacancy"
+          element={<MainLayout showHead={false} component={<VacancyPage />} />}
+        />
+        <Route
+          path="/wawancara/:id_schedule"
+          element={
+            <MainLayout showHead={false} component={<InterviewPage />} />
+          }
+        />
+        <Route
+          path="/pengumuman/:id_announcement"
+          element={
+            <MainLayout showHead={false} component={<AnnouncementPage />} />
+          }
+        />
+
         <Route element={<ProtectedRoute />}>
           <Route path="/dashboard" element={<DashboardLayout />}>
             <Route path="news" element={<News />} />
