@@ -6,7 +6,10 @@ import { createNews, getNewsByUrl, updateNews } from "../../../API/NewsAPI";
 import { useNavigate, useParams } from "react-router-dom";
 import SubmitButton from "../../../components/button/SubmitButton";
 import RichTextEditor from "../../../components/item/RichTextEditor";
-import { normalizeRichTextHtmlForSubmit } from "../../../utils/helper";
+import {
+  formatDateForInputDateTime,
+  normalizeRichTextHtmlForSubmit,
+} from "../../../utils/helper";
 
 const FormCreateNews = () => {
   const [berita, setBerita] = useState({});
@@ -44,7 +47,8 @@ const FormCreateNews = () => {
       content: "",
       image: null,
       hidden: false,
-      source: "", // Tambahkan source ke initialValues
+      source: "",
+      createdAt: formatDateForInputDateTime(new Date()),
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
@@ -65,6 +69,9 @@ const FormCreateNews = () => {
         formData.append("content", normalizedContent);
         formData.append("hidden", values.hidden ? "true" : "false");
         formData.append("source", values.source);
+        if (values.createdAt) {
+          formData.append("created_at", values.createdAt);
+        }
 
         if (values.image) {
           formData.append("image", values.image);
@@ -95,7 +102,10 @@ const FormCreateNews = () => {
         content: data.content || "",
         image: null,
         hidden: data.hidden ?? false,
-        source: data.source, // Set nilai source dari data berita
+        source: data.source,
+        createdAt: data.created_at
+          ? formatDateForInputDateTime(data.created_at)
+          : "",
       });
     } catch (error) {
       console.error("gagal set berita ", error);
@@ -129,6 +139,22 @@ const FormCreateNews = () => {
         {formik.touched.title && formik.errors.title ? (
           <div className="text-red-500 text-sm">{formik.errors.title}</div>
         ) : null}
+      </div>
+      <div className="mb-4">
+        <label
+          htmlFor="createdAt"
+          className="block mb-1 text-sm font-medium text-gray-900"
+        >
+          Tanggal Publish
+        </label>
+        <InputField
+          id="createdAt"
+          name="createdAt"
+          type="datetime-local"
+          value={formik.values.createdAt}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+        />
       </div>
       <div className="mb-4">
         <label
@@ -206,6 +232,7 @@ const FormCreateNews = () => {
           lain)
         </h2>
       </div>
+
       <SubmitButton submitting={submitting} />
     </form>
   );

@@ -1,26 +1,12 @@
-// src/index.jsx
 import React from "react";
-import { ThemeProvider } from "@material-tailwind/react";
-import { HelmetProvider } from "react-helmet-async";
-import App from "./App";
-import { createRoot } from "react-dom/client";
+import { hydrateRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
+import AppRoot from "./AppRoot";
 
 const rootElement = document.getElementById("root");
+const initialData = window.__INITIAL_DATA__ || {};
 
-const root = createRoot(rootElement);
-root.render(
-  React.createElement(
-    BrowserRouter,
-    null,
-    React.createElement(
-      ThemeProvider,
-      null,
-      React.createElement(
-        HelmetProvider,
-        null,
-        React.createElement(App, null)
-      )
-    )
-  )
+hydrateRoot(
+  rootElement,
+  <AppRoot Router={BrowserRouter} initialData={initialData} />
 );

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import axios from "axios";
 import {
   previewContent,
@@ -6,6 +6,7 @@ import {
   formatDate,
   scrollToTop,
   isBrowser,
+  resolveAssetUrl,
 } from "../../utils/helper";
 import { useParams, useNavigate } from "react-router-dom";
 import RichTextContent from "../../components/item/RichTextContent";
@@ -13,15 +14,29 @@ import EmptyState from "../../components/modal/EmptyState";
 import { axiosInstance } from "../../API/axios";
 import LoadingState from "../../components/modal/LoadingState";
 import SEO from "../../components/item/SEO";
+import { useSSRData } from "../../ssr/SSRDataContext";
 
 const NewsPage = () => {
   const { url } = useParams();
   const navigate = useNavigate();
-  const [newsContent, setNewsContent] = useState(null);
-  const [lastNews, setLastNews] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [loading, setLoading] = useState(true);
+  const ssrData = useSSRData();
+  const initialNewsData = useMemo(() => {
+    if (!ssrData?.newsPage || ssrData.newsPage.url !== url) {
+      return null;
+    }
+
+    return ssrData.newsPage;
+  }, [ssrData, url]);
+  const hasConsumedInitialData = useRef(Boolean(initialNewsData));
+  const [newsContent, setNewsContent] = useState(
+    initialNewsData?.newsContent || null,
+  );
+  const [lastNews, setLastNews] = useState(initialNewsData?.lastNews || null);
+  const [currentPage, setCurrentPage] = useState(
+    initialNewsData?.currentPage || 1,
+  );
+  const [totalPages, setTotalPages] = useState(initialNewsData?.totalPages || 1);
+  const [loading, setLoading] = useState(!initialNewsData);
 
   const navigateToNews = (url) => {
     navigate(`/news/${url}`);
@@ -93,6 +108,11 @@ const NewsPage = () => {
   };
 
   useEffect(() => {
+    if (hasConsumedInitialData.current) {
+      hasConsumedInitialData.current = false;
+      return;
+    }
+
     loadContent();
   }, [url, currentPage]);
 
@@ -105,12 +125,11 @@ const NewsPage = () => {
     : "berita, news, nama website";
   const image =
     newsContent && newsContent.imageURL
-      ? process.env.REACT_APP_IMAGE_URL + newsContent.imageURL
+      ? resolveAssetUrl(newsContent.imageURL)
       : "/images/imagenotfound.jpg";
-  let link = "msikaranganyar.com";
-  if (isBrowser()) {
-    link = window.location.href;
-  }
+  const link = isBrowser()
+    ? window.location.href
+    : initialNewsData?.pageUrl || "https://msikaranganyar.com";
 
   return (
     <>
@@ -130,7 +149,7 @@ const NewsPage = () => {
               <div className="px-10 md:px-16 lg:px-32 col-span-2 h-full order-1">
                 {newsContent.imageURL ? (
                   <img
-                    src={process.env.REACT_APP_IMAGE_URL + newsContent.imageURL}
+                    src={resolveAssetUrl(newsContent.imageURL)}
                     alt="Large News"
                     className="w-full object-cover aspect-video"
                   />
@@ -149,9 +168,7 @@ const NewsPage = () => {
                       <div className="aspect-square max-w-[25%]">
                         {item.imageURL ? (
                           <img
-                            src={
-                              process.env.REACT_APP_IMAGE_URL + item.imageURL
-                            }
+                            src={resolveAssetUrl(item.imageURL)}
                             alt="Large News"
                             className="w-full object-cover aspect-square"
                           />
