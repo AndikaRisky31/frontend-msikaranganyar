@@ -35,7 +35,8 @@
     "start": "vite",
     "dev": "vite",
     "serve": "vite preview",
-    "build": "vite build && node scripts/obfuscate-dist.cjs",
+    "build": "vite build",
+    "obfuscate": "node scripts/obfuscate-dist.cjs",
     "test": "echo \"No tests configured\"",
     "ssr": "node server/index.js",
     "full": "npm run build && node server/index.js"
